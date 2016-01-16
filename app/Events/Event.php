@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Events;
+namespace Hotpms\Events;
 
 abstract class Event
 {

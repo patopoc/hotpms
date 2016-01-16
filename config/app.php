@@ -80,7 +80,8 @@ return [
 
     'key' => env('APP_KEY', 'SomeRandomString'),
 
-    'cipher' => 'AES-256-CBC',
+    //'cipher' => 'AES-256-CBC',
+	'cipher' => MCRYPT_RIJNDAEL_128,
 
     /*
     |--------------------------------------------------------------------------
@@ -136,13 +137,20 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+    	
+    	/**
+    	 * Vendor service providers
+    	 */
+    		
+    	Collective\Html\HtmlServiceProvider::class,
+    		
 
         /*
          * Application Service Providers...
          */
-        App\Providers\AppServiceProvider::class,
-        App\Providers\EventServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,
+        Hotpms\Providers\AppServiceProvider::class,
+        Hotpms\Providers\EventServiceProvider::class,
+        Hotpms\Providers\RouteServiceProvider::class,
 
     ],
 
@@ -191,6 +199,9 @@ return [
         'URL'       => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
+    	
+    	'Form' => Collective\Html\FormFacade::class,
+    	'Html' => Collective\Html\HtmlFacade::class,
 
     ],
 

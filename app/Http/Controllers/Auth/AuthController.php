@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace Hotpms\Http\Controllers\Auth;
 
-use App\User;
+use Hotpms\User;
 use Validator;
-use App\Http\Controllers\Controller;
+use Hotpms\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
 class AuthController extends Controller

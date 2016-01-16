@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
+use Faker\Factory as Faker;
 
 class DatabaseSeeder extends Seeder
 {
@@ -11,10 +12,10 @@ class DatabaseSeeder extends Seeder
      * @return void
      */
     public function run()
-    {
-        Model::unguard();
+    {    	
+    	Model::unguard();
 
-        // $this->call('UserTableSeeder');
+        $this->call('PeopleTableSeeder');
 
         Model::reguard();
     }
