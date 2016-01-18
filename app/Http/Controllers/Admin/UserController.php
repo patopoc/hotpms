@@ -6,10 +6,8 @@ use Illuminate\Http\Request;
 
 use Hotpms\Http\Requests;
 use Hotpms\Http\Controllers\Controller;
-use Hotpms\Person;
-use Illuminate\Support\Facades\Session;
 
-class PeopleController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,9 +16,7 @@ class PeopleController extends Controller
      */
     public function index()
     {
-		$people= Person::all();
-		
-		return view('admin.people.index', compact('people'));
+    	   
     }
 
     /**
@@ -30,7 +26,7 @@ class PeopleController extends Controller
      */
     public function create()
     {
-        return view('admin.people.create');
+        //
     }
 
     /**
@@ -41,9 +37,7 @@ class PeopleController extends Controller
      */
     public function store(Request $request)
     {
-        Person::create($request->all());
-        
-        return \Redirect::route('admin.people.index');
+        //
     }
 
     /**
@@ -65,8 +59,7 @@ class PeopleController extends Controller
      */
     public function edit($id)
     {
-        $person= Person::findOrFail($id);
-        return view('admin.people.edit', compact('person'));
+        //
     }
 
     /**
@@ -78,11 +71,7 @@ class PeopleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $person= Person::findOrFail($id);
-        $person->fill($request->all());
-        $person->save();
-        return redirect()->route('admin.people.index');
-  
+        //
     }
 
     /**
@@ -91,19 +80,8 @@ class PeopleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id, Request $request)
+    public function destroy($id)
     {
-        $person= Person::findOrFail($id);
-        $person->delete();
-        
-        $message= $person->name. ' ha sido eliminado';
-        
-        if($request->ajax()){
-        	return $message;
-        }
-        
-        Session::flash('message', $message);        
-        
-        return redirect()->route('admin.people.index');
+        //
     }
 }

@@ -5,22 +5,27 @@
 <div class="row">
 <div class="col-md-10 col-md-offset-1">
 <div class="panel panel-default">
-<div class="panel-heading">Edit User {{$user->first_name}}</div>
+<div class="panel-heading">Edit Person {{$person->name}}</div>
 <div class="panel-body">
-@include('admin.users.partials.messages')
+@include('admin.people.partials.messages')
 
-{!!Form::model($user, ['route' => ['admin.users.update', $user->id], 'method' => 'put'])!!}
-		  @include('admin.users.partials.fields')	 
+{!!Form::model($person, ['route' => ['admin.people.update', $person->id], 'method' => 'put'])!!}
+		  @include('admin.people.partials.fields')	 
 		 
-		  <button type="submit" class="btn btn-default">Update User</button>
+		  <button type="submit" class="btn btn-default">Update Person</button>
 {!!Form::close()!!}
 
 
 </div>
 </div>
-@include('admin.users.partials.delete')
+@include('admin.people.partials.delete')
 
 </div>
 </div>
 </div>
 @endsection
+
+@include('admin.people.partials.scripts')
+
+
+

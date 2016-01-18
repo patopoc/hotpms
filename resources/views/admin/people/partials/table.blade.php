@@ -14,7 +14,7 @@
 			<td> {{$person->name}}</td>
 			<td> {{$person->last_name}}</td>
 			<td>
-				<a href="{ route('admin.people.edit', $person) }}">Editar</a>
+				<a href="{{ route('admin.people.edit', $person) }}">Editar</a>
 				<a href="#" class="btn-delete">Eliminar</a>
 			</td>
 		</tr>	

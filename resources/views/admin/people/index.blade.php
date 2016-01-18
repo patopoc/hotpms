@@ -23,29 +23,9 @@
 </div>
 </div>
 </div>
-{{Form::open( ['route' => ['admin.users.destroy', ':USER_ID'], 'method' => 'delete', 'id'=>'form-delete'])!!}
-{{Form::close()!!}
+{!!Form::open( ['route' => ['admin.people.destroy', ':PERSON_ID'], 'method' => 'delete', 'id'=>'form-delete'])!!}
+{!!Form::close()!!}
+
 @endsection
 
-
-@section('scripts')
-<script type="text/javascript">
-$(document).ready(function(){
-	$('.btn-delete').click(function(e){
-		var row= $(this).parents('tr');
-		var id= row.data('id');
-		var form= $('#form-delete');		
-		var url= form.attr('action').replace(':USER_ID', id);
-		var data= form.serialize();
-
-		
-		$.post(url, data, function(result){
-			alert(result);
-			row.fadeOut();
-		}).fail(function(){
-			alert("no se borro usuario")});			
-		});
-});
-
-</script>
-@endsection
+@include('admin.people.partials.scripts')
