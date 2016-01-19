@@ -1,4 +1,4 @@
-{!!Form::open( ['route' => ['admin.people.destroy', $person->id], 'method' => 'delete', 
+{!!Form::open( ['route' => ['admin.people.destroy', $data["person"]->id], 'method' => 'delete', 
 				'id' => 'form-delete'])!!}
 	 
 		  <button type="submit" class="btn btn-danger">Delete User</button>

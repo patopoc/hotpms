@@ -8,9 +8,20 @@ use Hotpms\Http\Requests;
 use Hotpms\Http\Controllers\Controller;
 use Hotpms\Person;
 use Illuminate\Support\Facades\Session;
+use Webpatser\Countries\Countries;
+
 
 class PeopleController extends Controller
 {
+	
+	public $countriesShortList;
+	
+	public function __construct(){
+		
+		$this->countriesShortList= \DB::table('countries')->lists('name', 'country_code');
+	}
+
+	
     /**
      * Display a listing of the resource.
      *
@@ -29,8 +40,9 @@ class PeopleController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        return view('admin.people.create');
+    {    	   	
+    	$countriesShortList= $this->countriesShortList;
+    	return view('admin.people.create', compact('countriesShortList'));
     }
 
     /**
@@ -65,8 +77,11 @@ class PeopleController extends Controller
      */
     public function edit($id)
     {
-        $person= Person::findOrFail($id);
-        return view('admin.people.edit', compact('person'));
+        $data["person"]= Person::findOrFail($id);
+        $data["countries"]= $this->countriesShortList;
+        
+        
+        return view('admin.people.edit', compact('data'));
     }
 
     /**

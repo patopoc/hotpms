@@ -14,6 +14,8 @@ class PeopleTableSeeder extends Seeder
     {
         $faker= Faker::create();
         
+        $countries= DB::table('countries')->lists("country_code");
+        
         for($i = 0; $i < 10; $i ++){
         	\DB::table('people')->insert(array(
         			'ci' => $faker->randomDigit,
@@ -21,7 +23,7 @@ class PeopleTableSeeder extends Seeder
         			'last_name' => $faker->lastName,
         			'email' => $faker->unique()->email,
         			'telephone' => $faker->phoneNumber,
-        			'id_country' => $faker->randomNumber(1),
+        			'id_country' => $countries[array_rand($countries,1)],
         	));
         }
     }

@@ -25,6 +25,6 @@
 </div>
 <div class="form-group">
  	{!! Form::label('id_country', 'Pais') !!}
- 	{!! Form::select('id_country', ['' => 'Select Country', '1' => 'Paraguay', '2' => 'Dinamarca'], null, ['class' => 'form-control']) !!}	 	
+ 	{!! Form::select('id_country', ['' => 'Select Country'] + $data["countries"], null, ['class' => 'form-control']) !!}	 	
     
 </div>

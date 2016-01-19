@@ -4,17 +4,24 @@
 <script type="text/javascript">
 
 $(document).ready(function(){
+	var row=null;
+	var id = null;
+	var form = null;
+	var url = null;
+	var data=null;
 	$('.btn-delete').click(function(e){
-		var row= $(this).parents('tr');
-		var id= row.data('id');
-		var form= $('#form-delete');
-		var url= form.attr('action').replace(':PERSON_ID', id);
-		var data= form.serialize();		
+		row= $(this).parents('tr');
+		id= row.data('id');
+		form= $('#form-delete');
+		url= form.attr('action').replace(':PERSON_ID', id);
+		data= form.serialize();	
+		$.fn.confirmDelete();
+			
 	});
 	
 	$('#form-delete').submit(function(e){
 		e.preventDefault();
-		return $.fn.confirmDelete();
+		$.fn.confirmDelete();
 	});
 	
 	$.fn.confirmDelete=function (){
@@ -24,20 +31,22 @@ $(document).ready(function(){
 			 modal: true,
 			 buttons: {
 				  Ok: function() {
-					if(typeof url !== 'undefined'){
+					if(url !== null){
 						$.post(url, data, function(result){
-							alert(result);
+							
 							row.fadeOut();
 						}).fail(function(){
 							alert("no se borro usuario");
 						});
+						 $( this ).dialog( "close" );
 					}
-					else{
-						return true;
+					else if($("#form-delete") !== null){
+						$("#form-delete")[0].submit();						
 					}
 				 },
 				 Cancel: function() {
-				 $( this ).dialog( "close" );
+					 $( this ).dialog( "close" );
+					 
 				 }
 			 }
 		});

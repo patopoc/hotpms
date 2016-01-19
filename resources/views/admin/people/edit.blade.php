@@ -5,11 +5,11 @@
 <div class="row">
 <div class="col-md-10 col-md-offset-1">
 <div class="panel panel-default">
-<div class="panel-heading">Edit Person {{$person->name}}</div>
+<div class="panel-heading">Edit Person {{$data["person"]->name}}</div>
 <div class="panel-body">
 @include('admin.people.partials.messages')
 
-{!!Form::model($person, ['route' => ['admin.people.update', $person->id], 'method' => 'put'])!!}
+{!!Form::model($data["person"], ['route' => ['admin.people.update', $data["person"]], 'method' => 'put'])!!}
 		  @include('admin.people.partials.fields')	 
 		 
 		  <button type="submit" class="btn btn-default">Update Person</button>

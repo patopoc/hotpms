@@ -10,7 +10,7 @@
 	<p class="alert alert-success"> {{Session::get('message')}}</p>
 @endif
 	<p>
-		<a class="btn btn-info" href="{{ route('admin.people.create') }}" role="button">Link</a>
+		<a class="btn btn-info" href="{{ route('admin.people.create') }}" role="button">Nuevo</a>
 	</p>	
 	
 <div class="panel-body">
