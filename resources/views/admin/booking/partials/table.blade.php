@@ -1,0 +1,34 @@
+<table class="table table-striped">
+		<tr>
+			<th>Referencia</th>
+			<th>Nombre</th>
+			<th>Fecha de LLegada</th>
+			<th>Hora de LLegada</th>
+			<th>Noches</th>
+			<th>No Habitaciones</th>
+			<th>Typo de Habitacion</th>
+			<th>Adultos</th>
+			<th>Ninios</th>
+			<th>Precio Total</th>
+		</tr>
+				
+		@foreach ($bookings as $booking)
+		<tr data-id="{{$booking->id}}">
+			<td> {{$booking->reference_code or ''}}</td>
+			<td> {{$booking->person->name or ''}}</td>
+			<td> {{$booking->check_in or ''}}</td>
+			<td> {{$booking->arrival_time or ''}}</td>
+			<td> </td>
+			<td> {{$booking->number_of_rooms or ''}}</td>
+			<td> {{$booking->roomType->id or ''}}</td>			
+			<td> {{$booking->adults or ''}}</td>
+			<td> {{$booking->children or ''}}</td>
+			<td> </td>
+			<td>
+				<a href="#"><span class="glyphicon glyphicon-pencil"></span>Editar</a>
+				<a href="#" class="btn-delete"><span class="glyphicon glyphicon-minus-sign"></span>Eliminar</a>
+			</td>
+		</tr>	
+		@endforeach
+				
+	</table>

@@ -31,7 +31,7 @@ class PeopleController extends Controller
     {
 		$people= Person::all();
 		
-		return view('admin.people.index', compact('people'));
+		return view('admin.people.index', compact('people'));		
     }
 
     /**
