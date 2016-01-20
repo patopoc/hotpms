@@ -20,5 +20,7 @@ Route::group(['prefix' => 'admin', 'namespace'=> 'Admin'], function(){
 	Route::resource('booking', 'BookingController');
 	Route::resource('property', 'PropertyController');
 	Route::resource('rate', 'RateController');
+	Route::resource('services', 'ServicesController');
+	Route::resource('service_plans', 'ServicePlanController');
 	
 });
