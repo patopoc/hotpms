@@ -17,12 +17,8 @@ Route::get('/', function () {
 
 Route::group(['prefix' => 'admin', 'namespace'=> 'Admin'], function(){
 	Route::resource('people', 'PeopleController');
-});
-
-Route::group(['prefix' => 'admin', 'namespace'=> 'Admin'], function(){
 	Route::resource('booking', 'BookingController');
-});
-
-Route::group(['prefix' => 'admin', 'namespace'=> 'Admin'], function(){
 	Route::resource('property', 'PropertyController');
+	Route::resource('rate', 'RateController');
+	
 });

@@ -1,8 +1,8 @@
-{!!Form::open( ['route' => ['admin.people.destroy', $data["person"]->id], 'method' => 'delete', 
+{!!Form::open( ['route' => ['admin.property.destroy', $property->id], 'method' => 'delete', 
 				'id' => 'form-delete'])!!}
 	 
-		  <button type="submit" class="btn btn-danger">Delete User</button>
-		  <a class="btn btn-info" href="{{ route('admin.people.index') }}" role="button">Cancel</a>
+		  <button type="submit" class="btn btn-danger">Delete Property</button>
+		  <a class="btn btn-info" href="{{ route('admin.property.index') }}" role="button">Cancel</a>
 		  
 {!!Form::close()!!}
 

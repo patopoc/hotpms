@@ -6,12 +6,12 @@ use Illuminate\Http\Request;
 
 use Hotpms\Http\Requests;
 use Hotpms\Http\Controllers\Controller;
-use Hotpms\Property;
-use Hotpms\Http\Requests\CreatePropertyRequest;
+use Hotpms\Http\Requests\CreateRateRequest;
 use Illuminate\Support\Facades\Session;
-use Hotpms\Http\Requests\EditPropertyRequest;
+use Hotpms\Http\Requests\EditRateRequest;
+use Hotpms\Rate;
 
-class PropertyController extends Controller
+class RateController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,8 +20,8 @@ class PropertyController extends Controller
      */
     public function index()
     {
-        $properties= Property::all();
-        return view('admin.property.index', compact('properties'));
+        $rates= Rate::all();
+        return view('admin.rate.index', compact('rates'));
     }
 
     /**
@@ -31,7 +31,7 @@ class PropertyController extends Controller
      */
     public function create()
     {
-        return view('admin.property.create');
+        return view('admin.rate.create');
     }
 
     /**
@@ -40,10 +40,11 @@ class PropertyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreatePropertyRequest $request)
+    public function store(CreateRateRequest $request)
     {    	
-        Property::create($request->all());
-        return \Redirect::route('admin.property.index');
+    	
+        Rate::create($request->all());
+        return \Redirect::route('admin.rate.index');
     }
 
     /**
@@ -65,8 +66,8 @@ class PropertyController extends Controller
      */
     public function edit($id)
     {
-        $property= Property::findOrFail($id);
-        return view('admin.property.edit', compact('property'));
+        $rate= Rate::findOrFail($id);
+        return view('admin.rate.edit', compact('rate'));
     }
 
     /**
@@ -76,11 +77,11 @@ class PropertyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(EditPropertyRequest $request, $id)
+    public function update(EditRateRequest $request, $id)
     {
-        $property= Property::findOrFail($id);
-        $property->fill($request->all());
-        $property->save();
+        $rate= Rate::findOrFail($id);
+        $rate->fill($request->all());
+        $rate->save();
         
         return redirect()->back();
     }
@@ -93,13 +94,13 @@ class PropertyController extends Controller
      */
     public function destroy($id, Request $request)
     {
-        $property= Property::findOrFail($id);
-        $property->delete();
-        $message= "La propiedad ".$property->name.' fue eliminada';
+        $rate= Rate::findOrFail($id);
+        $rate->delete();
+        $message= "La propiedad ".$rate->name.' fue eliminada';
         if($request->ajax()){
         	return $message;
         }
         Session::flash('message',$message);
-        return redirect()->route('admin.property.index');
+        return redirect()->route('admin.rate.index');
     }
 }

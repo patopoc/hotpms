@@ -25,6 +25,9 @@
     
     <!-- Bootstrap datetimepicker -->
     <link href="{{ asset('dist/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet">
+    
+    <!-- JQueryUI -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -381,6 +384,7 @@
 
     <!-- jQuery -->
     <script src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="{{ asset('bower_components/bootstrap/js/transition.js') }}"></script>
@@ -399,6 +403,8 @@
     <script src="{{ asset('dist/js/sb-admin-2.js') }}"></script>
     
     @yield('scripts')
+    
+    @yield('commonscripts')    
 
 </body>
 
