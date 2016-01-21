@@ -8,13 +8,13 @@
 			<div class="panel-heading">New Service Plan</div>
 			<div class="panel-body">
 			
-			@include('admin.service_plans.partials.messages')
+			@include('admin.facility_plans.partials.messages')
 			
-			{!!Form::open(['route' => 'admin.service_plans.store', 'method' => 'post'])!!}
-					@include('admin.service_plans.partials.scripts')					 
-					@include('admin.service_plans.partials.fields')
+			{!!Form::open(['route' => 'admin.facility_plans.store', 'method' => 'post'])!!}
+					@include('admin.facility_plans.partials.fields')
+					@include('admin.facility_plans.partials.scripts')
 					<button type="submit" class="btn btn-default">Create Service Plan</button>
-				{!!Form::close()!!}
+			{!!Form::close()!!}
 			</div>
 		</div>
 	</div>
