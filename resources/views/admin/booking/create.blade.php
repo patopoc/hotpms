@@ -8,10 +8,10 @@
 <div class="panel-heading">New Users</div>
 <div class="panel-body">
 
-@include('admin.people.partials.messages')
+@include('admin.booking.partials.messages')
 
-{!!Form::open(['route' => 'admin.people.store', 'method' => 'post'])!!}
-		 
+{!!Form::open(['route' => 'admin.booking.store', 'method' => 'post'])!!}
+		 @include('admin.booking.partials.scripts')
 		 @include('admin.booking.partials.fields')
 		  <button type="submit" class="btn btn-default">Create User</button>
 	{!!Form::close()!!}

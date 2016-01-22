@@ -20,7 +20,6 @@ class PeopleController extends Controller
 		
 		$this->countriesShortList= \DB::table('countries')->lists('name', 'country_code');
 	}
-
 	
     /**
      * Display a listing of the resource.

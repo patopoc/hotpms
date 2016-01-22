@@ -1,5 +1,6 @@
 <?php
 
+use Hotpms\Person;
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -15,7 +16,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
 Route::group(['prefix' => 'admin', 'namespace'=> 'Admin'], function(){
+	Route::get('people/search/{ci}', ['as' => 'peopleSearch', function($ci){		
+		return Person::where('ci',$ci)->first()->toJson();		
+	}]);
+	
 	Route::resource('people', 'PeopleController');
 	Route::resource('booking', 'BookingController');
 	Route::resource('property', 'PropertyController');

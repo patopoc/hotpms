@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Hotpms\Http\Requests;
 use Hotpms\Http\Controllers\Controller;
 use Hotpms\Booking;
+use Hotpms\Property;
 
 class BookingController extends Controller
 {
@@ -30,7 +31,9 @@ class BookingController extends Controller
      */
     public function create()
     {
-        return view('admin.booking.create');
+    	$data['properties']= \DB::table('property_settings')->lists('name','id');
+    	$data['countries']= \DB::table('countries')->lists('name', 'country_code');
+        return view('admin.booking.create', compact('data'));
     }
 
     /**
