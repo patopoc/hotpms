@@ -2,7 +2,6 @@
 <script type="text/javascript">
 
 $(document).ready(function(){
-	
 	$('#checkin-time-picker').datetimepicker({
 		format:'LT'
 	});

@@ -19,7 +19,10 @@ Route::get('/', function () {
 
 Route::group(['prefix' => 'admin', 'namespace'=> 'Admin'], function(){
 	Route::get('people/search/{ci}', ['as' => 'peopleSearch', function($ci){		
-		return Person::where('ci',$ci)->first()->toJson();		
+		$person= Person::where('ci',$ci)->first();
+		if($person !== null)
+			return $person->toJson();
+		return $person;
 	}]);
 	
 	Route::resource('people', 'PeopleController');

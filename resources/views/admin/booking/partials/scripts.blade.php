@@ -4,14 +4,31 @@
 <script type="text/javascript">
 
 $(document).ready(function(){
+	$('#check_in').datetimepicker({
+		format: 'YYYY/MM/DD'
+	});
+	$('#check_out').datetimepicker({
+		format: 'YYYY/MM/DD'
+	});
+	
+	$('#arrival_time').datetimepicker({
+		format:'LT'
+	});
+	
     $("#ci").focusout(function(){
         var route= "{{route('peopleSearch')}}";
         route= route.replace("%7Bci%7D",$(this).val());
         console.log("route: " + route);
 		$.get(route, function(data){
-			var person= $.parseJSON(data);
-			$("#name").val(person.name).attr("readonly",true);
-			$("#last_name").val(person.last_name).attr("readonly",true);
+			console.log(data);
+			if(data !== null && data !==''){
+				var person= $.parseJSON(data);
+				$("#name").val(person.name).attr("readonly",true);
+				$("#last_name").val(person.last_name).attr("readonly",true);
+				$("#email").val(person.email).attr("readonly",true);
+				$("#telephone").val(person.telephone).attr("readonly",true);
+				$("#id_country").val(person.id_country).attr("readonly",true);
+			}
 			
 		});
     });

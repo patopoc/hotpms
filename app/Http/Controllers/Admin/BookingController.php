@@ -8,6 +8,8 @@ use Hotpms\Http\Requests;
 use Hotpms\Http\Controllers\Controller;
 use Hotpms\Booking;
 use Hotpms\Property;
+use Illuminate\Database\Eloquent\Model;
+use Hotpms\Person;
 
 class BookingController extends Controller
 {
@@ -33,6 +35,8 @@ class BookingController extends Controller
     {
     	$data['properties']= \DB::table('property_settings')->lists('name','id');
     	$data['countries']= \DB::table('countries')->lists('name', 'country_code');
+    	$data['room_types']= \DB::table('room_types')->lists('name', 'id');
+    	$data['rate_plans']= \DB::table('rates')->lists('name', 'id');
         return view('admin.booking.create', compact('data'));
     }
 
@@ -44,7 +48,46 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+    	//dd(Person::where('ci',$request->get('ci')));
+        if(count(Person::where('ci',$request->get('ci'))->get()) == 0){
+        	Person::create([
+        			'ci' => $request->get('ci'),
+        			'name' => $request->get('name'),
+        			'last_name' => $request->get('last_name'),
+        			'email' => $request->get('email'),
+        			'telephone' => $request->get('telephone'),
+        			'id_country' => $request->get('id_country'),
+        	]);
+        }
+    	
+        $person= Person::where('ci',$request->get('ci'))->get()->first();
+        
+    	$booking= new Booking([
+        		'id_property' => $request->get('id_property'),
+        		'id_user' => $request->get('id_user'),
+        		'person' => $person->id,
+        		'date' => date("Y/m/d"),
+        		'check_in' => $request->get('check_in'),
+        		'check_out' => $request->get('check_out'),
+        		'arrival_time' => $request->get('arrival_time'),
+        		'comments_and_requests' => $request->get('comments_and_requests'),
+        		'id_room_type' => $request->get('id_room_type'),
+        		'number_of_rooms' => $request->get('number_of_rooms'),
+        		'adults' => $request->get('adults'),
+        		'children' => $request->get('children'),
+        		'pets' => $request->get('pets'),
+        		'rate_plan' => $request->get('rate_plan'), 		
+        		
+        		]);
+        
+        $reference_code;
+        do{
+        	$reference_code= str_random(10);
+        }while(count(Booking::where('reference_code',$reference_code)->get()) > 0);
+        $booking->reference_code= $reference_code;
+        $booking->save();
+        
+        return redirect()->route('admin.booking.index');
     }
 
     /**
@@ -55,7 +98,7 @@ class BookingController extends Controller
      */
     public function show($id)
     {
-        //
+    	
     }
 
     /**
@@ -66,7 +109,8 @@ class BookingController extends Controller
      */
     public function edit($id)
     {
-        //
+        $booking= Booking::findOrFail($id);
+        dd($booking->personData->name);
     }
 
     /**

@@ -15,7 +15,7 @@
 		@foreach ($bookings as $booking)
 		<tr data-id="{{$booking->id}}">
 			<td> {{$booking->reference_code or ''}}</td>
-			<td> {{$booking->person->name or ''}}</td>
+			<td> {{$booking->personData->name or ''}}</td>
 			<td> {{$booking->check_in or ''}}</td>
 			<td> {{$booking->arrival_time or ''}}</td>
 			<td> </td>

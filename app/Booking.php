@@ -21,7 +21,7 @@ class Booking extends Model
 		return $this->hasOne('Hotpms\User','id','id_user');
 	}
 	
-	public function person(){
+	public function personData(){
 		return $this->hasOne('Hotpms\Person','id','person');
 	}
 	
