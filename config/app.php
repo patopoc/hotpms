@@ -144,6 +144,7 @@ return [
     		
     	Collective\Html\HtmlServiceProvider::class,
     	'Webpatser\Countries\CountriesServiceProvider',
+    	Intervention\Image\ImageServiceProvider::class,
     		
 
         /*
@@ -205,6 +206,7 @@ return [
     	'Html' => Collective\Html\HtmlFacade::class,
     		
    		'Countries' => 'Webpatser\Countries\CountriesFacade',
+    	'Image' => 'Intervention\Image\Facades\Image'
 
     ],
 

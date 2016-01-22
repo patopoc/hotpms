@@ -4,7 +4,7 @@ namespace Hotpms\Http\Requests;
 
 use Hotpms\Http\Requests\Request;
 
-class CreateFacilityPlanRequest extends Request
+class CreateBedTypeRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,7 @@ class CreateFacilityPlanRequest extends Request
     public function rules()
     {
         return [
-        		'name' => 'required | unique:facilities_plan,name',        		
-        		
+        		'type' => 'required | unique:rates,name',       		
         ];
     }
 }
