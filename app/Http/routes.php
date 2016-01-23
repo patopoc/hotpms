@@ -24,7 +24,7 @@ Route::group(['prefix' => 'admin', 'namespace'=> 'Admin'], function(){
 			return $person->toJson();
 		return $person;
 	}]);
-	
+	Route::get('booking/canceled', 'BookingController@canceled');
 	Route::resource('people', 'PeopleController');
 	Route::resource('booking', 'BookingController');
 	Route::resource('property', 'PropertyController');

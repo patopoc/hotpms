@@ -11,7 +11,7 @@ class Booking extends Model
 	protected $fillable = ['id_property', 'id_user', 'person', 'date', 'check_in', 
 							'check_out', 'arrival_time', 'comments_and_requests', 
 							'id_room_type', 'number_of_rooms', 'adults', 'children',
-							'pets', 'rate_plan', 'notification'] ;
+							'pets', 'rate_plan', 'notification','status'] ;
 	
 	public function property(){
 		return $this->hasOne('Hotpms\Property','id','id_property');

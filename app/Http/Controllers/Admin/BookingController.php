@@ -20,12 +20,17 @@ class BookingController extends Controller
      */
     public function index()
     {
-        $bookings= Booking::all();
+        $bookings= Booking::where('status','a')->get();
         
         return view('admin.booking.index',compact('bookings'));
         
     }
 
+    public function canceled(){
+    	$bookings= Booking::where('status','c')->get();
+        
+        return view('admin.booking.index',compact('bookings'));
+    }
     /**
      * Show the form for creating a new resource.
      *
