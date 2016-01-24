@@ -25,6 +25,7 @@ Route::group(['prefix' => 'admin', 'namespace'=> 'Admin'], function(){
 		return $person;
 	}]);
 	Route::get('booking/canceled', 'BookingController@canceled');
+	Route::get('booking/arrival', 'BookingController@arrival');
 	Route::resource('people', 'PeopleController');
 	Route::resource('booking', 'BookingController');
 	Route::resource('property', 'PropertyController');
@@ -35,5 +36,6 @@ Route::group(['prefix' => 'admin', 'namespace'=> 'Admin'], function(){
 	Route::resource('facility_plans', 'FacilityPlanController');
 	Route::resource('bed_types', 'BedTypeController');
 	Route::resource('room_types', 'RoomTypeController');
+	Route::resource('users', 'UserController');
 	
 });

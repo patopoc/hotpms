@@ -18,12 +18,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      * @var string
      */
     protected $table = 'users';
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
+    
     protected $fillable = ['id_person', 'id_role', 'id_property', 'auth_key', 'username', 'password'];
 
     /**
@@ -32,4 +27,25 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
+    
+    public $timestamps= false;
+    
+    public function person(){
+    	return $this->hasOne('Hotpms\Person', 'id', 'id_person');
+    }
+    
+    public function role(){
+    	return $this->hasOne('Hotpms\Role', 'id', 'id_role');
+    }
+    
+    public function property(){
+    	return $this->hasOne('Hotpms\Property', 'id', 'id_property');
+    }
+    
+    public function setPasswordAttribute($value){
+    	if( ! empty($value) ){
+    		$this->attributes['password']= bcrypt($value);
+    	}
+    }
+    
 }

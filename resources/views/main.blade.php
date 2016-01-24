@@ -286,16 +286,16 @@
                             <a href="#"><i class="fa fa-book fa-fw"></i> Bookings<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="flot.html"><i class="fa fa-angle-double-right  fa-fw"></i>Arrival</a>
+                                    <a href="{{route('admin.booking.index')}}/arrival"><i class="fa fa-angle-double-right  fa-fw"></i>Arrival</a>
                                 </li>
                                 <li>
-                                    <a href="flot.html"><i class="fa fa-angle-double-right  fa-fw"></i>Cancelation</a>
+                                    <a href="{{route('admin.booking.index')}}/canceled"><i class="fa fa-angle-double-right  fa-fw"></i>Cancelation</a>
                                 </li>
                                 <li>
-                                    <a href="flot.html"><i class="fa fa-angle-double-right  fa-fw"></i>Manage Bookings</a>
+                                    <a href="{{route('admin.booking.index')}}"><i class="fa fa-angle-double-right  fa-fw"></i>Manage Bookings</a>
                                 </li>
                                 <li>
-                                    <a href="flot.html"><i class="fa fa-angle-double-right  fa-fw"></i>New Bookings</a>
+                                    <a href="{{route('admin.booking.create')}}"><i class="fa fa-angle-double-right  fa-fw"></i>New Bookings</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
@@ -316,10 +316,10 @@
                             <a href="#"><i class="fa glyphicon-bed fa-fw"></i> Rooms and Rates<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="flot.html"><i class="fa fa-angle-double-right  fa-fw"></i>Manage Rooms</a>
+                                    <a href="{{route('admin.room_types.index')}}"><i class="fa fa-angle-double-right  fa-fw"></i>Manage Rooms</a>
                                 </li>
                                 <li>
-                                    <a href="flot.html"><i class="fa fa-angle-double-right  fa-fw"></i>Manage Rates</a>
+                                    <a href="{{route('admin.rate.index')}}"><i class="fa fa-angle-double-right  fa-fw"></i>Manage Rates</a>
                                 </li>                                
                             </ul>
                             <!-- /.nav-second-level -->
@@ -327,17 +327,20 @@
                         <li>
                             <a href="index.html"><i class="fa fa-building fa-fw"></i> Properties</a>
                             <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="flot.html"><i class="fa fa-angle-double-right  fa-fw"></i>Facilities</a>
+                            	<li>
+                                    <a href="{{route('admin.property.index')}}"><i class="fa fa-angle-double-right  fa-fw"></i>Manage Properties</a>
                                 </li>
                                 <li>
-                                    <a href="flot.html"><i class="fa fa-angle-double-right  fa-fw"></i>Facilities Plan</a>
+                                    <a href="{{route('admin.facilities.index')}}"><i class="fa fa-angle-double-right  fa-fw"></i>Facilities</a>
                                 </li>
                                 <li>
-                                    <a href="flot.html"><i class="fa fa-angle-double-right  fa-fw"></i>Services</a>
+                                    <a href="{{route('admin.facility_plans.index')}}"><i class="fa fa-angle-double-right  fa-fw"></i>Facilities Plan</a>
+                                </li>
+                                <li>
+                                    <a href="{{route('admin.services.index')}}"><i class="fa fa-angle-double-right  fa-fw"></i>Services</a>
                                 </li>                                
                                 <li>
-                                    <a href="flot.html"><i class="fa fa-angle-double-right  fa-fw"></i>Services Plans</a>
+                                    <a href="{{route('admin.service_plans.index')}}"><i class="fa fa-angle-double-right  fa-fw"></i>Services Plans</a>
                                 </li>
                             </ul>
                         </li>
@@ -345,16 +348,16 @@
                             <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Reports<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="flot.html"><i class="fa fa-angle-double-right  fa-fw"></i>Bookings</a>
+                                    <a href="#"><i class="fa fa-angle-double-right  fa-fw"></i>Bookings</a>
                                 </li>
                                 <li>
-                                    <a href="flot.html"><i class="fa fa-angle-double-right  fa-fw"></i>Customers</a>
+                                    <a href="#"><i class="fa fa-angle-double-right  fa-fw"></i>Customers</a>
                                 </li>                                
                                 <li>
-                                    <a href="flot.html"><i class="fa fa-angle-double-right  fa-fw"></i>Availability</a>
+                                    <a href="#"><i class="fa fa-angle-double-right  fa-fw"></i>Availability</a>
                                 </li>
                                 <li>
-                                    <a href="flot.html"><i class="fa fa-angle-double-right  fa-fw"></i>Sales</a>
+                                    <a href="#"><i class="fa fa-angle-double-right  fa-fw"></i>Sales</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
@@ -363,13 +366,13 @@
                             <a href="#"><i class="fa fa-users  fa-fw"></i> Accounts<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="flot.html"><i class="fa fa-angle-double-right  fa-fw"></i>My Account</a>
+                                    <a href="#"><i class="fa fa-angle-double-right  fa-fw"></i>My Account</a>
                                 </li>
                                 <li>
-                                    <a href="flot.html"><i class="fa fa-angle-double-right  fa-fw"></i>Users</a>
+                                    <a href="{{route('admin.users.index')}}"><i class="fa fa-angle-double-right  fa-fw"></i>Users</a>
                                 </li>                                
                                 <li>
-                                    <a href="flot.html"><i class="fa fa-angle-double-right  fa-fw"></i>People</a>
+                                    <a href="{{route('admin.people.index')}}"><i class="fa fa-angle-double-right  fa-fw"></i>People</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->

@@ -31,6 +31,13 @@ class BookingController extends Controller
         
         return view('admin.booking.index',compact('bookings'));
     }
+    
+    public function arrival(){
+    	$data['today']= Booking::where('check_in',date('Y/m/d'))->get();
+    	$data['tomorrow']= Booking::where('check_in',date('Y/m/d', strtotime('+1 day')))->get();
+    	return view('admin.booking.index',compact('data'));
+    }
+    
     /**
      * Show the form for creating a new resource.
      *
