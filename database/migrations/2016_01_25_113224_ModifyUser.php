@@ -2,8 +2,9 @@
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\Schema;
 
-class AddColumnBookingTable extends Migration
+class ModifyUser extends Migration
 {
     /**
      * Run the migrations.
@@ -12,8 +13,10 @@ class AddColumnBookingTable extends Migration
      */
     public function up()
     {
-        DB::statement('ALTER TABLE bookings ADD reference_code varchar(10) NOT NULL ;');
-        DB::statement('ALTER TABLE bookings ADD status varchar(1) NOT NULL ;');
+        Schema::table('users',function($table){
+        	$table->string('password',60)->change();
+        	$table->rememberToken();
+        });
     }
 
     /**
@@ -23,6 +26,6 @@ class AddColumnBookingTable extends Migration
      */
     public function down()
     {
-    	DB::statement('ALTER TABLE bookings DROP COLUMN reference_code;');
+        //
     }
 }
