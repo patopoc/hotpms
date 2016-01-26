@@ -18,6 +18,8 @@ class PeopleController extends Controller
 	
 	public function __construct(){
 		
+		$this->middleware('access_control');
+		
 		$this->countriesShortList= \DB::table('countries')->lists('name', 'country_code');
 	}
 	

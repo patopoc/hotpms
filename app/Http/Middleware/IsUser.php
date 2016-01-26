@@ -3,9 +3,16 @@
 namespace Hotpms\Http\Middleware;
 
 use Closure;
+use Illuminate\Contracts\Auth\Guard;
+
 
 class IsUser
 {
+	private $auth;
+	public function __construct(Guard $auth){
+		$this->auth= $auth;
+	}
+	
     /**
      * Handle an incoming request.
      *

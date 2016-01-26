@@ -31,5 +31,6 @@ class Kernel extends HttpKernel
         'guest' => \Hotpms\Http\Middleware\RedirectIfAuthenticated::class,
     	'is_admin' => \Hotpms\Http\Middleware\IsAdmin::class,
     	'is_user' => \Hotpms\Http\Middleware\IsUser::class,
+    	'access_control' => \Hotpms\Http\Middleware\AccessControl::class,
     ];
 }

@@ -11,8 +11,10 @@ use Illuminate\Support\Facades\Session;
 use Hotpms\Http\Requests\EditRateRequest;
 use Hotpms\Rate;
 use Illuminate\Support\Facades\Route;
+use Hotpms\Module;
+use Hotpms\Role;
 
-class RateController extends Controller
+class RoleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,9 +22,21 @@ class RateController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {    	
-        $rates= Rate::all();
-        return view('admin.rate.index', compact('rates'));
+    {
+    	
+    	//install modules by loading controllers into modules table
+    	$controllersDirContent= new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator('../app/Http/Controllers'), \RecursiveIteratorIterator::SELF_FIRST);
+    	
+    	foreach ($controllersDirContent as $key => $val){
+    		if(!preg_match('#\\\.{0,2}$#', $key) && preg_match('#\.php$#', $key)){
+    			$name= explode('Controllers\\', $key)[1];
+    			if(Module::where('name',$name)->first() === null)
+    				Module::create(["name" => $name]);
+    		}    			
+    	}    	
+
+    	$roles= Role::all();
+        return view('admin.roles.index', compact('roles'));
     }
 
     /**

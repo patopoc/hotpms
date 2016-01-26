@@ -3,9 +3,16 @@
 namespace Hotpms\Http\Middleware;
 
 use Closure;
+use Illuminate\Contracts\Auth\Guard;
+
 
 class IsAdmin
 {
+	private $auth;
+	public function __construct(Guard $auth){
+		$this->auth= $auth;
+	}
+	
     /**
      * Handle an incoming request.
      *
@@ -15,7 +22,6 @@ class IsAdmin
      */
     public function handle($request, Closure $next)
     {
-    	dd('here');
     	if( ! $this->auth->user()->isAdmin()){
     			
     		$this->auth->logout();

@@ -34,16 +34,20 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth','namespace'=> 'Admin']
 	}]);
 	Route::get('booking/canceled',['middleware' => ['is_admin'] ,'uses' => 'BookingController@canceled']);
 	Route::get('booking/arrival', ['middleware' => ['is_admin', 'is_user'] ,'uses' => 'BookingController@arrival']);
+	
+	//the middleware for resource is defined within every controller
 	Route::resource('people', 'PeopleController');
-	Route::resource('booking', 'BookingController', ['middleware' => ['is_admin', 'is_user']]);
-	Route::resource('property','PropertyController', ['middleware' => ['is_admin']]);
-	Route::resource('rate', 'RateController', ['middleware' => ['is_admin']]);
-	Route::resource('services', 'ServicesController', ['middleware' => ['is_admin']]);
-	Route::resource('facilities', 'FacilitiesController', ['middleware' => ['is_admin']]);
-	Route::resource('service_plans', 'ServicePlanController', ['middleware' => ['is_admin', 'is_user']]);
-	Route::resource('facility_plans', 'FacilityPlanController', ['middleware' => ['is_admin', 'is_user']]);
-	Route::resource('bed_types', 'BedTypeController',['middleware' => ['is_admin', 'is_user']]);
-	Route::resource('room_types', 'RoomTypeController', ['middleware' => ['is_admin', 'is_user']]);
-	Route::resource('users', 'UserController', ['middleware' => ['is_admin']]);
+	Route::resource('booking', 'BookingController');
+	Route::resource('property','PropertyController');
+	Route::resource('rate', 'RateController');
+	Route::resource('services', 'ServicesController');
+	Route::resource('facilities', 'FacilitiesController');
+	Route::resource('service_plans', 'ServicePlanController');
+	Route::resource('facility_plans', 'FacilityPlanController');
+	Route::resource('bed_types', 'BedTypeController');
+	Route::resource('room_types', 'RoomTypeController');
+	Route::resource('users', 'UserController');
+	Route::resource('roles', 'RoleController');
+	Route::resource('role_details', 'RoleDetailController');
 	
 });

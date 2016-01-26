@@ -8,7 +8,7 @@ use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
-class Role extends Model
+class RoleDetail extends Model
 {    
 
     /**
@@ -16,17 +16,19 @@ class Role extends Model
      *
      * @var string
      */
-    protected $table = 'roles';
+    protected $table = 'role_detail';
+    
+    public $timestamps= false;
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['name'];
+    protected $fillable = ['id','id_role','id_module','mod_show', 'mod_insert', 'mod_update','mod_delete'];
     
-    public function roleDetails(){
-    	return $this->hasMany('Hotpms\RoleDetail','id_role','id');
+    public function module(){
+    	return $this->hasOne('Hotpms\Module','id','id_module');
     }
 
 }

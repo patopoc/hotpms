@@ -4,25 +4,24 @@ namespace Hotpms\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 
-use Hotpms\Http\Requests;
 use Hotpms\Http\Controllers\Controller;
-use Hotpms\Http\Requests\CreateRateRequest;
 use Illuminate\Support\Facades\Session;
-use Hotpms\Http\Requests\EditRateRequest;
-use Hotpms\Rate;
 use Illuminate\Support\Facades\Route;
+use Hotpms\Module;
+use Hotpms\Role;
+use Hotpms\RoleDetail;
 
-class RateController extends Controller
+class RoleDetailController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {    	
-        $rates= Rate::all();
-        return view('admin.rate.index', compact('rates'));
+    	
+    	
     }
 
     /**
@@ -41,13 +40,47 @@ class RateController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateRateRequest $request)
+    public function store(Request $request)
     {    	
+    	$roleId= $request->get('role-id');
     	
-        Rate::create($request->all());
-        return \Redirect::route('admin.rate.index');
+    	foreach($request->all() as $key => $val){
+    		//condider only the checkboxes
+    		if($key !== '_token' && $key !== 'role-id'){
+
+    			$roleDetail= RoleDetail::firstOrNew(['id_role' => $roleId, 'id_module' => $key]);
+    			 
+    			$modActions= $this->getActionsArray($val);
+				
+    			$roleDetail->fill([
+    				'mod_show' => $modActions['mod_show'],
+		    		'mod_insert' => $modActions['mod_insert'],
+		    		'mod_update' => $modActions['mod_update'],
+		    		'mod_delete' => $modActions['mod_delete'],
+    			]);
+    			$roleDetail->save();    			 
+    			
+    		}
+    	}
+    	
+        //Rate::create($request->all());
+        return \Redirect::route('admin.roles.index');
     }
 
+    private function getActionsArray($actionRequest){
+    	$actions=array(
+    		'mod_show' => 0,
+    		'mod_insert' => 0,
+    		'mod_update' => 0,
+    		'mod_delete' => 0,
+    	);
+    	foreach($actionRequest as $action){
+    		if($action !== "")
+    			$actions[$action] = 1;
+    	}
+    	return $actions;
+    }
+    
     /**
      * Display the specified resource.
      *
@@ -56,7 +89,13 @@ class RateController extends Controller
      */
     public function show($id)
     {
-        //
+    	
+    	$data['role']= Role::find($id);
+    	$data['modules']= Module::all();
+    	
+    	//dd($data['role']->roleDetails->where('id_module',137)->first()->module->name);
+    	
+        return view('admin.role_details.index', compact('data'));
     }
 
     /**

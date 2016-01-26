@@ -41,7 +41,7 @@ class ServicesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(CreateServiceRequest $request)
-    {    	
+    {   	
     	
         Service::create($request->all());
         return \Redirect::route('admin.services.index');
