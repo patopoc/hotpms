@@ -23,3 +23,4 @@
 @endsection
 
 @include('admin.facilities.partials.scripts')
+@include('menu')

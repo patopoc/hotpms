@@ -29,3 +29,4 @@
 @endsection
 
 @include('commonscripts')
+@include('menu')

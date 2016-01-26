@@ -27,6 +27,6 @@
 
 @include('admin.service_plans.partials.scripts')
 @include('commonscripts')
-
+@include('menu')
 
 

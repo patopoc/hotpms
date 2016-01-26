@@ -30,3 +30,4 @@
 
 @include('admin.room_types.partials.scripts')
 @include('commonscripts')
+@include('menu')

@@ -28,5 +28,5 @@
 @include('admin.people.partials.scripts')
 @include('commonscripts')
 
-
+@include('menu')
 

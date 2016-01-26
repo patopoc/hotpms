@@ -8,12 +8,12 @@
 			<div class="panel-heading">New services</div>
 			<div class="panel-body">
 			
-			@include('admin.services.partials.messages')
+			@include('admin.menus.partials.messages')
 			
-			{!!Form::open(['route' => 'admin.services.store', 'method' => 'post'])!!}
+			{!!Form::open(['route' => 'admin.menus.store', 'method' => 'post'])!!}
 					 
-					 @include('admin.services.partials.fields')
-					  <button type="submit" class="btn btn-default">Create services</button>
+					 @include('admin.menus.partials.fields')
+					  <button type="submit" class="btn btn-default">Create Menu Item</button>
 				{!!Form::close()!!}
 			</div>
 		</div>
@@ -22,5 +22,5 @@
 </div>
 @endsection
 
-@include('admin.services.partials.scripts')
+@include('admin.menus.partials.scripts')
 @include('menu')

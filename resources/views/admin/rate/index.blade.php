@@ -30,3 +30,4 @@
 
 @include('admin.rate.partials.scripts')
 @include('commonscripts')
+@include('menu')

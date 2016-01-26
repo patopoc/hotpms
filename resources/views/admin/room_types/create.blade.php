@@ -23,3 +23,4 @@
 @endsection
 
 @include('admin.bed_types.partials.scripts')
+@include('menu')

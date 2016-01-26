@@ -10,12 +10,12 @@
 	<p class="alert alert-success"> {{Session::get('message')}}</p>
 @endif
 	<p>
-		<a class="btn btn-info" href="{{ route('admin.bed_types.create') }}" role="button">Nuevo</a>
+		<a class="btn btn-info" href="{{ route('admin.menus.create') }}" role="button">Nuevo</a>
 	</p>	
 	
 <div class="panel-body">
 	
-	@include('admin.bed_types.partials.table')
+	@include('admin.menus.partials.table')
 	
 	
 </div>
@@ -23,11 +23,11 @@
 </div>
 </div>
 </div>
-{!!Form::open( ['route' => ['admin.bed_types.destroy', ':PERSON_ID'], 'method' => 'delete', 'id'=>'form-delete'])!!}
+{!!Form::open( ['route' => ['admin.menus.destroy', ':PERSON_ID'], 'method' => 'delete', 'id'=>'form-delete'])!!}
 {!!Form::close()!!}
 
 @endsection
 
-@include('admin.bed_types.partials.scripts')
+@include('admin.menus.partials.scripts')
 @include('commonscripts')
 @include('menu')

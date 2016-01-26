@@ -32,8 +32,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth','namespace'=> 'Admin']
 			return $person->toJson();
 		return $person;
 	}]);
-	Route::get('booking/canceled',['middleware' => ['is_admin'] ,'uses' => 'BookingController@canceled']);
-	Route::get('booking/arrival', ['middleware' => ['is_admin', 'is_user'] ,'uses' => 'BookingController@arrival']);
+	Route::get('booking/canceled',["as" => "admin.booking.canceled",'uses' => 'BookingController@canceled']);
+	Route::get('booking/arrival', ["as" => "admin.booking.arrival" ,'uses' => 'BookingController@arrival']);
 	
 	//the middleware for resource is defined within every controller
 	Route::resource('people', 'PeopleController');
@@ -49,5 +49,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth','namespace'=> 'Admin']
 	Route::resource('users', 'UserController');
 	Route::resource('roles', 'RoleController');
 	Route::resource('role_details', 'RoleDetailController');
+	Route::resource('menus', 'MenuController');
 	
 });

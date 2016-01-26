@@ -30,3 +30,4 @@
 @endsection
 
 @include('commonscripts')
+@include('main')

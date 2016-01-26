@@ -27,6 +27,6 @@
 
 @include('admin.bed_types.partials.scripts')
 @include('commonscripts')
-
+@include('menu')
 
 

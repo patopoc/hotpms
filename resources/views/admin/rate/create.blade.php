@@ -23,3 +23,4 @@
 @endsection
 
 @include('admin.rate.partials.scripts')
+@include('menu')

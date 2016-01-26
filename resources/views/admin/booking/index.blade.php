@@ -29,3 +29,4 @@
 @endsection
 @include('admin.booking.partials.scripts')
 @include('commonscripts')
+@include('menu')

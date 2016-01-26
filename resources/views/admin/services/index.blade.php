@@ -30,3 +30,4 @@
 
 @include('admin.services.partials.scripts')
 @include('commonscripts')
+@include('menu')

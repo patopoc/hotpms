@@ -23,3 +23,4 @@
 @endsection
 
 @include('admin.property.partials.scripts')
+@include('menu')

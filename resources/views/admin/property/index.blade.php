@@ -29,3 +29,4 @@
 @endsection
 
 @include('admin.people.partials.scripts')
+@include('menu')
