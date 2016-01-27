@@ -30,4 +30,4 @@
 @endsection
 
 @include('commonscripts')
-@include('main')
+@include('menu')

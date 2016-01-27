@@ -32,6 +32,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth','namespace'=> 'Admin']
 			return $person->toJson();
 		return $person;
 	}]);
+	Route::get('availability/list/{fromDate}/{toDate}', ['as' => 'availabilityList', 'uses' =>'AvailabilityController@listAll']);
 	Route::get('booking/canceled',["as" => "admin.booking.canceled",'uses' => 'BookingController@canceled']);
 	Route::get('booking/arrival', ["as" => "admin.booking.arrival" ,'uses' => 'BookingController@arrival']);
 	
@@ -50,5 +51,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth','namespace'=> 'Admin']
 	Route::resource('roles', 'RoleController');
 	Route::resource('role_details', 'RoleDetailController');
 	Route::resource('menus', 'MenuController');
+	Route::resource('availability', 'AvailabilityController');
 	
 });

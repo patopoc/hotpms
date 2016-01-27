@@ -45,6 +45,13 @@ class AccessControl
     }
     
     private function checkAction($action, $roleDetail){
+    	if($roleDetail === null){
+    		if($request->ajax()){
+    			return response('Unauthorized.',401);
+    		}
+    		return redirect()->to('auth/login');    		
+    	}
+    	
     	if($action === 'index' || $action === 'show'){
     		
     		if ($roleDetail->mod_show == 0){

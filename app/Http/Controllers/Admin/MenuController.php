@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Route;
 
 class MenuController extends Controller
 {
+	public function __construct(){
+	
+		$this->middleware('access_control');
+	}
     /**
      * Display a listing of the resource.
      *
@@ -79,7 +83,11 @@ class MenuController extends Controller
      */
     public function edit($id)
     {
-        //
+    	$data['menuItem']= Menu::findOrFail($id);
+    	$data['modules']= \DB::table('modules')->lists('name', 'id');
+    	$data['menuSections']= \DB::table('menu')->where('type','section')->lists('name','id');
+    	$data['routes']= $this->getAvailableRoutes();
+    	return view('admin.menus.edit', compact('data'));
     }
 
     /**
@@ -91,7 +99,11 @@ class MenuController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $menuItem= Menu::findOrFail($id);
+        $menuItem->fill($request->all());
+        $menuItem->save();
+        
+        return redirect()->route('admin.menus.index');
     }
 
     /**
@@ -102,6 +114,17 @@ class MenuController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $menuItem= Menu::findOrFail($id);
+        $menuItem->delete();
+        
+        $message= $menuItem->name. ' ha sido eliminado';
+        
+        if($request->ajax()){
+        	return $message;
+        }
+        
+        Session::flash('message', $message);        
+        
+        return redirect()->route('admin.menus.index');
     }
 }

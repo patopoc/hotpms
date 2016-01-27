@@ -12,4 +12,8 @@ class Person extends Model{
 		return $this->hasOne("Hotpms\Country","country_code", "id_country");
 	}
 	
+	public function getFullNameAttribute(){
+		return $this->name . " " . $this->last_name;
+	}
+	
 }

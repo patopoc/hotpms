@@ -32,4 +32,5 @@ class Booking extends Model
 	public function rate(){
 		return $this->hasOne('Hotpms\Rate','id','rate_plan');
 	}
+	
 }

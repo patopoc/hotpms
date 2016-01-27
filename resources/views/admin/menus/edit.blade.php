@@ -5,12 +5,12 @@
 <div class="row">
 <div class="col-md-10 col-md-offset-1">
 <div class="panel panel-default">
-<div class="panel-heading">Edit services {{$service->name}}</div>
+<div class="panel-heading">Edit Menu Item {{$data['menuItem']->name}}</div>
 <div class="panel-body">
-@include('admin.services.partials.messages')
+@include('admin.menus.partials.messages')
 
-{!!Form::model($service, ['route' => ['admin.services.update', $service], 'method' => 'put'])!!}
-		  @include('admin.services.partials.fields')	 
+{!!Form::model($data['menuItem'], ['route' => ['admin.menus.update', $data['menuItem']], 'method' => 'put'])!!}
+		  @include('admin.menus.partials.fields')	 
 		 
 		  <button type="submit" class="btn btn-default">Update services</button>
 {!!Form::close()!!}
@@ -18,14 +18,14 @@
 
 </div>
 </div>
-@include('admin.services.partials.delete')
+@include('admin.menus.partials.delete')
 
 </div>
 </div>
 </div>
 @endsection
 
-@include('admin.services.partials.scripts')
+@include('admin.menus.partials.scripts')
 @include('commonscripts')
 @include('menu')
 

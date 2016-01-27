@@ -25,9 +25,13 @@ $menu= MenuHelper::create();
                         </li>
 						@foreach($menu as $menuSection)
 							<li>
-                            <a href="#"><i class="fa {{$menuSection['section']->icon}} fa-fw"></i> {{$menuSection['section']->description}}<span class="fa arrow"></span></a>
+							@if($menuSection['section']->name != 'toplevel')
+                            	<a href="#"><i class="fa {{$menuSection['section']->icon}} fa-fw"></i> {{$menuSection['section']->description}}<span class="fa arrow"></span></a>
+                            @endif
                             @foreach($menuSection['items'] as $menuItem)
+	                            @if($menuSection['section']->name != 'toplevel')
 	                            <ul class="nav nav-second-level">
+	                            @endif
 	                                <li>
 	                                    @if($menuItem->route !== '')
 	                                    	<a href="{{route($menuItem->route)}}">
@@ -36,7 +40,9 @@ $menu= MenuHelper::create();
 	                                    @endif
 	                                    <i class="fa {{$menuItem->icon}}  fa-fw"></i>{{$menuItem->description}}</a>
 	                                </li>
+	                            @if($menuSection['section']->name != 'toplevel')
 	                            </ul>
+	                            @endif
                             @endforeach
                             </li>
 							

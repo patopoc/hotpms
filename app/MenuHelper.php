@@ -24,11 +24,12 @@ class MenuHelper{
 					}
 				}
 				else{
-					$filteredItems[]= $item;
+					$filteredItems[]= $item;	
+					$allowedItemsCount ++;
 				}
 			}
 			//Only show section when there are items to display 
-			if($allowedItemsCount > 0)
+			if($allowedItemsCount > 0 )
 				$menu[]= ['section' => $section, 'items' => $filteredItems];
 		}
 		//dd($menu);
@@ -37,8 +38,8 @@ class MenuHelper{
 	
 	private static function checkAction($roleId, $item){
 		
-		if($item->id_module == 0 )
-			return true;
+		//if($item->id_module == 0 )
+		//	return true;
 		
 		$roleDetail= RoleDetail::where('id_role', $roleId)
 								->where('id_module', $item->id_module)

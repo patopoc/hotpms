@@ -14,7 +14,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class ServicePlanController extends Controller
 {
-    /**
+	public function __construct(){
+	
+		$this->middleware('access_control');
+	}    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response

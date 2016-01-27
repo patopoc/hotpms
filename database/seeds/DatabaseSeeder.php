@@ -19,7 +19,8 @@ class DatabaseSeeder extends Seeder
         //$this->command->info('Seede the countries!');
         
         //$this->call('PeopleTableSeeder');
-        $this->call('RolesTableSeeder');
+        //$this->call('RolesTableSeeder');
+        $this->call('BookingTableSeeder');
         
 
         Model::reguard();

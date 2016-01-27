@@ -13,6 +13,10 @@ use Hotpms\Http\Requests\EditPropertyRequest;
 
 class PropertyController extends Controller
 {
+	public function __construct(){
+	
+		$this->middleware('access_control');
+	}
     /**
      * Display a listing of the resource.
      *

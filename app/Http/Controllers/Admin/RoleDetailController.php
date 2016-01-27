@@ -13,6 +13,10 @@ use Hotpms\RoleDetail;
 
 class RoleDetailController extends Controller
 {
+	public function __construct(){
+	
+		$this->middleware('access_control');
+	}
     /**
      * Display a listing of the resource.
      *

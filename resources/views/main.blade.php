@@ -28,7 +28,26 @@
     
     <!-- JQueryUI -->
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-
+           
+	<!-- JQuery Gantt -->
+	<link href="{{ asset('dist/css/style.css') }}" rel="stylesheet">
+	
+	<style type="text/css">
+           
+           /* Bootstrap 3.x re-reset */
+           .fn-gantt *,
+           .fn-gantt *:after,
+           .fn-gantt *:before {
+             -webkit-box-sizing: content-box;
+                -moz-box-sizing: content-box;
+                     box-sizing: content-box;
+           }
+           
+           .control-element{
+           		display:none;
+           }
+    </style>
+	
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -297,6 +316,9 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="{{ asset('dist/js/sb-admin-2.js') }}"></script>    
+           
+    <!-- JQuery Gantt -->
+    <script src="{{ asset('js/jquery.fn.gantt.js') }}"></script>
     
     @yield('commonscripts')    
     @yield('scripts')

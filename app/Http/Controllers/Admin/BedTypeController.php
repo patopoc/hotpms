@@ -13,6 +13,11 @@ use Hotpms\Http\Requests\EditBedTypeRequest;
 
 class BedTypeController extends Controller
 {
+	public function __construct(){
+	
+		$this->middleware('access_control');
+	}
+    
     /**
      * Display a listing of the resource.
      *
