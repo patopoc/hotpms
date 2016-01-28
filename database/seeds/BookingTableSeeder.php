@@ -15,10 +15,12 @@ class BookingTableSeeder extends Seeder
     {
         $faker= Faker::create();
         $people= \DB::table('people')->lists('id');
-        $properties= \DB::table('properties')->lists('id');
+        $properties= \DB::table('property_settings')->lists('id');
+        $roomTypes= \DB::table('room_types')->lists('id');
         for($i=0; $i < 10 ; $i++){
         	$checkIn= $faker->dateTimeBetween('now','+6 months')->format("Y-m-d");
         	$checkOut= date('Y-m-d',strtotime($checkIn) + 345600);
+        	
         	$reference_code;
         	do{
         		$reference_code= str_random(10);
@@ -33,8 +35,8 @@ class BookingTableSeeder extends Seeder
         			'check_out' => $checkOut,        			
         			'arrival_time' => $faker->time($format = 'H:i:s', $max = 'now'),
         			'comments_and_requests' => "",
-        			'id_room_type' => 1,
-        			'number_of_rooms' => 1,
+        			'id_room_type' => $roomTypes[array_rand($roomTypes,1)],
+        			'number_of_rooms' => 2,
         			'adults' => 1,
         			'children' => 0,
         			'pets' => 0,

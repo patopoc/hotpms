@@ -46,22 +46,41 @@ class AvailabilityController extends Controller
     	$bookings= Booking::where('check_in', ">=", $fromDate)
     						->where('check_out', "<=", $toDate)
     						->get();
+    	
     	if($bookings !== null){
     		foreach ($bookings as $booking){
+    			$roomId= $booking->roomType->id;
     			$roomName= $booking->roomType->name;
     			$checkIn= $booking->check_in;
     			$checkOut= $booking->check_out;
-    			$person= $booking->personData->full_name;
-    			
-    			$bookingList[]= [
-    					"name" => $roomName,
-    					"values" =>[[
+	   			$person= $booking->personData->full_name;
+	   			
+	   			$registeredListItem= false;
+	   			for($i=0; $i < count($bookingList); $i++){
+	   				if($bookingList[$i]['name'] === $roomName){
+	   					$bookingList[$i]['values'][]= [
     							"from" => $checkIn,
     							"to" => $checkOut,
     							"label" => $person,
     							"customClass" => "ganttRed"
-    					]]
-    			];
+    					];
+	   					$registeredListItem=true;	   					
+	   					break;
+	   				}
+	   			}
+    			
+	   			if(!$registeredListItem){
+	    			$bookingList[]= [
+	    					"name" => $roomName,
+	    					"id" => $roomId,
+	    					"values" =>[[
+	    							"from" => $checkIn,
+	    							"to" => $checkOut,
+	    							"label" => $person,
+	    							"customClass" => "ganttRed"
+	    					]]
+	    			];
+	   			}
     		}
     		
     	}
@@ -75,6 +94,7 @@ class AvailabilityController extends Controller
     					"customClass" => "control-element",
     			]]
     	];
+    	
     	
     	return json_encode($bookingList);
     	//return $fromDate . " " . $toDate;

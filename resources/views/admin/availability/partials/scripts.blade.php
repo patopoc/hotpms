@@ -8,10 +8,14 @@ $(document).ready(function(){
 	var route= "{{route('availabilityList')}}";
     route= route.replace("%7BfromDate%7D","{{$data['fromDate']}}");
     route= route.replace("%7BtoDate%7D","{{$data['toDate']}}");
-    //console.log("route: " + route);
-	// $.get(route, function(data){
-	//	console.log(data);
-    //});
+    /*/
+    console.log("route: " + route);
+	 $.get(route, function(data){
+		console.log(data);
+    });
+    /**/
+    
+    /**/
     $(".gantt").gantt({
         source: route,
         navigate: "scroll",
@@ -24,7 +28,22 @@ $(document).ready(function(){
             //alert("Item clicked - show some details");
         },
         onAddClick: function(dt, rowId) {
-           // alert("Empty space clicked - add an item! " + dt + "||" + rowId);
+           var cellDate= moment(dt).format("YYYY-MM-DD"); 
+           
+           $("#book-confirmation").dialog({
+				 resizable: false,
+				 height:140,
+				 modal: true,
+				 buttons: {
+					  Ok: function() {
+							window.location.replace("{{route('admin.booking.create')}}?date=" + cellDate + "&room=" + rowId);
+					 },
+					 Cancel: function() {
+						 $( this ).dialog( "close" );
+						 
+					 }
+				 }
+			});
         },
         onRender: function() {
             if (window.console && typeof console.log === "function") {
@@ -47,7 +66,7 @@ $(document).ready(function(){
 		format: 'YYYY-MM-DD'
 	});
 	
-	
+	/**/
 });
 </script>
 @endsection

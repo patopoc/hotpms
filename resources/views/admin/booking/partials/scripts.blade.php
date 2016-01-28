@@ -4,11 +4,17 @@
 <script type="text/javascript">
 
 $(document).ready(function(){
+	var jsonDates= "{{$data['disabledDates']}}";
+	jsonDates= jsonDates.replace(/&quot;/g, "\"");
+	
+	var disDates= $.parseJSON(jsonDates);
 	$('#check_in').datetimepicker({
-		format: 'YYYY/MM/DD'
+		format: 'YYYY/MM/DD',
+		disabledDates: disDates
 	});
 	$('#check_out').datetimepicker({
-		format: 'YYYY/MM/DD'
+		format: 'YYYY/MM/DD',
+		disabledDates: disDates
 	});
 	
 	$('#arrival_time').datetimepicker({

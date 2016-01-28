@@ -47,6 +47,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth','namespace'=> 'Admin']
 	Route::resource('facility_plans', 'FacilityPlanController');
 	Route::resource('bed_types', 'BedTypeController');
 	Route::resource('room_types', 'RoomTypeController');
+	Route::resource('rooms', 'RoomController');
 	Route::resource('users', 'UserController');
 	Route::resource('roles', 'RoleController');
 	Route::resource('role_details', 'RoleDetailController');

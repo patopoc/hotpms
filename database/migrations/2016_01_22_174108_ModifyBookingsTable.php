@@ -20,7 +20,10 @@ class ModifyBookingsTable extends Migration
         	$table->date('comments_and_requests')->nullable()->change();        	
         });*/
         DB::statement("ALTER TABLE bookings MODIFY notification ENUM('none','email','telephone') default 'none';");
-        DB::statement("ALTER TABLE bookings MODIFY status char(1) default 'a';");        
+        DB::statement("ALTER TABLE bookings MODIFY status char(1) default 'a';");
+        DB::statement("ALTER TABLE bookings MODIFY check_in date;");
+        DB::statement("ALTER TABLE bookings MODIFY check_out date;");
+        
     }
 
     /**

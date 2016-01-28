@@ -39,12 +39,12 @@ class AccessControl
     							->first();
     	//Check if action is allowed according to roleDetails mod_show, mod_insert, mod_update, mod_delete
     	
-    	$this->checkAction($controllerAction, $roleDetail);    	
+    	$this->checkAction($controllerAction, $roleDetail, $request);    	
     	
         return $next($request);
     }
     
-    private function checkAction($action, $roleDetail){
+    private function checkAction($action, $roleDetail, $request){
     	if($roleDetail === null){
     		if($request->ajax()){
     			return response('Unauthorized.',401);

@@ -25,7 +25,6 @@ class BookingController extends Controller
     public function index()
     {
         $bookings= Booking::where('status','a')->get();
-        
         return view('admin.booking.index',compact('bookings'));
         
     }
@@ -47,14 +46,45 @@ class BookingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+    public function create(Request $request)
+    {       	
+    	if($request->has("date"))
+    		$data["date"]= $request->get("date");
+    	if($request->has("room"))
+    		$data["room"]= $request->get("room");
+    	
     	$data['properties']= \DB::table('property_settings')->lists('name','id');
     	$data['countries']= \DB::table('countries')->lists('name', 'country_code');
     	$data['room_types']= \DB::table('room_types')->lists('name', 'id');
     	$data['rate_plans']= \DB::table('rates')->lists('name', 'id');
+    	
+    	$data['disabledDates']= json_encode($this->getDisabledDates());
         return view('admin.booking.create', compact('data'));
     }
+    
+    private function getDisabledDates(){
+    	$dates= \DB::table('bookings')->lists('check_out', 'check_in');
+    	$disabledDates= array();
+    	foreach ($dates as $checkIn => $checkOut){
+			$disabledDates= array_merge($disabledDates, $this->date_range($checkIn, $checkOut));    		
+    	}
+    	return $disabledDates;
+    }
+    
+    private function date_range($first, $last, $step = '+1 day', $output_format = 'Y-m-d' ) {
+
+	    $dates = array();
+	    $current = strtotime($first);
+	    $last = strtotime($last);
+	
+	    while( $current <= $last ) {
+	
+	        $dates[] = date($output_format, $current);
+	        $current = strtotime($step, $current);
+	    }
+	
+	    return $dates;
+	}
 
     /**
      * Store a newly created resource in storage.

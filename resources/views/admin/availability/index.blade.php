@@ -25,6 +25,7 @@
         </span>
  	</div>	 	
     
+    <div id="book-confirmation"></div>
 	</div>
 	<div class="form-group">
 	{!! Form::label('to_date', 'To Date') !!}

@@ -51,7 +51,11 @@
 <div class="form-group">
 	{!! Form::label('check_in', 'Check In') !!}
 	<div class='input-group date' id='check_in'>
+		@if(isset($data["date"]))
+		{!! Form::text('check_in', $data["date"], ['class' => 'form-control']) !!}
+		@else
 	 	{!! Form::text('check_in', null, ['class' => 'form-control']) !!}
+	 	@endif
 	 	<span class="input-group-addon">
         	<span class="glyphicon glyphicon-time"></span>
         </span>
@@ -85,7 +89,11 @@
 </div>
 <div class="form-group">
  	{!! Form::label('id_room_type', 'Pais') !!}
- 	{!! Form::select('id_room_type', $data["room_types"], null, ['class' => 'form-control', 'placeholder' => 'Select room type']) !!}	 	    
+ 	@if(isset($data['room']))
+ 	{!! Form::select('id_room_type', $data["room_types"], $data['room'], ['class' => 'form-control', 'placeholder' => 'Select room type']) !!}
+ 	@else
+ 	{!! Form::select('id_room_type', $data["room_types"], null, ['class' => 'form-control', 'placeholder' => 'Select room type']) !!}
+ 	@endif	 	    
 </div>
 <div class="form-group">
  	{!! Form::label('number_of_rooms', 'Rooms') !!}
