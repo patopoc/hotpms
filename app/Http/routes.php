@@ -25,7 +25,7 @@ Route::get('/', function () {
 });
 
 
-Route::group(['prefix' => 'admin', 'middleware' => 'auth','namespace'=> 'Admin'], function(){
+Route::group(['prefix' => 'admin', 'middleware' => ['auth','set_current_property'],'namespace'=> 'Admin'], function(){
 	Route::get('people/search/{ci}', ['as' => 'peopleSearch', function($ci){		
 		$person= Person::where('ci',$ci)->first();
 		if($person !== null)

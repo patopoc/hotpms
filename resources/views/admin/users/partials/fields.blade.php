@@ -80,7 +80,9 @@
  	{!! Form::label('id_role', 'Roles') !!}
  	{!! Form::select('id_role', $data["roles"], null, ['class' => 'form-control', 'placeholder' => 'Select Role']) !!}	 	    
 </div>
+<div id="properties-container">
 <div class="form-group">
- 	{!! Form::label('id_property', 'Properties') !!}
- 	{!! Form::select('id_property', $data["properties"], null, ['class' => 'form-control', 'placeholder' => 'Select Property']) !!}	 	    
+ 	{!! Form::label('property0', 'Properties') !!}
+ 	{!! Form::select('property0', $data["properties"], null, ['class' => 'form-control', 'placeholder' => 'Select Property (default)', 'onchange' => 'addProperty(this);']) !!}	 	    
+</div>
 </div>

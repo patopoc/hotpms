@@ -25,6 +25,7 @@ class UserController extends Controller
     public function index()
     {
    		$users= User::all();
+   		
    		return view('admin.users.index', compact('users'));
     }
 
@@ -49,6 +50,24 @@ class UserController extends Controller
      */
     public function store(CreateUserRequest $request)
     {    	
+    	
+    	$propertyKeys= array();
+			
+    	foreach($request->all() as $key => $val){
+    		if(preg_match("%^property[0-9]+$%", $key) && $val !== ""){
+    			//check that a value doesn't repeat
+    			$repeatedProperty= false;
+    			foreach($propertyKeys as $propertyKey){
+    				if($val == $propertyKey){
+    					$repeatedProperty=true;
+    					break;
+    				}
+    			}
+    			if(!$repeatedProperty)
+    				$propertyKeys[]= $val;
+    		}
+    	}    	
+    	
     	if(count(Person::where('ci',$request->get('ci'))->get()) == 0){
     		Person::create([
     				'ci' => $request->get('ci'),
@@ -65,12 +84,14 @@ class UserController extends Controller
         $user= User::create([
         		'id_person'=> $person->id,
         		'id_role' => $request->get('id_role'),
-        		'id_property' => $request->get('id_property'),
+        		'default_property' => $propertyKeys[0],
         		'auth_key' => 'some key',
         		'username' => $request->get('username'),
         		'password' => $request->get('password'),
         		
-        ]);		
+        ]);
+        
+        $user->properties()->attach($propertyKeys);
         
 		return \Redirect::route('admin.users.index');
     }
@@ -126,7 +147,7 @@ class UserController extends Controller
 		$user->fill([
         		'id_person'=> $person->id,
         		'id_role' => $request->get('id_role'),
-        		'id_property' => $request->get('id_property'),
+        		'default_property' => $request->get('default_property'),
         		'auth_key' => 'some key',
         		'username' => $request->get('username'),
         		'password' => $request->get('password'),

@@ -1,16 +1,8 @@
 
 <div class="form-group">
  	{!! Form::label('date', 'Date') !!}
- 	{!! Form::text('date', "hoy", ['class' => 'form-control', 'readonly' => true]) !!}	 	
+ 	{!! Form::text('date', date("Y-m-d"), ['class' => 'form-control', 'readonly' => true]) !!}	 	
     
-</div>
-<div class="form-group">
- 	{!! Form::label('id_property', 'Pais') !!}
- 	@if(isset($data['booking']))
- 		{!! Form::select('id_property', $data["properties"], $data['booking']->id_property, ['class' => 'form-control', 'placeholder' => 'Select Property']) !!}
- 	@else
- 		{!! Form::select('id_property', $data["properties"], null, ['class' => 'form-control', 'placeholder' => 'Select Property']) !!}	 	
-    @endif
 </div>
 <div class="form-group">
  	{!! Form::label('id_user', 'Nombre') !!}
@@ -88,7 +80,7 @@
     
 </div>
 <div class="form-group">
- 	{!! Form::label('id_room_type', 'Pais') !!}
+ 	{!! Form::label('id_room_type', 'Room') !!}
  	@if(isset($data['room']))
  	{!! Form::select('id_room_type', $data["room_types"], $data['room'], ['class' => 'form-control', 'placeholder' => 'Select room type']) !!}
  	@else

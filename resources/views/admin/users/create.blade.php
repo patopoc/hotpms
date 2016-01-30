@@ -14,7 +14,7 @@
 		 @include('admin.users.partials.scripts')
 		 @include('admin.users.partials.fields')
 		  <button type="submit" class="btn btn-default">Create User</button>
-	{!!Form::close()!!}
+{!!Form::close()!!}
 </div>
 </div>
 </div>

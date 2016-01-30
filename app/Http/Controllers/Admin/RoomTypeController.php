@@ -21,6 +21,7 @@ class RoomTypeController extends Controller
 	public function __construct(){
 		$this->middleware('access_control');
 		$this->data['service_plans']= \DB::table('service_plan')->lists('name','id');
+		$this->data['properties']= \DB::table('property_settings')->lists('name','id');
 		$this->data['facility_plans']= \DB::table('facilities_plan')->lists('name','id');
 		$this->data['rate']= \DB::table('rates')->lists('name','id');
 		$this->data['bed_type']= \DB::table('bed_types')->lists('type','id');		 
@@ -120,8 +121,8 @@ class RoomTypeController extends Controller
      */
     public function edit($id)
     {
-        $bed_type= RoomType::findOrFail($id);
-        return view('admin.room_types.edit', compact('bed_type'));
+        $room= RoomType::findOrFail($id);
+        return view('admin.room_types.edit', compact('room'));
     }
 
     /**

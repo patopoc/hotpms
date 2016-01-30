@@ -19,7 +19,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     protected $table = 'users';
     
-    protected $fillable = ['id_person', 'id_role', 'id_property', 'auth_key', 'username', 'password'];
+    protected $fillable = ['id_person', 'id_role', 'default_property', 'auth_key', 'username', 'password'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -38,8 +38,8 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     	return $this->hasOne('Hotpms\Role', 'id', 'id_role');
     }
     
-    public function property(){
-    	return $this->hasOne('Hotpms\Property', 'id', 'id_property');
+    public function properties(){
+    	return $this->belongsToMany('Hotpms\Property', 'user_assigned_properties', 'id_user', 'id_property');
     }
     
     public function setPasswordAttribute($value){

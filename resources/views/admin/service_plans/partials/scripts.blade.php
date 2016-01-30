@@ -7,7 +7,8 @@ var serviceCounter=0;
 
 addService= function(el){
 
-	if(el.name.substring(el.name.length - 1) >= serviceCounter){
+	var elName= el.name.split('service');
+	if(elName[1] >= serviceCounter){
 		serviceCounter++;
 		var selectElem='{!! Form::select("serv", ["" => "Select a Service"] + $services, null, ["class" => "form-control", "onchange"=>"addService(this);"]) !!}';
 		selectElem= selectElem.replace('serv','service' + serviceCounter);

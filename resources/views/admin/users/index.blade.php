@@ -27,6 +27,6 @@
 {!!Form::close()!!}
 
 @endsection
-@include('admin.users.partials.scripts')
+
 @include('commonscripts')
 @include('menu')

@@ -10,6 +10,7 @@ use Hotpms\Booking;
 use Hotpms\Property;
 use Illuminate\Database\Eloquent\Model;
 use Hotpms\Person;
+use Illuminate\Support\Facades\Auth;
 
 class BookingController extends Controller
 {
@@ -53,9 +54,12 @@ class BookingController extends Controller
     	if($request->has("room"))
     		$data["room"]= $request->get("room");
     	
-    	$data['properties']= \DB::table('property_settings')->lists('name','id');
+    	//$data['properties']= \DB::table('property_settings')->lists('name','id');
+    	$user= Auth::user();
     	$data['countries']= \DB::table('countries')->lists('name', 'country_code');
-    	$data['room_types']= \DB::table('room_types')->lists('name', 'id');
+    	$data['room_types']= \DB::table('room_types')->where('id_property',$user->id_property)
+    												->where('available',1)
+    												->lists('name', 'id');
     	$data['rate_plans']= \DB::table('rates')->lists('name', 'id');
     	
     	$data['disabledDates']= json_encode($this->getDisabledDates());
@@ -94,6 +98,8 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
+    	$this->checkAvailability($request);
+    	
     	//dd(Person::where('ci',$request->get('ci')));
         if(count(Person::where('ci',$request->get('ci'))->get()) == 0){
         	Person::create([
@@ -109,7 +115,7 @@ class BookingController extends Controller
         $person= Person::where('ci',$request->get('ci'))->get()->first();
         
     	$booking= new Booking([
-        		'id_property' => $request->get('id_property'),
+        		'id_property' => Auth::user()->id_property,
         		'id_user' => $request->get('id_user'),
         		'person' => $person->id,
         		'date' => date("Y/m/d"),
@@ -132,10 +138,25 @@ class BookingController extends Controller
         }while(count(Booking::where('reference_code',$reference_code)->get()) > 0);
         $booking->reference_code= $reference_code;
         $booking->save();
+               
         
         return redirect()->route('admin.booking.index');
     }
 
+    private function checkAvailability($request){
+    	$booking= Booking::where("id_room_type", $request->get("id_room_type"))
+    						->where("check_in",">=", $request->get("check_in"))
+    						->where("check_in","<=", $request->get("check_out"))
+    						->first();
+    	if($booking !== null){
+	    	$message= "Room already reserved for given dates";
+	    	if($request->ajax()){
+	    		return $message;
+	    	}
+	    	Session::flash('message',$message);
+	    	return redirect()->route('admin.bookings.create');
+    	}
+    }
     /**
      * Display the specified resource.
      *

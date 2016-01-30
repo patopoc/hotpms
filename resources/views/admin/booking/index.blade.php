@@ -27,6 +27,6 @@
 {!!Form::close()!!}
 
 @endsection
-@include('admin.booking.partials.scripts')
+include('admin.booking.partials.scripts')
 @include('commonscripts')
 @include('menu')

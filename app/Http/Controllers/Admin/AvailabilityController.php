@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Hotpms\Http\Requests;
 use Hotpms\Http\Controllers\Controller;
 use Hotpms\Booking;
+use Hotpms\RoomType;
 
 class AvailabilityController extends Controller
 {
@@ -21,6 +22,7 @@ class AvailabilityController extends Controller
      */
     public function index(Request $request)
     {
+    	    	
     	$fromDate= date("Y-m-d");
     	$toDate= date('Y-m-d', strtotime('+1 month'));
     	 
@@ -46,41 +48,52 @@ class AvailabilityController extends Controller
     	$bookings= Booking::where('check_in', ">=", $fromDate)
     						->where('check_out', "<=", $toDate)
     						->get();
+    	$rooms= RoomType::all();
     	
-    	if($bookings !== null){
-    		foreach ($bookings as $booking){
-    			$roomId= $booking->roomType->id;
-    			$roomName= $booking->roomType->name;
-    			$checkIn= $booking->check_in;
-    			$checkOut= $booking->check_out;
-	   			$person= $booking->personData->full_name;
-	   			
-	   			$registeredListItem= false;
-	   			for($i=0; $i < count($bookingList); $i++){
-	   				if($bookingList[$i]['name'] === $roomName){
-	   					$bookingList[$i]['values'][]= [
-    							"from" => $checkIn,
-    							"to" => $checkOut,
-    							"label" => $person,
-    							"customClass" => "ganttRed"
-    					];
-	   					$registeredListItem=true;	   					
-	   					break;
-	   				}
-	   			}
-    			
-	   			if(!$registeredListItem){
-	    			$bookingList[]= [
-	    					"name" => $roomName,
-	    					"id" => $roomId,
-	    					"values" =>[[
+    	if($bookings !== null && count($rooms) > 0){
+    		foreach ($rooms as $room){
+    			$booking= $bookings->where('id_room_type',$room->id)->first();
+    			if($booking !== null){
+	    			$roomId= $booking->roomType->id;
+	    			$roomName= $booking->roomType->name;
+	    			$checkIn= $booking->check_in;
+	    			$checkOut= $booking->check_out;
+		   			$person= $booking->personData->full_name;
+		   			
+		   			$registeredListItem= false;
+		   			for($i=0; $i < count($bookingList); $i++){
+		   				if($bookingList[$i]['name'] === $roomName){
+		   					$bookingList[$i]['values'][]= [
 	    							"from" => $checkIn,
 	    							"to" => $checkOut,
 	    							"label" => $person,
 	    							"customClass" => "ganttRed"
-	    					]]
-	    			];
-	   			}
+	    					];
+		   					$registeredListItem=true;	   					
+		   					break;
+		   				}
+		   			}
+	    			
+		   			if(!$registeredListItem){
+		    			$bookingList[]= [
+		    					"name" => $roomName,
+		    					"id" => $roomId,
+		    					"values" =>[[
+		    							"from" => $checkIn,
+		    							"to" => $checkOut,
+		    							"label" => $person,
+		    							"customClass" => "ganttRed"
+		    					]]
+		    			];
+		   			}
+    			}
+    			else{
+    				$bookingList[]= [
+    						"name" => $room->name,
+    						"id" => $room->id,
+    						"values" =>[]
+    				];
+    			}
     		}
     		
     	}

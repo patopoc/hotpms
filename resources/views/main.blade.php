@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>HotPMS</title>
+    <title>{{Session::get('current_property')->name}}</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="{{ asset('bower_components/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -70,11 +70,39 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">Hot PMS</a>
+                <a class="navbar-brand" href="index.html">{{Session::get('current_property')->name}}</a>
             </div>
             <!-- /.navbar-header -->
-
+			
             <ul class="nav navbar-top-links navbar-right">
+                @if(Session::has('available_properties'))
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-exchange fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-messages">
+                        @foreach(Session::get('available_properties') as $property)
+                        <li>
+                            <a href="{{route('admin.people.index')}}?current_property={{$property->id}}">
+                                <div>
+                                    <strong>{{$property->name}}</strong>                                    
+                                </div>                                
+                            </a>
+                        </li>
+						@endforeach
+						<li class="divider"></li>
+                        <li>
+                            <a class="text-center" href="#">
+                                <strong>Switch Property</strong>
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-messages -->
+                </li>
+                @endif
+                
+                
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-envelope fa-fw"></i>  <i class="fa fa-caret-down"></i>

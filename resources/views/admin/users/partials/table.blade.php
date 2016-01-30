@@ -10,7 +10,12 @@
 		<tr data-id="{{$user->id}}">
 			<td> {{$user->username or ''}}</td>
 			<td> {{$user->person->name or ''}}</td>
-			<td> {{$user->property->name or ''}}</td>
+			<td> 
+			@foreach($user->properties as $property)
+			{{$property->name or ''}}
+			<br>
+			@endforeach
+			</td>
 			<td> {{$user->role->name or ''}}</td>
 			<td>
 				<a href="{{route('admin.users.edit', $user)}}"><span class="glyphicon glyphicon-pencil"></span>Editar</a>

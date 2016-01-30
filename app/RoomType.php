@@ -12,12 +12,14 @@ class RoomType extends Model
     
     protected $fillable= ['name', 
     					'description', 
+    					'id_property',
     					'id_service_plan', 
     					'id_rate', 
     					'id_facilities_plan', 
     					'size', 'id_bed_type', 
     					'id_room_picture', 
-    					'cancelation_fee'];
+    					'cancelation_fee',
+    					'available'];
     
     public function servicePlans(){
     	return $this->hasOne("Hotpms\ServicePlan", "id", "id_service_plan");
