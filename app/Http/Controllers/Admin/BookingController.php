@@ -3,7 +3,6 @@
 namespace Hotpms\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-
 use Hotpms\Http\Requests;
 use Hotpms\Http\Controllers\Controller;
 use Hotpms\Booking;
@@ -11,6 +10,9 @@ use Hotpms\Property;
 use Illuminate\Database\Eloquent\Model;
 use Hotpms\Person;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+use Hotpms\Helpers\DateHelper;
+
 
 class BookingController extends Controller
 {
@@ -25,20 +27,28 @@ class BookingController extends Controller
      */
     public function index()
     {
-        $bookings= Booking::where('status','a')->get();
+        $bookings= Booking::where('status','a')
+        					->where('id_property', session('current_property')->id)
+        					->get();
         return view('admin.booking.index',compact('bookings'));
         
     }
 
     public function canceled(){
-    	$bookings= Booking::where('status','c')->get();
+    	$bookings= Booking::where('status','c')
+        					->where('id_property', session('current_property')->id)
+        					->get();
         
         return view('admin.booking.index',compact('bookings'));
     }
     
     public function arrival(){
-    	$data['today']= Booking::where('check_in',date('Y/m/d'))->get();
-    	$data['tomorrow']= Booking::where('check_in',date('Y/m/d', strtotime('+1 day')))->get();
+    	$data['today']= Booking::where('check_in',date('Y/m/d'))
+        					->where('id_property', session('current_property')->id)
+        					->get();
+    	$data['tomorrow']= Booking::where('check_in',date('Y/m/d', strtotime('+1 day')))
+        					->where('id_property', session('current_property')->id)
+        					->get();
     	return view('admin.booking.index',compact('data'));
     }
     
@@ -55,9 +65,9 @@ class BookingController extends Controller
     		$data["room"]= $request->get("room");
     	
     	//$data['properties']= \DB::table('property_settings')->lists('name','id');
-    	$user= Auth::user();
     	$data['countries']= \DB::table('countries')->lists('name', 'country_code');
-    	$data['room_types']= \DB::table('room_types')->where('id_property',$user->id_property)
+    	$currentProperty= $request->session()->get('current_property')->id;
+    	$data['room_types']= \DB::table('room_types')->where('id_property', $currentProperty)
     												->where('available',1)
     												->lists('name', 'id');
     	$data['rate_plans']= \DB::table('rates')->lists('name', 'id');
@@ -67,28 +77,15 @@ class BookingController extends Controller
     }
     
     private function getDisabledDates(){
-    	$dates= \DB::table('bookings')->lists('check_out', 'check_in');
+    	$dates= \DB::table('bookings')->where('id_property', session('current_property')->id)->lists('check_out', 'check_in');
     	$disabledDates= array();
     	foreach ($dates as $checkIn => $checkOut){
-			$disabledDates= array_merge($disabledDates, $this->date_range($checkIn, $checkOut));    		
+			$disabledDates= array_merge($disabledDates, DateHelper::date_range($checkIn, $checkOut));    		
     	}
     	return $disabledDates;
     }
     
-    private function date_range($first, $last, $step = '+1 day', $output_format = 'Y-m-d' ) {
-
-	    $dates = array();
-	    $current = strtotime($first);
-	    $last = strtotime($last);
-	
-	    while( $current <= $last ) {
-	
-	        $dates[] = date($output_format, $current);
-	        $current = strtotime($step, $current);
-	    }
-	
-	    return $dates;
-	}
+    
 
     /**
      * Store a newly created resource in storage.
@@ -115,8 +112,8 @@ class BookingController extends Controller
         $person= Person::where('ci',$request->get('ci'))->get()->first();
         
     	$booking= new Booking([
-        		'id_property' => Auth::user()->id_property,
-        		'id_user' => $request->get('id_user'),
+        		'id_property' => session('current_property')->id,
+        		'id_user' => Auth::user()->id,
         		'person' => $person->id,
         		'date' => date("Y/m/d"),
         		'check_in' => $request->get('check_in'),
@@ -143,18 +140,19 @@ class BookingController extends Controller
         return redirect()->route('admin.booking.index');
     }
 
-    private function checkAvailability($request){
+    private function checkAvailability($request, $id=null){
     	$booking= Booking::where("id_room_type", $request->get("id_room_type"))
+        					->where('id_property', session('current_property')->id)        					
     						->where("check_in",">=", $request->get("check_in"))
     						->where("check_in","<=", $request->get("check_out"))
     						->first();
-    	if($booking !== null){
+    	if($booking !== null && $booking->id != $id){
 	    	$message= "Room already reserved for given dates";
 	    	if($request->ajax()){
 	    		return $message;
 	    	}
 	    	Session::flash('message',$message);
-	    	return redirect()->route('admin.bookings.create');
+	    	return redirect()->route('admin.booking.create');
     	}
     }
     /**
@@ -176,8 +174,16 @@ class BookingController extends Controller
      */
     public function edit($id)
     {
-        $booking= Booking::findOrFail($id);
-        dd($booking->personData->name);
+        $data['booking']= Booking::findOrFail($id);
+        $data['countries']= \DB::table('countries')->lists('name', 'country_code');
+        $currentProperty= session('current_property')->id;
+        $data['room_types']= \DB::table('room_types')->where('id_property', $currentProperty)
+											        ->where('available',1)
+											        ->lists('name', 'id');
+        $data['rate_plans']= \DB::table('rates')->lists('name', 'id');         
+        $data['disabledDates']= json_encode($this->getDisabledDates());
+        
+        return view('admin.booking.edit', compact('data'));
     }
 
     /**
@@ -189,7 +195,48 @@ class BookingController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+    	$this->checkAvailability($request, $id);
+    	
+    	if(count(Person::where('ci',$request->get('ci'))->get()) == 0){
+    		$message= "You can not change the owner of this booking. You must create a new booking instead";
+    		if($request->ajax()){
+    			return $message;
+    		}
+    		Session::flash('message',$message);
+    		return redirect()->route('admin.booking.edit');
+    	}
+    	 
+    	$person= Person::where('ci',$request->get('ci'))->get()->first();
+    	$person->fill([    				
+    				'name' => $request->get('name'),
+    				'last_name' => $request->get('last_name'),
+    				'email' => $request->get('email'),
+    				'telephone' => $request->get('telephone'),
+    				'id_country' => $request->get('id_country'),
+    		]);
+    	$person->save();
+    	$booking= Booking::findOrFail($id);
+    	$booking->fill([
+    			'id_property' => session('current_property')->id,
+    			'id_user' => Auth::user()->id,
+    			'person' => $person->id,
+    			'date' => date("Y/m/d"),
+    			'check_in' => $request->get('check_in'),
+    			'check_out' => $request->get('check_out'),
+    			'arrival_time' => $request->get('arrival_time'),
+    			'comments_and_requests' => $request->get('comments_and_requests'),
+    			'id_room_type' => $request->get('id_room_type'),
+    			'number_of_rooms' => $request->get('number_of_rooms'),
+    			'adults' => $request->get('adults'),
+    			'children' => $request->get('children'),
+    			'pets' => $request->get('pets'),
+    			'rate_plan' => $request->get('rate_plan'),
+    	
+    	]);
+    	$booking->save();
+    	 
+    	
+    	return redirect()->route('admin.booking.index');
     }
 
     /**
@@ -200,6 +247,11 @@ class BookingController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //It doesn't destroy but rather cancel the booking
+        $booking= Booking::findOrFail($id);
+        $booking->status='c';
+        $booking->save();
+        
+        return redirect()->route('admin.booking.index');
     }
 }

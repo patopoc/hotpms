@@ -4,14 +4,10 @@
  	{!! Form::text('date', date("Y-m-d"), ['class' => 'form-control', 'readonly' => true]) !!}	 	
     
 </div>
+
 <div class="form-group">
- 	{!! Form::label('id_user', 'Nombre') !!}
- 	{!! Form::text('id_user', "usuario", ['class' => 'form-control']) !!}	 	
-    
-</div>
-<div class="form-group">
- 	{!! Form::label('ci', 'CI') !!}
- 	{!! Form::text('ci', null, ['class' => 'form-control', 'placeholder' => 'Enter CI and press Enter']) !!}	 	
+	{!! Form::label('ci', 'CI') !!}	
+ 	{!! Form::text('ci', null, ['class' => 'form-control', 'placeholder' => 'Enter CI and press Enter']) !!}
     
 </div>
 <div class="form-group">
@@ -21,7 +17,7 @@
 </div>
 
 <div class="form-group">
- 	{!! Form::label('last_name', 'Apellido') !!}
+ 	{!! Form::label('last_name', 'Last Name') !!}
  	{!! Form::text('last_name', null, ['class' => 'form-control']) !!}	 	
     
 </div>
@@ -36,7 +32,7 @@
     
 </div>
 <div class="form-group">
- 	{!! Form::label('id_country', 'Pais') !!}
+ 	{!! Form::label('id_country', 'Country') !!}
  	{!! Form::select('id_country', ['' => 'Select Country'] + $data["countries"], null, ['class' => 'form-control']) !!}	 	
     
 </div>
@@ -80,9 +76,11 @@
     
 </div>
 <div class="form-group">
- 	{!! Form::label('id_room_type', 'Room') !!}
+ 	{!! Form::label('id_room_type', 'Room Type') !!}
  	@if(isset($data['room']))
  	{!! Form::select('id_room_type', $data["room_types"], $data['room'], ['class' => 'form-control', 'placeholder' => 'Select room type']) !!}
+ 	@elseif(isset($data['booking']))
+ 	{!! Form::select('id_room_type', $data["room_types"], $data['booking']->id_room_type, ['class' => 'form-control', 'placeholder' => 'Select room type']) !!}
  	@else
  	{!! Form::select('id_room_type', $data["room_types"], null, ['class' => 'form-control', 'placeholder' => 'Select room type']) !!}
  	@endif	 	    
@@ -110,5 +108,9 @@
 </div>
 <div class="form-group">
  	{!! Form::label('rate_plan', 'Rate Plan') !!}
- 	{!! Form::select('rate_plan', $data["rate_plans"], null, ['class' => 'form-control', 'placeholder' => 'Select room type']) !!}	 	    
+ 	@if(isset($data['booking']))
+ 	{!! Form::select('rate_plan', $data["rate_plans"], $data['booking']->rate_plan, ['class' => 'form-control', 'placeholder' => 'Select room type']) !!}
+ 	@else
+ 	{!! Form::select('rate_plan', $data["rate_plans"], null, ['class' => 'form-control', 'placeholder' => 'Select room type']) !!}
+ 	@endif	 	    
 </div>

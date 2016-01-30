@@ -3,6 +3,7 @@
 namespace Hotpms;
 
 use Illuminate\Database\Eloquent\Model;
+use Hotpms\Helpers\DateHelper;
 
 class Booking extends Model
 {
@@ -31,6 +32,35 @@ class Booking extends Model
 	
 	public function rate(){
 		return $this->hasOne('Hotpms\Rate','id','rate_plan');
+	}
+	
+	public function getTotalPriceAttribute(){
+		$dateRange= DateHelper::date_range($this->check_in, $this->check_out);
+		$totalPrice=0;
+		foreach ($dateRange as $date){
+			if(DateHelper::isWeekend($date)){
+				$totalPrice += $this->rate->weekend_price;
+			}
+			else{
+				$totalPrice += $this->rate->weekday_price;
+			}
+		}
+		
+		$services= $this->roomType->servicePlans->services;
+		if($services !== null){
+			foreach ($services as $service){
+				$totalPrice += $service->price;
+			}
+		}
+		return $totalPrice;
+	}
+	
+	public function getNumberOfDaysAttribute(){
+		$checkIn= new \DateTime($this->check_in);
+		$checkOut= new \DateTime($this->check_out);
+		$dateDifference= date_diff($checkIn, $checkOut, true)->format("%a");
+		
+		return intval($dateDifference) + 1;		
 	}
 	
 }

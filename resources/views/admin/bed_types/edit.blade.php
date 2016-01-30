@@ -5,14 +5,14 @@
 <div class="row">
 <div class="col-md-10 col-md-offset-1">
 <div class="panel panel-default">
-<div class="panel-heading">Edit bed_types {{$bed_type->type}}</div>
+<div class="panel-heading">Edit Bed Type: {{$bed_type->type}}</div>
 <div class="panel-body">
 @include('admin.bed_types.partials.messages')
 
 {!!Form::model($bed_type, ['route' => ['admin.bed_types.update', $bed_type], 'method' => 'put'])!!}
 		  @include('admin.bed_types.partials.fields')	 
 		 
-		  <button type="submit" class="btn btn-default">Update bed_types</button>
+		  <button type="submit" class="btn btn-default">Update</button>
 {!!Form::close()!!}
 
 

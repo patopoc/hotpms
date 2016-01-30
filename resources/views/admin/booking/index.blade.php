@@ -5,12 +5,12 @@
 <div class="row">
 <div class="col-mg-10">
 <div class="panel panel-default">
-<div class="panel-heading">Users</div>
+<div class="panel-heading">Bookings</div>
 @if(Session::has('message'))
 	<p class="alert alert-success"> {{Session::get('message')}}</p>
 @endif
 	<p>
-		<a class="btn btn-info" href="{{ route('admin.booking.create') }}" role="button">Nuevo</a>
+		<a class="btn btn-info" href="{{ route('admin.booking.create') }}" role="button">New</a>
 	</p>	
 	
 <div class="panel-body">
@@ -23,10 +23,9 @@
 </div>
 </div>
 </div>
-{!!Form::open( ['route' => ['admin.bed_types.destroy', ':PERSON_ID'], 'method' => 'delete', 'id'=>'form-delete'])!!}
+{!!Form::open( ['route' => ['admin.booking.destroy', ':PERSON_ID'], 'method' => 'delete', 'id'=>'form-delete'])!!}
 {!!Form::close()!!}
 
 @endsection
-include('admin.booking.partials.scripts')
 @include('commonscripts')
 @include('menu')

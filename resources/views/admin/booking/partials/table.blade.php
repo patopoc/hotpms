@@ -18,15 +18,15 @@
 			@foreach ($data['today'] as $booking)
 				<tr data-id="{{$booking->id}}">
 					<td> {{$booking->reference_code or ''}}</td>
-					<td> {{$booking->personData->name or ''}}</td>
+					<td> {{$booking->personData->full_name or ''}}</td>
 					<td> {{$booking->check_in or ''}}</td>
 					<td> {{$booking->arrival_time or ''}}</td>
-					<td> </td>
+					<td> {{$booking->number_of_days or ''}}</td>
 					<td> {{$booking->number_of_rooms or ''}}</td>
 					<td> {{$booking->roomType->id or ''}}</td>			
 					<td> {{$booking->adults or ''}}</td>
 					<td> {{$booking->children or ''}}</td>
-					<td> </td>
+					<td> {{$booking->total_price}}</td>
 					<td>
 						<a href="#"><span class="glyphicon glyphicon-pencil"></span>Editar</a>
 						<a href="#" class="btn-delete"><span class="glyphicon glyphicon-minus-sign"></span>Eliminar</a>
@@ -40,14 +40,14 @@
 					<td> {{$booking->personData->name or ''}}</td>
 					<td> {{$booking->check_in or ''}}</td>
 					<td> {{$booking->arrival_time or ''}}</td>
-					<td> </td>
+					<td> {{$booking->number_of_days or ''}}</td>
 					<td> {{$booking->number_of_rooms or ''}}</td>
 					<td> {{$booking->roomType->id or ''}}</td>			
 					<td> {{$booking->adults or ''}}</td>
 					<td> {{$booking->children or ''}}</td>
-					<td> </td>
+					<td> {{$booking->total_price}}</td>
 					<td>
-						<a href="#"><span class="glyphicon glyphicon-pencil"></span>Editar</a>
+						<a href="{{route('admin.booking.edit', $booking->id)}}"><span class="glyphicon glyphicon-pencil"></span>Editar</a>
 						<a href="#" class="btn-delete"><span class="glyphicon glyphicon-minus-sign"></span>Eliminar</a>
 					</td>
 				</tr>	

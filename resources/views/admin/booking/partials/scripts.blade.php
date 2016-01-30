@@ -5,6 +5,27 @@
 
 $(document).ready(function(){
 	var jsonDates= "{{$data['disabledDates']}}";
+
+	getPersonData= function(id){
+		
+		var route= "{{route('peopleSearch')}}";
+	    route= route.replace("%7Bci%7D",id);
+	    console.log("url: " + route);
+		$.get(route, function(data){
+			console.log(data);
+			if(data !== null && data !==''){
+				var person= $.parseJSON(data);
+				$("#ci").val(person.ci);
+				$("#name").val(person.name);
+				$("#last_name").val(person.last_name);
+				$("#email").val(person.email);
+				$("#telephone").val(person.telephone);
+				$("#id_country").val(person.id_country);
+			}
+			
+		});
+	};
+	
 	jsonDates= jsonDates.replace(/&quot;/g, "\"");
 	
 	var disDates= $.parseJSON(jsonDates);
@@ -22,22 +43,14 @@ $(document).ready(function(){
 	});
 	
     $("#ci").focusout(function(){
-        var route= "{{route('peopleSearch')}}";
-        route= route.replace("%7Bci%7D",$(this).val());
-        console.log("route: " + route);
-		$.get(route, function(data){
-			console.log(data);
-			if(data !== null && data !==''){
-				var person= $.parseJSON(data);
-				$("#name").val(person.name).attr("readonly",true);
-				$("#last_name").val(person.last_name).attr("readonly",true);
-				$("#email").val(person.email).attr("readonly",true);
-				$("#telephone").val(person.telephone).attr("readonly",true);
-				$("#id_country").val(person.id_country).attr("readonly",true);
-			}
-			
-		});
+        getPersonData($(this).val());
     });
+
+    @if(isset($data['booking']))    
+    	getPersonData("{{$data['booking']->personData->ci}}");    
+    @endif
+    	    
+    
 });
 </script>
 @endsection
