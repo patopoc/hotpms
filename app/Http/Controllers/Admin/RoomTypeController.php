@@ -81,7 +81,7 @@ class RoomTypeController extends Controller
     				->withInput($request->all());
     		}
     		
-	    	$imageName= $picture->getClientOriginalName();    	
+	    	$imageName= "room-" . $roomType->id . "-" . $picture->getClientOriginalName();    	
 	    	$image = Image::make($picture->getRealPath());	    	
 	    	
 	    	$savePath= $destinationFolder . $imageName;
@@ -121,8 +121,9 @@ class RoomTypeController extends Controller
      */
     public function edit($id)
     {
-        $room= RoomType::findOrFail($id);
-        return view('admin.room_types.edit', compact('room'));
+    	$data= $this->data;
+        $data['room']= RoomType::findOrFail($id);
+        return view('admin.room_types.edit', compact('data'));
     }
 
     /**
@@ -138,7 +139,12 @@ class RoomTypeController extends Controller
         $roomtype->fill($request->all());
         $roomtype->save();
         
-        return redirect()->back();
+        $message= $roomtype->name.' updated successfully';
+        if($request->ajax()){
+        	return $message;
+        }
+        Session::flash('message',$message);
+        return redirect()->route('admin.room_types.index');
     }
 
     /**
@@ -150,8 +156,9 @@ class RoomTypeController extends Controller
     public function destroy($id, Request $request)
     {
         $roomtype= RoomType::findOrFail($id);
+        $roomtype->removePictures();
         $roomtype->delete();
-        $message= "La propiedad ".$roomtype->name.' fue eliminada';
+        $message= $roomtype->name.' removed successfully';
         if($request->ajax()){
         	return $message;
         }

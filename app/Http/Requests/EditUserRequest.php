@@ -30,6 +30,8 @@ class EditUserRequest extends Request {
 		return [
 			'username'=> 'required|unique:users,username,' . $this->route->getParameter('users'),
 			'password' => '',
+			'property0' => 'required',
+			'id_role' => 'required',
 			
 		];
 	}

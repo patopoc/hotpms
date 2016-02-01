@@ -1,6 +1,6 @@
 <table class="table table-striped">
 		<tr>
-			<th>Name</th>			
+			<th>Role</th>			
 			
 		</tr>
 				

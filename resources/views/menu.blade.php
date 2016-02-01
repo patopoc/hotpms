@@ -33,7 +33,7 @@ $menu= MenuHelper::create();
 	                            <ul class="nav nav-second-level">
 	                            @endif
 	                                <li>
-	                                    @if($menuItem->route !== '')
+	                                    @if($menuItem->route !== '' && Route::has($menuItem->route))
 	                                    	<a href="{{route($menuItem->route)}}">
 	                                    @else
 	                                    	<a href="#">

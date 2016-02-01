@@ -29,7 +29,7 @@ class MenuHelper{
 				}
 			}
 			//Only show section when there are items to display 
-			if($allowedItemsCount > 0 )
+			if($allowedItemsCount > 0 || $roleId === null)
 				$menu[]= ['section' => $section, 'items' => $filteredItems];
 		}
 		//dd($menu);

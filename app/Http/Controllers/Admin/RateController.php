@@ -88,7 +88,12 @@ class RateController extends Controller
         $rate->fill($request->all());
         $rate->save();
         
-        return redirect()->back();
+        $message= $rate->name.' updated successfully';
+        if($request->ajax()){
+        	return $message;
+        }
+        Session::flash('message',$message);
+        return redirect()->route('admin.rate.index');
     }
 
     /**
@@ -101,7 +106,7 @@ class RateController extends Controller
     {
         $rate= Rate::findOrFail($id);
         $rate->delete();
-        $message= "La propiedad ".$rate->name.' fue eliminada';
+        $message= $rate->name.' removed successfully';
         if($request->ajax()){
         	return $message;
         }

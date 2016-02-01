@@ -12,7 +12,7 @@
 {!!Form::model($data['menuItem'], ['route' => ['admin.menus.update', $data['menuItem']], 'method' => 'put'])!!}
 		  @include('admin.menus.partials.fields')	 
 		 
-		  <button type="submit" class="btn btn-default">Update services</button>
+		  <button type="submit" class="btn btn-default">Update</button>
 {!!Form::close()!!}
 
 

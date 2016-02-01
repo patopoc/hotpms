@@ -13,12 +13,31 @@ use Hotpms\FacilityPlan;
 use Illuminate\Database\Eloquent\Model;
 use Hotpms\Http\Requests\EditFacilityPlanRequest;
 use Hotpms\Facility;
+use Hotpms\Helpers\ArrayCheckHelper;
 
 class FacilityPlanController extends Controller
 {
+	private $data=null;
 	public function __construct(){
 	
 		$this->middleware('access_control');
+		$facilities= \DB::table("facilities")->lists('name','id');
+		 
+		$facilitiesArray[]= array(
+				"key" => 0,
+				"val" => "Select Facility"
+		);
+		 
+		foreach($facilities as $key => $val){
+			$facilitiesArray[]= [
+					"key" => $key,
+					"val" => $val,
+			];
+		}
+		
+		$this->data["facilities"]= $facilities;
+		$this->data['facilitiesJson']= $facilitiesArray;
+		
 	}
     /**
      * Display a listing of the resource.
@@ -38,10 +57,8 @@ class FacilityPlanController extends Controller
      */
     public function create()
     {
-    	$facilities= \DB::table("facilities")->lists('name','id');
     	
-    	//pack into $data because a script inside scripts.blade.php access everything through $data
- 		$data["facilities"]= $facilities;
+    	$data= $this->data;  
     	return view('admin.facility_plans.create', compact('data'));
     }
 
@@ -53,13 +70,28 @@ class FacilityPlanController extends Controller
      */
     public function store(CreateFacilityPlanRequest $request)
     {       	
-        $data= $request->all();
+        //$data= $request->all();
         $facilityKeys= array();
         
-        foreach($request->all() as $key => $val){
+        $facilityKeys= ArrayCheckHelper::ignoreRepeated($request->all(), "facility");
+        /*foreach($request->all() as $key => $val){
+        	if(preg_match("%^facility[0-9]+$%", $key) && $val !== ""){
+        		//check that a value doesn't repeat
+        		$repeatedVal= false;
+        		foreach($facilityKeys as $facilityKey){
+        			if($val == $facilityKey){
+        				$repeatedVal=true;
+        				break;
+        			}
+        		}
+        		if(!$repeatedVal)
+        			$facilityKeys[]= $val;
+        	}
+        }
+        /*foreach($request->all() as $key => $val){
         	if($key !== "_token" && $key !=="name")
         		$facilityKeys[]= $val;	
-        }       
+        } */      
         
     	$facility_plan= FacilityPlan::create($request->all());
     	$facility_plan->facilities()->attach($facilityKeys);
@@ -86,14 +118,11 @@ class FacilityPlanController extends Controller
      */
     public function edit($id)
     {
-    	$data= array();
-        $facility_plan= FacilityPlan::findOrFail($id);
-        $facilities= \DB::table("facilities")->lists('name','id');
-        $data['facility_plan']= $facility_plan;
-        $data['facilities']= $facilities;
+    	
+    	$data= $this->data;
+        $facility_plan= FacilityPlan::findOrFail($id);        
+        $data['facility_plan']= $facility_plan;        
         
-        //dd($data['facility_plan']->facilities[1]->id);
-        //dd($data['facilities']);
         return view('admin.facility_plans.edit', compact('data'));
     }
 
@@ -106,12 +135,12 @@ class FacilityPlanController extends Controller
      */
     public function update(EditFacilityPlanRequest $request, $id)
     {
-    	$facilityKeys= array();
+    	$facilityKeys= ArrayCheckHelper::ignoreRepeated($request->all(), "facility");
     	
-    	foreach($request->all() as $key => $val){
+    	/*foreach($request->all() as $key => $val){
     		if($key !== "_token" && $key !=="name")
     			$facilityKeys[]= $val;
-    	}
+    	}*/
     	
     	
     	$facility_plan= FacilityPlan::find($id);
@@ -120,7 +149,12 @@ class FacilityPlanController extends Controller
     	 
     	$facility_plan->facilities()->sync($facilityKeys);
         
-        return redirect()->back();
+        $message= $facility_plan->name . ' updated succesfully';
+        if($request->ajax()){
+        	return $message;
+        }
+        Session::flash('message',$message);
+        return redirect()->route('admin.facility_plans.index');
     }
 
     /**
@@ -133,7 +167,7 @@ class FacilityPlanController extends Controller
     {
         $facility= FacilityPlan::findOrFail($id);
         $facility->delete();
-        $message= "El Servicio ".$facility->name.' fue eliminado';
+        $message= $facility->name.' removed succesfully';
         if($request->ajax()){
         	return $message;
         }

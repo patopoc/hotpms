@@ -5,15 +5,15 @@
 <div class="row">
 	<div class="col-lg-6">
 		<div class="panel panel-default">
-			<div class="panel-heading">New Service Plan</div>
+			<div class="panel-heading">New Role</div>
 			<div class="panel-body">
 			
-			@include('admin.facility_plans.partials.messages')
+			@include('admin.roles.partials.messages')
 			
-			{!!Form::open(['route' => 'admin.facility_plans.store', 'method' => 'post'])!!}
-					@include('admin.facility_plans.partials.fields')
-					@include('admin.facility_plans.partials.scripts')
-					<button type="submit" class="btn btn-default">Create Service Plan</button>
+			{!!Form::open(['route' => 'admin.roles.store', 'method' => 'post'])!!}
+					@include('admin.roles.partials.fields')
+					@include('admin.roles.partials.scripts')
+					<button type="submit" class="btn btn-default">Create</button>
 			{!!Form::close()!!}
 			</div>
 		</div>
@@ -21,4 +21,4 @@
 </div>
 </div>
 @endsection
-@include('main')
+@include('menu')

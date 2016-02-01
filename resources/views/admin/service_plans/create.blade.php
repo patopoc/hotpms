@@ -22,5 +22,5 @@
 </div>
 @endsection
 
-
+@include('commonscripts')
 @include('menu')

@@ -29,7 +29,7 @@ class EditRoomTypeRequest extends Request
     public function rules()
     {
         return [
-        		'name' => 'required | unique:rates,name,'. $this->route->getParameter('rate'),
+        		'name' => 'required | unique:rates,name,'. $this->route->getParameter('room_types'),
         		
         ];
     }

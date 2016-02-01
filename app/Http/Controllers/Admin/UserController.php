@@ -10,12 +10,34 @@ use Hotpms\User;
 use Hotpms\Country;
 use Hotpms\Person;
 use Hotpms\Http\Requests\CreateUserRequest;
+use Illuminate\Support\Facades\Session;
+use Hotpms\Http\Requests\EditUserRequest;
+use Hotpms\Helpers\ArrayCheckHelper;
 
 class UserController extends Controller
 {
+	private $data=null;
 	public function __construct(){
 	
 		$this->middleware('access_control');
+		$properties= \DB::table('property_settings')->lists('name','id');
+		
+		//property array but formatted for better use inside javascript
+		$propArray[]= array(
+				"key" => 0,
+				"val" => "Select Property"
+		);
+		foreach ($properties as $key => $val){
+			$propArray[]= [
+				"key" => $key,
+				"val" => $val,					
+			];
+		}
+		$data['properties']= $properties;
+		$data['propertiesJson']= $propArray;
+		$data['countries']= \DB::table('countries')->lists('name', 'country_code');
+		$data['roles']= \DB::table('roles')->lists('name', 'id');
+		$this->data= $data;	
 	}
     /**
      * Display a listing of the resource.
@@ -36,10 +58,8 @@ class UserController extends Controller
      */
     public function create()
     {
-    	$data['properties']= \DB::table('property_settings')->lists('name','id');
-    	$data['countries']= \DB::table('countries')->lists('name', 'country_code');
-    	$data['roles']= \DB::table('roles')->lists('name', 'id');
-        return view('admin.users.create', compact('data'));
+    	$data= $this->data;
+    	return view('admin.users.create', compact('data'));
     }
 
     /**
@@ -52,8 +72,10 @@ class UserController extends Controller
     {    	
     	
     	$propertyKeys= array();
+    	
+    	$propertyKeys= ArrayCheckHelper::ignoreRepeated($request->all(), "property");
 			
-    	foreach($request->all() as $key => $val){
+    	/*foreach($request->all() as $key => $val){
     		if(preg_match("%^property[0-9]+$%", $key) && $val !== ""){
     			//check that a value doesn't repeat
     			$repeatedProperty= false;
@@ -66,7 +88,7 @@ class UserController extends Controller
     			if(!$repeatedProperty)
     				$propertyKeys[]= $val;
     		}
-    	}    	
+    	}   */ 	
     	
     	if(count(Person::where('ci',$request->get('ci'))->get()) == 0){
     		Person::create([
@@ -116,9 +138,7 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::findOrFail($id);
-        $data['properties']= \DB::table('property_settings')->lists('name','id');
-        $data['countries']= \DB::table('countries')->lists('name', 'country_code');
-        $data['roles']= \DB::table('roles')->lists('name', 'id');
+        $data= $this->data;
         $data['user']= $user;
 		return view('admin.users.edit', compact('data'));
     }
@@ -130,8 +150,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EditUserRequest $request, $id)
     {
+    	$propertyKeys= ArrayCheckHelper::ignoreRepeated($request->all(), "property");
     	$person= Person::where('ci',$request->get('ci'))->get()->first();
     	$person->fill([
     			'ci' => $request->get('ci'),
@@ -155,7 +176,16 @@ class UserController extends Controller
         ]);
 		$user->save();
 		
-		return redirect()->back();
+		$user->properties()->sync();
+		
+		$message= $user->username . ' updated successfully';
+		if($request->ajax()){
+			return $message;
+		}
+		
+		Session::flash('message', $message);
+		
+		return redirect()->route('admin.users.index');
     }
 
     /**
@@ -170,7 +200,7 @@ class UserController extends Controller
 		
 		$user->delete();
 		
-		$message= 'El usuario ' . $user->username . ' ha sido eliminado';
+		$message= $user->username . ' removed successfully';
 		if($request->ajax()){
 			return $message;
 		}

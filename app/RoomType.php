@@ -3,6 +3,7 @@
 namespace Hotpms;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\File;
 
 class RoomType extends Model
 {
@@ -35,5 +36,13 @@ class RoomType extends Model
     
     public function pictures(){
     	return $this->hasMany('Hotpms\RoomPicture','id_room_types', 'id');
+    }
+    
+    public function removePictures(){
+    	foreach($this->pictures as $picture){
+    		if(! unlink(public_path() . $picture->url))
+    			dd("fuck " . public_path() . $picture->url);
+    		$picture->delete();
+    	}
     }
 }

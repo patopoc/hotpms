@@ -235,6 +235,11 @@ class BookingController extends Controller
     	]);
     	$booking->save();
     	 
+    	$message= "Booking " . $booking->reference_code . ' updated succesfully';
+    	if($request->ajax()){
+    		return $message;
+    	}
+    	Session::flash('message',$message);    	
     	
     	return redirect()->route('admin.booking.index');
     }
@@ -252,6 +257,12 @@ class BookingController extends Controller
         $booking->status='c';
         $booking->save();
         
+        $message= "Booking " . $booking->reference_code . ' removed succesfully';
+        if($request->ajax()){
+        	return $message;
+        }
+        Session::flash('message',$message);
+                
         return redirect()->route('admin.booking.index');
     }
 }

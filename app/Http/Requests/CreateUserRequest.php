@@ -23,7 +23,9 @@ class CreateUserRequest extends Request {
 	{
 		return [
 			'username'=> 'required|unique:users,username',
-			'password' => 'required| confirmed',		
+			'password' => 'required| confirmed',
+			'property0' => 'required',
+			'id_role' => 'required',
 			
 		];
 	}

@@ -5,7 +5,7 @@
 
 $(document).ready(function(){
 
-	var propertyCounter=0;	
+	/*var propertyCounter=0;	
 
 	addProperty= function(el){
 
@@ -18,7 +18,7 @@ $(document).ready(function(){
 			
 			$("#properties-container").append('<div class="form-group">' + selectElem + "</div>");	
 		}
-	};
+	};*/
 	
 	$('#check_in').datetimepicker({
 		format: 'YYYY/MM/DD'

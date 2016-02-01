@@ -88,7 +88,12 @@ class FacilitiesController extends Controller
         $facility->fill($request->all());
         $facility->save();
         
-        return redirect()->back();
+        $message= $facility->name.' updated succesfully';
+        if($request->ajax()){
+        	return $message;
+        }
+        Session::flash('message',$message);
+        return redirect()->route('admin.facilities.index');
     }
 
     /**
@@ -101,7 +106,7 @@ class FacilitiesController extends Controller
     {
         $facility= Facility::findOrFail($id);
         $facility->delete();
-        $message= "El Servicio ".$facility->name.' fue eliminado';
+        $message= $facility->name.' removed succesfully';
         if($request->ajax()){
         	return $message;
         }

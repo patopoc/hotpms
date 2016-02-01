@@ -10,6 +10,7 @@ use Hotpms\MenuHelper;
 use Hotpms\Module;
 use Hotpms\Menu;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 
 class MenuController extends Controller
 {
@@ -103,6 +104,14 @@ class MenuController extends Controller
         $menuItem->fill($request->all());
         $menuItem->save();
         
+        $message= $menuItem->name. ' updated successfully';
+        
+        if($request->ajax()){
+        	return $message;
+        }
+        
+        Session::flash('message', $message);        
+        
         return redirect()->route('admin.menus.index');
     }
 
@@ -112,12 +121,20 @@ class MenuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         $menuItem= Menu::findOrFail($id);
+        if($menuItem->type == "section"){
+        	$items= Menu::where('id_section', $menuItem->id)->get();
+        	if($items !== null){
+        		foreach($items as $item)
+        			$item->delete();
+        	}
+        }
+        
         $menuItem->delete();
         
-        $message= $menuItem->name. ' ha sido eliminado';
+        $message= $menuItem->name. ' removed successfully';
         
         if($request->ajax()){
         	return $message;

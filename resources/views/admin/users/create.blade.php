@@ -21,4 +21,6 @@
 </div>
 </div>
 @endsection
+
+@include('commonscripts')
 @include('menu')

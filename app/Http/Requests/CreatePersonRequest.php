@@ -3,10 +3,9 @@
 namespace Hotpms\Http\Requests;
 
 use Hotpms\Http\Requests\Request;
-use Illuminate\Support\Facades\Input;
 
-class CreateRoomRequest extends Request
-{	
+class CreatePersonRequest extends Request
+{
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -23,10 +22,10 @@ class CreateRoomRequest extends Request
      * @return array
      */
     public function rules()
-    {    	
+    {
         return [
-        		'id_property' => 'required | unique:rooms,id_property,null,id,room_type,' . Input::get('room_type'),    
-        		//'pictures' => 'required | mimes:jpeg,jpg,bmp,png'
+        		'ci' => 'required | unique:people,ci',
+        		'email'=> 'required | unique:people,email',
         ];
     }
 }

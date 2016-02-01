@@ -13,6 +13,8 @@ use Hotpms\Rate;
 use Illuminate\Support\Facades\Route;
 use Hotpms\Module;
 use Hotpms\Role;
+use Hotpms\Http\Requests\CreateRoleRequest;
+use Hotpms\Http\Requests\EditRoleRequest;
 
 class RoleController extends Controller
 {
@@ -51,7 +53,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        return view('admin.rate.create');
+        return view('admin.roles.create');
     }
 
     /**
@@ -60,11 +62,11 @@ class RoleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateRateRequest $request)
+    public function store(CreateRoleRequest $request)
     {    	
     	
-        Rate::create($request->all());
-        return \Redirect::route('admin.rate.index');
+        $role= Role::create($request->all());
+        return \Redirect::route('admin.role_details.show', $role->id);
     }
 
     /**
@@ -86,8 +88,8 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        $rate= Rate::findOrFail($id);
-        return view('admin.rate.edit', compact('rate'));
+        $role= Role::findOrFail($id);
+        return view('admin.roles.edit', compact('role'));
     }
 
     /**
@@ -97,13 +99,17 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(EditRateRequest $request, $id)
+    public function update(EditRoleRequest $request, $id)
     {
-        $rate= Rate::findOrFail($id);
-        $rate->fill($request->all());
-        $rate->save();
-        
-        return redirect()->back();
+        $role= Role::findOrFail($id);
+        $role->fill($request->all());
+        $role->save();
+        $message= $role->name.' updated successfully';
+        if($request->ajax()){
+        	return $message;
+        }
+        Session::flash('message',$message);
+        return redirect()->route('admin.roles.index');
     }
 
     /**
@@ -114,13 +120,13 @@ class RoleController extends Controller
      */
     public function destroy($id, Request $request)
     {
-        $rate= Rate::findOrFail($id);
-        $rate->delete();
-        $message= "La propiedad ".$rate->name.' fue eliminada';
+        $role= Role::findOrFail($id);
+        $role->delete();
+        $message= $role->name.' removed successfully';
         if($request->ajax()){
         	return $message;
         }
         Session::flash('message',$message);
-        return redirect()->route('admin.rate.index');
+        return redirect()->route('admin.roles.index');
     }
 }

@@ -5,12 +5,12 @@
 <div class="row">
 <div class="col-md-10 col-md-offset-1">
 <div class="panel panel-default">
-<div class="panel-heading">Users</div>
+<div class="panel-heading">People</div>
 @if(Session::has('message'))
 	<p class="alert alert-success"> {{Session::get('message')}}</p>
 @endif
 	<p>
-		<a class="btn btn-info" href="{{ route('admin.people.create') }}" role="button">Nuevo</a>
+		<a class="btn btn-info" href="{{ route('admin.people.create') }}" role="button">New</a>
 	</p>	
 	
 <div class="panel-body">
@@ -28,5 +28,6 @@
 
 @endsection
 
+@include('commonscripts')
 @include('admin.people.partials.scripts')
 @include('menu')

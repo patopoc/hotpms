@@ -88,7 +88,12 @@ class ServicesController extends Controller
         $service->fill($request->all());
         $service->save();
         
-        return redirect()->back();
+        $message= $service->name.' updated successfully';
+        if($request->ajax()){
+        	return $message;
+        }
+        Session::flash('message',$message);
+        return redirect()->route('admin.services.index');
     }
 
     /**
@@ -101,7 +106,7 @@ class ServicesController extends Controller
     {
         $service= Service::findOrFail($id);
         $service->delete();
-        $message= "El Servicio ".$service->name.' fue eliminado';
+        $message= $service->name.' removed successfully';
         if($request->ajax()){
         	return $message;
         }

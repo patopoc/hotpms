@@ -88,7 +88,13 @@ class BedTypeController extends Controller
         $bedtype->fill($request->all());
         $bedtype->save();
         
-        return redirect()->back();
+        $message= "Booking " . $bedtype->type . ' updated succesfully';
+        if($request->ajax()){
+        	return $message;
+        }
+        Session::flash('message',$message);
+         
+        return redirect()->route('admin.bed_types.index');        
     }
 
     /**

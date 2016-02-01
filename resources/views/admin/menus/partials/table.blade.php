@@ -26,7 +26,7 @@
             </td>
             <td>
 				<a href="{{ route('admin.menus.edit', $menuSection['section']->id) }}"><span class="glyphicon glyphicon-pencil"></span>Editar</a>
-				<a href="#" class="btn-delete"><span class="glyphicon glyphicon-minus-sign"></span>Eliminar</a>
+				
 			</td>
 		</tr>					
 		@endforeach	

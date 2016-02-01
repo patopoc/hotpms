@@ -9,6 +9,8 @@ use Hotpms\Http\Controllers\Controller;
 use Hotpms\Person;
 use Illuminate\Support\Facades\Session;
 use Webpatser\Countries\Countries;
+use Hotpms\Http\Requests\CreatePersonRequest;
+use Hotpms\Http\Requests\EditPersonRequest;
 
 
 class PeopleController extends Controller
@@ -42,8 +44,8 @@ class PeopleController extends Controller
      */
     public function create()
     {    	   	
-    	$countriesShortList= $this->countriesShortList;
-    	return view('admin.people.create', compact('countriesShortList'));
+    	$data['countries']= $this->countriesShortList;
+    	return view('admin.people.create', compact('data'));
     }
 
     /**
@@ -52,7 +54,7 @@ class PeopleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreatePersonRequest $request)
     {
         Person::create($request->all());
         
@@ -92,7 +94,7 @@ class PeopleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EditPersonRequest $request, $id)
     {
         $person= Person::findOrFail($id);
         $person->fill($request->all());

@@ -3,14 +3,9 @@
 namespace Hotpms\Http\Requests;
 
 use Hotpms\Http\Requests\Request;
-use Illuminate\Routing\Route;
 
-class EditBedTypeRequest extends Request
+class CreateRoleRequest extends Request
 {
-	private $route;
-	public function __construct(Route $route){
-		$this->route= $route;
-	}
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -29,7 +24,7 @@ class EditBedTypeRequest extends Request
     public function rules()
     {
         return [
-        		'type' => 'required | unique:rates,name,'. $this->route->getParameter('bed_types'),
+        		'name' => 'required | unique:roles,name',        		
         		
         ];
     }

@@ -9,9 +9,9 @@
     
 </div>
 <div class="form-group">
- 	{!! Form::label('id_property', 'Service Plan') !!}
- 	@if(isset($room))
- 	{!! Form::select('id_property', $data["properties"], $room->name, ['class' => 'form-control', 'placeholder' => 'Select Property']) !!}
+ 	{!! Form::label('id_property', 'Property') !!}
+ 	@if(isset($data['room']))
+ 	{!! Form::select('id_property', $data["properties"], $data['room']->name, ['class' => 'form-control', 'placeholder' => 'Select Property']) !!}
  	@else
  	{!! Form::select('id_property', $data["properties"], null, ['class' => 'form-control', 'placeholder' => 'Select Property']) !!}	 	
     @endIf
@@ -22,12 +22,12 @@
     
 </div>
 <div class="form-group">
- 	{!! Form::label('id_rate', 'Service Plan') !!}
+ 	{!! Form::label('id_rate', 'Rate') !!}
  	{!! Form::select('id_rate', $data["rate"], null, ['class' => 'form-control', 'placeholder' => 'Select Rate']) !!}	 	
     
 </div>
 <div class="form-group">
- 	{!! Form::label('id_facilities_plan', 'Service Plan') !!}
+ 	{!! Form::label('id_facilities_plan', 'Facility Plan') !!}
  	{!! Form::select('id_facilities_plan', $data["facility_plans"], null, ['class' => 'form-control', 'placeholder' => 'Select Facility Plan']) !!}	 	
     
 </div>
@@ -53,9 +53,9 @@
 </div>
 <div class="form-group">
  	{!! Form::label('available', 'Available') !!}
- 	@if(isset($room)){
- 	{!! Form::select('available', ["1" => "YES", "0" => "NO"], $room->available, ['class' => 'form-control', 'placeholder' => 'Select Bed Type']) !!}
+ 	@if(isset($data['room'])){
+ 	{!! Form::select('available', ["1" => "YES", "0" => "NO"], $data['room']->available, ['class' => 'form-control', 'placeholder' => 'Availability']) !!}
  	@else
- 	{!! Form::select('available', ["1" => "YES", "0" => "NO"], null, ['class' => 'form-control', 'placeholder' => 'Select Bed Type']) !!}	 	
+ 	{!! Form::select('available', ["1" => "YES", "0" => "NO"], null, ['class' => 'form-control', 'placeholder' => 'Availability']) !!}	 	
     @endif
 </div>

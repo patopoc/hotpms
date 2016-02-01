@@ -29,7 +29,7 @@ class EditFacilityRequest extends Request
     public function rules()
     {
         return [
-        		'name' => 'required | unique:services,name,'. $this->route->getParameter('services'),        				
+        		'name' => 'required | unique:services,name,'. $this->route->getParameter('facilities'),        				
         		
         ];
     }
