@@ -1,4 +1,4 @@
-@extends('app')
+@extends('main')
 
 @section('content')
 <div class="container">
@@ -26,6 +26,7 @@
 @endsection
 
 @include('admin.people.partials.scripts')
+@include('commonscripts')
 @include('menu')
 
 

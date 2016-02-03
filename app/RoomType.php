@@ -20,7 +20,9 @@ class RoomType extends Model
     					'size', 'id_bed_type', 
     					'id_room_picture', 
     					'cancelation_fee',
-    					'available'];
+    					'available',
+    					'occupied'
+    ];
     
     public function servicePlans(){
     	return $this->hasOne("Hotpms\ServicePlan", "id", "id_service_plan");

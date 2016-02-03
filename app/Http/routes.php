@@ -21,7 +21,7 @@ Route::controllers([
 
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('admin.dashboard.index');
 });
 
 
@@ -36,7 +36,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','set_current_property
 	Route::get('booking/canceled',["as" => "admin.booking.canceled",'uses' => 'BookingController@canceled']);
 	Route::get('booking/arrival', ["as" => "admin.booking.arrival" ,'uses' => 'BookingController@arrival']);
 	
-	//the middleware for resource is defined within every controller
+	//the middleware for resource is defined within every controller constructor
+	Route::resource('dashboard', 'DashboardController');
 	Route::resource('people', 'PeopleController');
 	Route::resource('booking', 'BookingController');
 	Route::resource('property','PropertyController');

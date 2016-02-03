@@ -3,7 +3,8 @@
 			<th>User</th>
 			<th>Name</th>			
 			<th>Property</th>
-			<th>Role</th>			
+			<th>Role</th>	
+			<th>Actions</th>		
 		</tr>
 				
 		@foreach ($users as $user)
@@ -18,8 +19,8 @@
 			</td>
 			<td> {{$user->role->name or ''}}</td>
 			<td>
-				<a href="{{route('admin.users.edit', $user)}}"><span class="glyphicon glyphicon-pencil"></span>Editar</a>
-				<a href="#" class="btn-delete"><span class="glyphicon glyphicon-minus-sign"></span>Eliminar</a>
+				<a href="{{route('admin.users.edit', $user)}}" class='btn btn-warning btn-sm' role='button'><span class="glyphicon glyphicon-pencil"></span></a>
+				<a href="#" class="btn-delete btn btn-danger btn-sm" role='button'><span class="glyphicon glyphicon-minus-sign"></span></a>
 			</td>
 		</tr>	
 		@endforeach

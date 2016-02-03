@@ -2,6 +2,7 @@
 		<tr>
 			<th>Name</th>
 			<th>Price</th>
+			<th>Actions</th>
 			
 		</tr>
 		@foreach($menu as $menuSection)
@@ -16,8 +17,8 @@
 	                        	<a href="#"><i class="fa {{$menuItem->icon}}  fa-fw"></i>{{$menuItem->description}}</a>
 	                        </td>
 	                        <td>
-								<a href="{{ route('admin.menus.edit', $menuItem->id) }}"><span class="glyphicon glyphicon-pencil"></span>Editar</a>
-								<a href="#" class="btn-delete"><span class="glyphicon glyphicon-minus-sign"></span>Eliminar</a>
+								<a href="{{ route('admin.menus.edit', $menuItem->id) }}" class='btn btn-warning btn-sm' role='button'><span class="glyphicon glyphicon-pencil"></span></a>
+								<a href="#" class="btn-delete btn btn-danger btn-sm" role='button'><span class="glyphicon glyphicon-minus-sign"></span></a>
 							</td>
 	                   </tr>
                     @endforeach
@@ -25,7 +26,7 @@
                 
             </td>
             <td>
-				<a href="{{ route('admin.menus.edit', $menuSection['section']->id) }}"><span class="glyphicon glyphicon-pencil"></span>Editar</a>
+				<a href="{{ route('admin.menus.edit', $menuSection['section']->id) }}" class='btn btn-warning btn-sm' role='button'><span class="glyphicon glyphicon-pencil"></span></a>
 				
 			</td>
 		</tr>					

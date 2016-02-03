@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Hotpms\Http\Requests;
 use Hotpms\Http\Controllers\Controller;
 use Hotpms\Booking;
-use Hotpms\Property;
 use Illuminate\Database\Eloquent\Model;
 use Hotpms\Person;
 use Illuminate\Support\Facades\Auth;
@@ -17,8 +16,8 @@ use Hotpms\Helpers\DateHelper;
 class BookingController extends Controller
 {
 	public function __construct(){
-	
-		$this->middleware('access_control');
+		
+		//$this->middleware('access_control');
 	}
     /**
      * Display a listing of the resource.
@@ -135,7 +134,7 @@ class BookingController extends Controller
         }while(count(Booking::where('reference_code',$reference_code)->get()) > 0);
         $booking->reference_code= $reference_code;
         $booking->save();
-               
+        //$booking->roomType->occupied= 1;               
         
         return redirect()->route('admin.booking.index');
     }
@@ -178,7 +177,7 @@ class BookingController extends Controller
         $data['countries']= \DB::table('countries')->lists('name', 'country_code');
         $currentProperty= session('current_property')->id;
         $data['room_types']= \DB::table('room_types')->where('id_property', $currentProperty)
-											        ->where('available',1)
+											        ->where('available',1)											        
 											        ->lists('name', 'id');
         $data['rate_plans']= \DB::table('rates')->lists('name', 'id');         
         $data['disabledDates']= json_encode($this->getDisabledDates());
@@ -216,6 +215,7 @@ class BookingController extends Controller
     		]);
     	$person->save();
     	$booking= Booking::findOrFail($id);
+    	//$booking->roomType->occupied= 0;
     	$booking->fill([
     			'id_property' => session('current_property')->id,
     			'id_user' => Auth::user()->id,
@@ -234,7 +234,7 @@ class BookingController extends Controller
     	
     	]);
     	$booking->save();
-    	 
+    	//$booking->roomType->occupied= 1;
     	$message= "Booking " . $booking->reference_code . ' updated succesfully';
     	if($request->ajax()){
     		return $message;

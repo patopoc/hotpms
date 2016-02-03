@@ -9,6 +9,7 @@
 			<th>Timezone</th>
 			<th>Conditions</th>
 			<th>Pet Rules</th>
+			<th>Actions</th>
 		</tr>
 				
 		@foreach ($properties as $property)
@@ -23,8 +24,8 @@
 			<td> {{$property->conditions or ''}}</td>
 			<td> {{$property->pet_rules or ''}}</td>			
 			<td>
-				<a href="{{ route('admin.property.edit', $property) }}"><span class="glyphicon glyphicon-pencil"></span>Editar</a>
-				<a href="#" class="btn-delete"><span class="glyphicon glyphicon-minus-sign"></span>Eliminar</a>
+				<a href="{{ route('admin.property.edit', $property) }}" class='btn btn-warning btn-sm' role='button'><span class="glyphicon glyphicon-pencil"></span></a>
+				<a href="#" class="btn-delete btn btn-danger btn-sm" role='button'><span class="glyphicon glyphicon-minus-sign"></span></a>
 			</td>
 		</tr>	
 		@endforeach

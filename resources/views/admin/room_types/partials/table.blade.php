@@ -5,7 +5,7 @@
 			<th>Size</th>
 			<th>Property</th>
 			<th>Available</th>
-			<th>Action</th>
+			<th>Actions</th>
 			
 			
 		</tr>
@@ -18,8 +18,8 @@
 			<td> {{$room_type->property->name or ''}}</td>
 			<td> {{$room_type->available or ''}}</td>
 			<td>
-				<a href="{{ route('admin.room_types.edit', $room_type) }}"><span class="glyphicon glyphicon-pencil"></span>Editar</a>
-				<a href="#" class="btn-delete"><span class="glyphicon glyphicon-minus-sign"></span>Eliminar</a>
+				<a href="{{ route('admin.room_types.edit', $room_type) }}" class='btn btn-warning btn-sm' role='button'><span class="glyphicon glyphicon-pencil"></span></a>
+				<a href="#" class="btn-delete btn btn-danger btn-sm" role='button'><span class="glyphicon glyphicon-minus-sign"></span></a>
 			</td>
 		</tr>	
 		<tr>

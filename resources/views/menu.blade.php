@@ -21,8 +21,8 @@ $menu= MenuHelper::create();
                         
                         
                         <li>
-                            <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
-                        </li>
+                            <a href="{{route('admin.dashboard.index')}}"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                        </li>	
 						@foreach($menu as $menuSection)
 							<li>
 							@if($menuSection['section']->name != 'toplevel')

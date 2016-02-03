@@ -1,5 +1,22 @@
 @section('commonscripts')
-<div id="confirm-delete"></div>
+
+<div class="modal fade" id="confirm-delete-modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Delete Item</h4>
+      </div>
+      <div class="modal-body">
+        <p>You are about to delete the item &hellip;</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button type="button" id="delete-ok" class="btn btn-primary">Ok</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 <script type="text/javascript">
 
@@ -25,32 +42,24 @@ $(document).ready(function(){
 	});
 	
 	$.fn.confirmDelete=function (){
-		 $( "#confirm-delete" ).dialog({
-			 resizable: false,
-			 height:140,
-			 modal: true,
-			 buttons: {
-				  Ok: function() {
-					if(url !== null){
-						$.post(url, data, function(result){
-							
-							row.fadeOut();
-						}).fail(function(){
-							alert("no se borro usuario");
-						});
-						 $( this ).dialog( "close" );
-					}
-					else if($("#form-delete") !== null){
-						$("#form-delete")[0].submit();						
-					}
-				 },
-				 Cancel: function() {
-					 $( this ).dialog( "close" );
-					 
-				 }
-			 }
-		});
+		 $("#confirm-delete-modal").modal('show');
 	} 
+
+	$("#delete-ok").click(function(){
+		if(url !== null){
+			$.post(url, data, function(result){
+				
+				row.fadeOut();
+			}).fail(function(){
+				alert("no se borro usuario");
+			});
+			 
+		}
+		else if($("#form-delete") !== null){
+			$("#form-delete")[0].submit();						
+		}
+		$("#confirm-delete-modal").modal("hide");
+	});
 
 	var itemCounter = -1;
 		

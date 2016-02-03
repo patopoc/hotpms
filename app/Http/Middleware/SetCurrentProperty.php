@@ -20,8 +20,15 @@ class SetCurrentProperty
     {
     	
     	if(! $request->session()->has('current_property')){
-	    	$property= Property::findOrFail(Auth::user()->default_property);
-	    	$request->session()->put('current_property', $property);
+    		if(Auth::user()->username == 'admin'){
+    			$properties= Property::all();
+    			Auth::user()->properties()->sync($properties);
+    			$request->session()->put('current_property', $properties[0]);
+    		}
+    		else{
+		    	$property= Property::findOrFail(Auth::user()->default_property);
+		    	$request->session()->put('current_property', $property);
+    		}
     	}
     	
     	if(!$request->session()->has('available_properties')){

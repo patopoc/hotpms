@@ -331,8 +331,7 @@
 
     <!-- Bootstrap Core JavaScript -->
     <script src="{{ asset('bower_components/bootstrap/js/transition.js') }}"></script>
-    <script src="{{ asset('bower_components/bootstrap/js/collapse.js') }}"></script>
-    
+    <script src="{{ asset('bower_components/bootstrap/js/collapse.js') }}"></script>    
     <script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
     
     <!-- Boostrap datetimepicker -->
@@ -347,6 +346,10 @@
            
     <!-- JQuery Gantt -->
     <script src="{{ asset('js/jquery.fn.gantt.js') }}"></script>
+    
+    <!-- uvCharts -->
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.2.2/d3.v3.min.js"></script>
+    <script src="{{ asset('js/uvcharts.min.js') }}"></script>
     
     @yield('commonscripts')    
     @yield('scripts')
