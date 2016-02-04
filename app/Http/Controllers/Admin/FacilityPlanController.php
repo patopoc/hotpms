@@ -21,6 +21,9 @@ class FacilityPlanController extends Controller
 	public function __construct(){
 	
 		$this->middleware('access_control');
+		$currentRoute= $this->getRouter()->current()->getAction()["as"];
+		$this->middleware('set_current_section:'.$currentRoute);
+		
 		$facilities= \DB::table("facilities")->lists('name','id');
 		 
 		$facilitiesArray[]= array(

@@ -1,3 +1,6 @@
+<?php 
+use Illuminate\Support\Facades\Session;
+?>
 @section('commonscripts')
 
 <div class="modal fade" id="confirm-delete-modal" tabindex="-1" role="dialog">
@@ -47,11 +50,15 @@ $(document).ready(function(){
 
 	$("#delete-ok").click(function(){
 		if(url !== null){
-			$.post(url, data, function(result){
-				
-				row.fadeOut();
-			}).fail(function(){
-				alert("no se borro usuario");
+			$.post(url, data, function(result){	
+				console.log(result);			
+				if(result.code == "23000"){
+					alert(result.message);
+				}
+				else
+					row.fadeOut();
+			}).fail(function(result){
+				alert(result);
 			});
 			 
 		}

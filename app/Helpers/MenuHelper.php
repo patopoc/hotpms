@@ -1,6 +1,8 @@
 <?php
-namespace Hotpms;
+namespace Hotpms\Helpers;
 use Illuminate\Support\Facades\Auth;
+use Hotpms\Menu;
+use Hotpms\RoleDetail;
 class MenuHelper{
 	
 	public static function create(){
@@ -10,11 +12,16 @@ class MenuHelper{
 	}
 	
 	public static function getMenuItems($roleId=null){
-		$sections= Menu::where('type','section')->get();
+		$sections= Menu::where('type','section')
+						->orderBy('order_index', 'asc')
+						->get();
 		$menu= array();
 		foreach($sections as $section){
 			$allowedItemsCount = 0;
-			$menuItems= Menu::where('type','item')->where('id_section',$section->id)->get();
+			$menuItems= Menu::where('type','item')
+							->where('id_section',$section->id)
+							->orderBy('order_index', 'asc')
+							->get();
 			$filteredItems= array();
 			foreach($menuItems as $item){
 				if($roleId !== null){

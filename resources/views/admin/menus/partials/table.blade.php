@@ -1,18 +1,17 @@
 <table class="table table-striped">
 		<tr>
 			<th>Name</th>
-			<th>Price</th>
 			<th>Actions</th>
 			
 		</tr>
 		@foreach($menu as $menuSection)
-		<tr>
+		<tr data-id="{{$menuSection['section']->id}}">
 			<td>
 				
             	<a href="#"><i class="fa {{$menuSection['section']->icon}} fa-fw"></i> {{$menuSection['section']->description}}<span class="fa arrow"></span></a>
                 	<table class="table table-striped">
                 	@foreach($menuSection['items'] as $menuItem)
-	                	<tr>
+	                	<tr data-id="{{$menuItem->id}}">
 	                    	<td>
 	                        	<a href="#"><i class="fa {{$menuItem->icon}}  fa-fw"></i>{{$menuItem->description}}</a>
 	                        </td>

@@ -20,6 +20,9 @@ class RoomTypeController extends Controller
 	
 	public function __construct(){
 		$this->middleware('access_control');
+		$currentRoute= $this->getRouter()->current()->getAction()["as"];
+		$this->middleware('set_current_section:'.$currentRoute);
+		
 		$this->data['service_plans']= \DB::table('service_plan')->lists('name','id');
 		$this->data['properties']= \DB::table('property_settings')->lists('name','id');
 		$this->data['facility_plans']= \DB::table('facilities_plan')->lists('name','id');

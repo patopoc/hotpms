@@ -1,15 +1,6 @@
 @extends('main')
 
 @section('content')
-<!-- div class="container"-->
-<div class="row">
-	<div class="col-lg-12">
-    	<h1 class="page-header">Dashboard</h1>
-    </div>
-	<!-- /.col-lg-12 -->
-</div>
-<!-- /.row --> 
-
 
 @if(Session::has('message'))
 	<p class="alert alert-success"> {{Session::get('message')}}</p>
@@ -127,10 +118,10 @@
                                             <tbody>
                                                 @foreach($data['lastBookings'] as $booking)
                                                 <tr>
-                                                	<td>{{$booking->personData->full_name}}</td>
-                                                	<td>{{$booking->check_in}}</td>
-                                                	<td>{{$booking->number_of_days}}</td>
-                                                	<td>{{$booking->roomType->name}}</td>
+                                                	<td>{{$booking->personData->full_name or ''}}</td>
+                                                	<td>{{$booking->check_in or ''}}</td>
+                                                	<td>{{$booking->number_of_days or ''}}</td>
+                                                	<td>{{$booking->roomType->name or ''}}</td>
                                                 </tr>                                                
                                                 @endforeach
                                             </tbody>

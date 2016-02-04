@@ -1,9 +1,8 @@
 @extends('main')
 
 @section('content')
-<div class="container">
 <div class="row">
-<div class="col-mg-10">
+<div class="col-lg-10">
 <div class="panel panel-default">
 <div class="panel-heading">Role Details</div>
 @if(Session::has('message'))

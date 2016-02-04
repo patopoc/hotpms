@@ -2,6 +2,7 @@
 		<tr>
 			<th>Name</th>
 			<th>Info</th>
+			<th>Logo</th>
 			<th>Address</th>
 			<th>Check In Time</th>
 			<th>Check Out Time</th>
@@ -16,6 +17,11 @@
 		<tr data-id="{{$property->id}}">
 			<td> {{$property->name or ''}}</td>
 			<td> {{$property->info or ''}}</td>
+			<td>
+			@if($property->logo !== null)
+				<img alt="" src="{{ asset($property->logo->url)}}">
+			@endif	
+			</td>
 			<td> {{$property->address or ''}}</td>
 			<td> {{$property->checkin_time or ''}}</td>
 			<td> {{$property->checkout_time or ''}}</td>

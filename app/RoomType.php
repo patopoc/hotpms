@@ -43,7 +43,7 @@ class RoomType extends Model
     public function removePictures(){
     	foreach($this->pictures as $picture){
     		if(! unlink(public_path() . $picture->url))
-    			dd("fuck " . public_path() . $picture->url);
+    			dd("can't delete " . public_path() . $picture->url);
     		$picture->delete();
     	}
     }

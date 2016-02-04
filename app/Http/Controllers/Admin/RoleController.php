@@ -21,6 +21,8 @@ class RoleController extends Controller
 	public function __construct(){
 	
 		$this->middleware('access_control');
+		$currentRoute= $this->getRouter()->current()->getAction()["as"];
+		$this->middleware('set_current_section:'.$currentRoute);
 	}
 	
     /**

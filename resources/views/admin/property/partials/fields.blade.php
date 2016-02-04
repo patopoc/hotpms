@@ -9,6 +9,15 @@
     
 </div>
 <div class="form-group">
+ 	{!! Form::label('logo', 'Logo') !!}
+ 	@if(isset($property) && $property->logo !== null)
+ 		<img alt="" src="{{asset($property->logo->url)}}">
+ 	@endif 	
+ 	{!! Form::file('logo', ['class' => 'form-control']) !!}	 	
+    
+</div>
+
+<div class="form-group">
  	{!! Form::label('address', 'Address') !!}
  	{!! Form::text('address', null, ['class' => 'form-control']) !!}	 	
     

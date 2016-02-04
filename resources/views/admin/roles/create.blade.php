@@ -1,9 +1,8 @@
 @extends('main')
 
 @section('content')
-<div class="container">
 <div class="row">
-	<div class="col-lg-6">
+	<div class="col-lg-8">
 		<div class="panel panel-default">
 			<div class="panel-heading">New Role</div>
 			<div class="panel-body">
@@ -13,12 +12,11 @@
 			{!!Form::open(['route' => 'admin.roles.store', 'method' => 'post'])!!}
 					@include('admin.roles.partials.fields')
 					@include('admin.roles.partials.scripts')
-					<button type="submit" class="btn btn-default">Create</button>
+					<button type="submit" class="btn btn-success">Create</button>
 			{!!Form::close()!!}
 			</div>
 		</div>
 	</div>
-</div>
 </div>
 @endsection
 @include('menu')

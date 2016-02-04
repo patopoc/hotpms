@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Session;
 use Webpatser\Countries\Countries;
 use Hotpms\Http\Requests\CreatePersonRequest;
 use Hotpms\Http\Requests\EditPersonRequest;
+use Illuminate\Database\QueryException;
 
 
 class PeopleController extends Controller
@@ -21,6 +22,8 @@ class PeopleController extends Controller
 	public function __construct(){
 		
 		$this->middleware('access_control');
+		$currentRoute= $this->getRouter()->current()->getAction()["as"];
+		$this->middleware('set_current_section:'.$currentRoute);
 		
 		$this->countriesShortList= \DB::table('countries')->lists('name', 'country_code');
 	}
@@ -99,6 +102,14 @@ class PeopleController extends Controller
         $person= Person::findOrFail($id);
         $person->fill($request->all());
         $person->save();
+        $message= $person->full_name. 'updated successfully';
+        
+        if($request->ajax()){
+        	return $message;
+        }
+        
+        Session::flash('message', $message);        
+        
         return redirect()->route('admin.people.index');
   
     }
@@ -112,12 +123,21 @@ class PeopleController extends Controller
     public function destroy($id, Request $request)
     {
         $person= Person::findOrFail($id);
-        $person->delete();
         
-        $message= $person->name. ' ha sido eliminado';
+        $message="";
+        
+        try{
+        	$person->delete();
+        	$message= $person->full_name. ' removed successfully';
+        }
+        catch(QueryException $e){
+        	if($e->getCode() == '23000'){
+        		$message= "This person can't be eliminated because another register is using its data ";
+        	}
+        }
         
         if($request->ajax()){
-        	return $message;
+        	return ['code'=>'23000', 'message' => $message];
         }
         
         Session::flash('message', $message);        

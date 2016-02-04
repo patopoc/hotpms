@@ -32,6 +32,8 @@
 	<!-- JQuery Gantt -->
 	<link href="{{ asset('dist/css/style.css') }}" rel="stylesheet">
 	
+	<!-- Custom navBar -->
+	<link href="{{ asset('dist/css/navBar.css') }}" rel="stylesheet">
 	<style type="text/css">
            
            /* Bootstrap 3.x re-reset */
@@ -46,6 +48,8 @@
            .control-element{
            		display:none;
            }
+                      
+			
     </style>
 	
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -70,7 +74,16 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">{{session('current_property')->name}}</a>
+                                
+                <a class="navbar-brand" href="{{route('admin.dashboard.index')}}">
+	                <div>
+	                
+	                @if(session('current_property')->logo !== null)                
+	                	<img style="margin-left:10px; margin-right:10px;" alt="" src="{{ asset(session('current_property')->logo->url) }}">
+	                @endif
+	                {{session('current_property')->name}}
+                	</div>
+                </a>
             </div>
             <!-- /.navbar-header -->
 			
@@ -103,7 +116,7 @@
                 @endif
                 
                 
-                <li class="dropdown">
+                <!-- li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-envelope fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
@@ -154,7 +167,7 @@
                     <!-- /.dropdown-messages -->
                 </li>
                 <!-- /.dropdown -->
-                <li class="dropdown">
+                <!-- li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-tasks fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
@@ -233,7 +246,7 @@
                     <!-- /.dropdown-tasks -->
                 </li>
                 <!-- /.dropdown -->
-                <li class="dropdown">
+                <!-- li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-bell fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
@@ -295,7 +308,7 @@
                 <!-- /.dropdown -->
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                        <i class="fa fa-user fa-fw"></i> {{auth()->user()->username}} <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
                         <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
@@ -318,6 +331,16 @@
 
         <!-- Page Content -->
         <div id="page-wrapper">
+        
+        	<!-- div class="container"-->
+			<div class="row">
+				<div class="col-lg-12">
+			    	<h1 class="page-header">{{session('current_section')->description}}</h1>
+			    </div>
+				<!-- /.col-lg-12 -->
+			</div>
+			<!-- /.row -->
+			 
             @yield('content')
         </div>
         <!-- /#page-wrapper -->
@@ -332,6 +355,7 @@
     <!-- Bootstrap Core JavaScript -->
     <script src="{{ asset('bower_components/bootstrap/js/transition.js') }}"></script>
     <script src="{{ asset('bower_components/bootstrap/js/collapse.js') }}"></script>    
+    <script src="{{ asset('bower_components/bootstrap/js/alert.js') }}"></script>
     <script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
     
     <!-- Boostrap datetimepicker -->

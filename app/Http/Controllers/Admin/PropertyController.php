@@ -10,12 +10,15 @@ use Hotpms\Property;
 use Hotpms\Http\Requests\CreatePropertyRequest;
 use Illuminate\Support\Facades\Session;
 use Hotpms\Http\Requests\EditPropertyRequest;
+use Hotpms\Helpers\PictureHelper;
 
 class PropertyController extends Controller
 {
 	public function __construct(){
 	
 		$this->middleware('access_control');
+		$currentRoute= $this->getRouter()->current()->getAction()["as"];
+		$this->middleware('set_current_section:'.$currentRoute);
 	}
     /**
      * Display a listing of the resource.
@@ -46,7 +49,11 @@ class PropertyController extends Controller
      */
     public function store(CreatePropertyRequest $request)
     {    	
-        Property::create($request->all());
+    	$pictures[]= $request->file('logo');
+    	$property= Property::create($request->all());
+    	if($pictures !== null)
+        	PictureHelper::savePictures($pictures, $property, 'logo');
+    	
         return \Redirect::route('admin.property.index');
     }
 
@@ -68,7 +75,7 @@ class PropertyController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
+    {    	
         $property= Property::findOrFail($id);
         return view('admin.property.edit', compact('property'));
     }
@@ -86,7 +93,17 @@ class PropertyController extends Controller
         $property->fill($request->all());
         $property->save();
         
-        return redirect()->back();
+        if($request->file('logo') !== null){
+        	$property->removeLogo();
+        	PictureHelper::savePictures([$request->file('logo')], $property,"logo");
+        }
+        
+        $message= $property->name.' updated successfully';
+        if($request->ajax()){
+        	return $message;
+        }
+        Session::flash('message',$message);
+        return redirect()->route('admin.property.index');
     }
 
     /**
@@ -98,8 +115,9 @@ class PropertyController extends Controller
     public function destroy($id, Request $request)
     {
         $property= Property::findOrFail($id);
+        $property->removeLogo();
         $property->delete();
-        $message= "La propiedad ".$property->name.' fue eliminada';
+        $message= $property->name.' removed successfully';
         if($request->ajax()){
         	return $message;
         }

@@ -13,7 +13,9 @@ class AvailabilityController extends Controller
 {
 	public function __construct(){
 	
-		$this->middleware('access_control');		
+		$this->middleware('access_control');	
+		$currentRoute= $this->getRouter()->current()->getAction()["as"];
+		$this->middleware('set_current_section:'.$currentRoute);
 	}
     /**
      * Display a listing of the resource.
@@ -49,8 +51,7 @@ class AvailabilityController extends Controller
     						->where('check_out', "<=", $toDate)
     						->get();
     	$rooms= RoomType::all();
-    	
-    	if($bookings !== null && count($rooms) > 0){
+    	if($bookings->count() > 0  && count($rooms) > 0){
     		foreach ($rooms as $room){
     			$booking= $bookings->where('id_room_type',$room->id)->first();
     			if($booking !== null){

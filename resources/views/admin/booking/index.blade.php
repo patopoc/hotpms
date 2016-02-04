@@ -1,20 +1,18 @@
 @extends('main')
 
 @section('content')
-<div class="container">
+<!-- div class="container"-->
 <div class="row">
-<div class="col-mg-10">
+<div class="col-lg-11">
 <div class="panel panel-default">
 <div class="panel-heading">Bookings</div>
-@if(Session::has('message'))
-	<p class="alert alert-success"> {{Session::get('message')}}</p>
-@endif
-	<p>
-		<a class="btn btn-info" href="{{ route('admin.booking.create') }}" role="button">New</a>
-	</p>	
+@include('alert')
+		
 	
 <div class="panel-body">
-	
+	<p>
+		<a class="btn btn-info" href="{{ route('admin.booking.create') }}" role="button">New</a>
+	</p>
 	@include('admin.booking.partials.table')
 	
 	
@@ -22,7 +20,7 @@
 </div>
 </div>
 </div>
-</div>
+<!-- /div-->
 {!!Form::open( ['route' => ['admin.booking.destroy', ':PERSON_ID'], 'method' => 'delete', 'id'=>'form-delete'])!!}
 {!!Form::close()!!}
 

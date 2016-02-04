@@ -85,8 +85,8 @@
 			<td> {{$booking->children or ''}}</td>
 			<td> {{$booking->total_price}}</td>
 			<td>
-				<a href="#"><span class="glyphicon glyphicon-pencil"></span>Editar</a>
-				<a href="#" class="btn-delete"><span class="glyphicon glyphicon-minus-sign"></span>Eliminar</a>
+				<a href="{{route('admin.booking.edit', $booking->id)}}" class='btn btn-warning btn-sm' role='button'><span class="glyphicon glyphicon-pencil"></span></a>
+				<a href="#" class="btn-delete btn btn-danger btn-sm" role='button'><span class="glyphicon glyphicon-minus-sign"></span></a>
 			</td>
 		</tr>	
 	@endforeach	

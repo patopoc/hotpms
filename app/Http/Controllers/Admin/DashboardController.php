@@ -12,13 +12,21 @@ use Hotpms\Helpers\DateHelper;
 
 class DashboardController extends Controller
 {
+	public function __construct(){
+	
+		$this->middleware('access_control');
+		$currentRoute= $this->getRouter()->current()->getAction()["as"];
+		$this->middleware('set_current_section:'.$currentRoute);
+	}
+    
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index()    
     {
+    	//dd($this->getRouter()->current()->getAction()["as"]);
     	$lastBookings= Booking::where('id_property',session('current_property')->id)
     							->where('status','a')
     							->orderBy('check_in', 'desc')
