@@ -23,7 +23,7 @@ class PictureHelper{
 				->withInput($request->all());
 			}
 		
-			$imageName= "room-" . $moduleModel->id . "-" . $picture->getClientOriginalName();
+			$imageName= "pic-" . $moduleModel->id . "-" . $picture->getClientOriginalName();
 			$image = Image::make($picture->getRealPath());
 			if($type == 'logo'){
 				$image->resize(50, null, function($constraint){

@@ -123,10 +123,22 @@ class RoleController extends Controller
     public function destroy($id, Request $request)
     {
         $role= Role::findOrFail($id);
-        $role->delete();
-        $message= $role->name.' removed successfully';
+    	$message="";
+        try{
+        	$role->delete();
+        	$message= trans('appstrings.item_removed', ['item' => $role->name]);
+        	Session::flash('message_type', 'success');
+        }
+        catch(\PDOException $e){
+        	$message= trans('sqlmessages.' . $e->getCode());
+        	if($message == 'sqlmessages.' . $e->getCode()){
+        		$message= trans('sqlmessages.undefined');
+        	}
+        	Session::flash('message_type', 'error');
+        }
+        
         if($request->ajax()){
-        	return $message;
+        	return ['code'=>'error', 'message' => $message];
         }
         Session::flash('message',$message);
         return redirect()->route('admin.roles.index');

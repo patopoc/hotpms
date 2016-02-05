@@ -11,7 +11,7 @@ class Property extends Model
     public $timestamps= false;
     
     protected $fillable= ['name','info','address','checkin_time','checkout_time','cancelation_policy',
-    						'timezone', 'conditions', 'pet_rules'
+    						'time_zone', 'conditions', 'pet_rules'
     ];
     
     public function pictures(){
@@ -29,5 +29,25 @@ class Property extends Model
     		$logo->delete();   
     		
     	}
+    }
+    
+    public function fullData(){
+    	$logoUrl="";
+    	if($this->logo !== null)
+    		$logoUrl= asset($this->logo->url);
+    	
+    	$data=[
+    			'name' => $this->name,
+    			'info' => $this->info,
+    			'logo' => $logoUrl,
+    			'address' => $this->address,
+    			'checkin_time' => $this->checkin_time,
+    			'checkout_time' => $this->checkout_time,
+    			'cancelation_policy' => $this->cancelation_policy,
+    			'time_zone' => $this->time_zone, 
+    			'conditions' => $this->conditions, 
+    			'pet_rules' => $this->pet_rules
+    	];
+    	return $data;
     }
 }

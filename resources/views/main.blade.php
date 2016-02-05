@@ -63,6 +63,7 @@
 
 <body>
 
+	@yield('detailbox')
     <div id="wrapper">
 
         <!-- Navigation -->
@@ -332,16 +333,17 @@
         <!-- Page Content -->
         <div id="page-wrapper">
         
-        	<!-- div class="container"-->
-			<div class="row">
-				<div class="col-lg-12">
-			    	<h1 class="page-header">{{session('current_section')->description}}</h1>
-			    </div>
-				<!-- /.col-lg-12 -->
-			</div>
-			<!-- /.row -->
-			 
-            @yield('content')
+        	<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12">
+				    	<h1 class="page-header">{{session('current_section')->description}}</h1>
+				    </div>
+					<!-- /.col-lg-12 -->
+				</div>
+				<!-- /.row -->
+				@yield('content')
+			</div>		 
+            
         </div>
         <!-- /#page-wrapper -->
 
@@ -353,9 +355,6 @@
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="{{ asset('bower_components/bootstrap/js/transition.js') }}"></script>
-    <script src="{{ asset('bower_components/bootstrap/js/collapse.js') }}"></script>    
-    <script src="{{ asset('bower_components/bootstrap/js/alert.js') }}"></script>
     <script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
     
     <!-- Boostrap datetimepicker -->

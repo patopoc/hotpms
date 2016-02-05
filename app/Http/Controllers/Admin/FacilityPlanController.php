@@ -169,10 +169,23 @@ class FacilityPlanController extends Controller
     public function destroy($id, Request $request)
     {
         $facility= FacilityPlan::findOrFail($id);
-        $facility->delete();
-        $message= $facility->name.' removed succesfully';
+        $message="";
+        
+        try{
+        	$facility->delete();
+        	$message= trans('appstrings.item_removed', ['item' => $facility->name]);
+        	Session::flash('message_type', 'success');
+        }
+        catch(\PDOException $e){
+        	$message= trans('sqlmessages.' . $e->getCode());
+        	if($message == 'sqlmessages.' . $e->getCode()){
+        		$message= trans('sqlmessages.undefined');
+        	}
+        	Session::flash('message_type', 'error');
+        }
+        
         if($request->ajax()){
-        	return $message;
+        	return ['code'=>'error', 'message' => $message];
         }
         Session::flash('message',$message);
         return redirect()->route('admin.facility_plans.index');

@@ -108,11 +108,25 @@ class BedTypeController extends Controller
     public function destroy($id, Request $request)
     {
         $bedtype= BedType::findOrFail($id);
-        $bedtype->delete();
-        $message= "La propiedad ".$bedtype->name.' fue eliminada';
-        if($request->ajax()){
-        	return $message;
+    	$message="";
+        
+        try{
+        	$bedtype->delete();
+        	$message= trans('appstrings.item_removed', ['item' => $bedtype->type]);
+        	Session::flash('message_type', 'success');
         }
+        catch(\PDOException $e){
+        	$message= trans('sqlmessages.' . $e->getCode());
+        	if($message == 'sqlmessages.' . $e->getCode()){
+        		$message= trans('sqlmessages.undefined');
+        	}
+        	Session::flash('message_type', 'error');
+        }
+        
+        if($request->ajax()){
+        	return ['code'=>'error', 'message' => $message];
+        }
+        
         Session::flash('message',$message);
         return redirect()->route('admin.bed_types.index');
     }

@@ -125,19 +125,21 @@ class PeopleController extends Controller
         $person= Person::findOrFail($id);
         
         $message="";
-        
         try{
         	$person->delete();
-        	$message= $person->full_name. ' removed successfully';
+        	$message= trans('appstrings.item_removed', ['item' => $person->full_name]);
+        	Session::flash('message_type', 'success');
         }
-        catch(QueryException $e){
-        	if($e->getCode() == '23000'){
-        		$message= "This person can't be eliminated because another register is using its data ";
+        catch(\PDOException $e){
+        	$message= trans('sqlmessages.' . $e->getCode());
+        	if($message == 'sqlmessages.' . $e->getCode()){
+        		$message= trans('sqlmessages.undefined');
         	}
+        	Session::flash('message_type', 'error');
         }
         
         if($request->ajax()){
-        	return ['code'=>'23000', 'message' => $message];
+        	return ['code'=>'error', 'message' => $message];
         }
         
         Session::flash('message', $message);        

@@ -28,19 +28,20 @@ class BookingController extends Controller
      */
     public function index()
     {
-        $bookings= Booking::where('status','a')
+        $data['bookings']= Booking::where('status','a')
         					->where('id_property', session('current_property')->id)
         					->get();
-        return view('admin.booking.index',compact('bookings'));
+        $data['status']= 'a';
+        return view('admin.booking.index',compact('data'));
         
     }
 
     public function canceled(){
-    	$bookings= Booking::where('status','c')
+    	$data['bookings']= Booking::where('status','c')
         					->where('id_property', session('current_property')->id)
         					->get();
-        
-        return view('admin.booking.index',compact('bookings'));
+        $data['status']= 'c';
+        return view('admin.booking.index',compact('data'));
     }
     
     public function arrival(){
@@ -50,6 +51,7 @@ class BookingController extends Controller
     	$data['tomorrow']= Booking::where('check_in',date('Y/m/d', strtotime('+1 day')))
         					->where('id_property', session('current_property')->id)
         					->get();
+    	$data['status']= 'a';
     	return view('admin.booking.index',compact('data'));
     }
     
@@ -252,7 +254,7 @@ class BookingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
         //It doesn't destroy but rather cancel the booking
         $booking= Booking::findOrFail($id);

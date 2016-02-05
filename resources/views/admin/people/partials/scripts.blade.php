@@ -4,7 +4,7 @@
 <script type="text/javascript">
 
 $(document).ready(function(){
-
+	
 	getPersonData= function(id){
 		
 		var route= "{{route('peopleSearch')}}";

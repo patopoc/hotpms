@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use Hotpms\Http\Requests;
 use Hotpms\Http\Controllers\Controller;
-use Hotpms\MenuHelper;
+use Hotpms\Helpers\MenuHelper;
 use Hotpms\Module;
 use Hotpms\Menu;
 use Illuminate\Support\Facades\Route;

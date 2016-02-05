@@ -7,7 +7,8 @@ class ArrayCheckHelper{
 		$items= array();
 		
 		foreach($data as $key => $val){
-			if(preg_match("%^". $prefix ."[0-9]+$%", $key) && $val !== ""){
+			if(preg_match("%^". $prefix ."[0-9]+$%", $key) && $val !== "" && $key != 0){
+				
 				//check that a value doesn't repeat
 				$repeatedVal= false;
 				foreach($items as $item){

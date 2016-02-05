@@ -60,7 +60,6 @@ class RoomTypeController extends Controller
     public function store(CreateRoomTypeRequest $request)
     {    	
     	$pictures= $request->file('pictures');
-    	//dd(count($pictures));
     	 
     	$destinationFolder= '/imgs/prop/';
     	$roomPictures= array();
@@ -69,39 +68,38 @@ class RoomTypeController extends Controller
     	$roomType->fill($request->all());
     	$roomType->save();    	
     	
-    	foreach ($pictures as $picture){
-    		
-    		//Do the Image validation here because the FormRequest is not responding to the rule 
-    		//given the field with array notation e.g. "pictures[]"
-    		
-    		$rules= ['file' => 'required | mimes:jpeg,jpg,bmp,png'];
-    		$validator= \Validator::make(['file' => $picture], $rules);
-    		
-    		if($validator->fails()){
-    			$roomType->delete();
-    			return redirect()->back()
-    				->withErrors($validator->messages())
-    				->withInput($request->all());
-    		}
-    		
-	    	$imageName= "room-" . $roomType->id . "-" . $picture->getClientOriginalName();    	
-	    	$image = Image::make($picture->getRealPath());	    	
-	    	
-	    	$savePath= $destinationFolder . $imageName;
-	    	//$pictures->move($destinationFolder, $imageName . '.' . $extension );
-	    	$image->save(public_path().$savePath);    	
-	        
-	        $roomPictures[] = new RoomPicture([
-	        		'url' => $savePath,
-	        		'id_room_types' => $roomType->id,
-	        ]);	
-    		
+    	if($pictures[0] !== null){
+	    	foreach ($pictures as $picture){
+	    		
+	    		//Do the Image validation here because the FormRequest is not responding to the rule 
+	    		//given the field with array notation e.g. "pictures[]"
+	    		
+	    		$rules= ['file' => 'required | mimes:jpeg,jpg,bmp,png'];
+	    		$validator= \Validator::make(['file' => $picture], $rules);
+	    		
+	    		if($validator->fails()){
+	    			$roomType->delete();
+	    			return redirect()->back()
+	    				->withErrors($validator->messages())
+	    				->withInput($request->all());
+	    		}
+	    		
+		    	$imageName= "room-" . $roomType->id . "-" . $picture->getClientOriginalName();    	
+		    	$image = Image::make($picture->getRealPath());	    	
+		    	
+		    	$savePath= $destinationFolder . $imageName;
+		    	//$pictures->move($destinationFolder, $imageName . '.' . $extension );
+		    	$image->save(public_path().$savePath);    	
+		        
+		        $roomPictures[] = new RoomPicture([
+		        		'url' => $savePath,
+		        		'id_room_types' => $roomType->id,
+		        ]);	
+	    		
+	    	}
+	    	$roomType->pictures()->saveMany($roomPictures);
     	}
     	
-    	
-    	 
-        $roomType->pictures()->saveMany($roomPictures);        
-        
         return \Redirect::route('admin.room_types.index');
     }
 
@@ -160,10 +158,23 @@ class RoomTypeController extends Controller
     {
         $roomtype= RoomType::findOrFail($id);
         $roomtype->removePictures();
-        $roomtype->delete();
-        $message= $roomtype->name.' removed successfully';
+    	
+        $message="";
+        try{
+        	$roomtype->delete();
+        	$message= trans('appstrings.item_removed', ['item' => $roomtype->name]);
+        	Session::flash('message_type', 'success');
+        }
+        catch(\PDOException $e){
+        	$message= trans('sqlmessages.' . $e->getCode());
+        	if($message == 'sqlmessages.' . $e->getCode()){
+        		$message= trans('sqlmessages.undefined');
+        	}
+        	Session::flash('message_type', 'error');
+        }
+        
         if($request->ajax()){
-        	return $message;
+        	return ['code'=>'error', 'message' => $message];
         }
         Session::flash('message',$message);
         return redirect()->route('admin.room_types.index');

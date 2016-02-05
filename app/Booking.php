@@ -63,4 +63,27 @@ class Booking extends Model
 		return intval($dateDifference) + 1;		
 	}
 	
+	public function fullData(){
+		$data= ['ci' => $this->personData->ci, 
+				'name' => $this->personData->name,
+				'last_name' => $this->personData->last_name,
+				'email' => $this->personData->email,
+				'telephone' => $this->personData->telephone,
+				'country' => $this->personData->country->name,				
+				'date' => $this->date, 
+				'check_in' => $this->check_in,
+				'check_out' => $this->check_out, 
+				'arrival_time' => $this->arrival_time, 
+				'comments_and_requests' => $this->comments_and_requests, 
+				'room_type' => $this->roomType->name, 
+				'number_of_rooms' => $this->number_of_rooms, 
+				'adults' => $this->adults, 
+				'children' => $this->children,
+				'pets' => $this->pets, 
+				'rate_plan' => $this->rate->name,	
+				
+		] ;
+		
+		return $data; 
+	}
 }

@@ -30,7 +30,8 @@
 	 	<span class="input-group-addon">
         	<span class="glyphicon glyphicon-time"></span>
         </span>
- 	</div>	 	
+ 	</div>	 
+ 	<br>	
  	<button type="submit" class="btn btn-info">Look Availability</button>
     {!! Form::close() !!}
 	<div class="gantt"></div>	

@@ -2,7 +2,7 @@
 		<tr>
 			<th>User</th>
 			<th>Name</th>			
-			<th>Property</th>
+			<th>Properties</th>
 			<th>Role</th>	
 			<th>Actions</th>		
 		</tr>

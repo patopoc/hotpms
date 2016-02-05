@@ -201,12 +201,23 @@ class UserController extends Controller
     {
         $user= User::findOrFail($id);
 		
-		$user->delete();
-		
-		$message= $user->username . ' removed successfully';
-		if($request->ajax()){
-			return $message;
-		}
+    	$message="";
+        try{
+        	$user->delete();
+        	$message= trans('appstrings.item_removed', ['item' => $user->username]);
+        	Session::flash('message_type', 'success');
+        }
+        catch(\PDOException $e){
+        	$message= trans('sqlmessages.' . $e->getCode());
+        	if($message == 'sqlmessages.' . $e->getCode()){
+        		$message= trans('sqlmessages.undefined');
+        	}
+        	Session::flash('message_type', 'error');
+        }
+        
+        if($request->ajax()){
+        	return ['code'=>'error', 'message' => $message];
+        }
 		
 		Session::flash('message', $message);
 		

@@ -14,7 +14,7 @@ class PeopleTableSeeder extends Seeder
     {
         $faker= Faker::create();
         
-        $countries= DB::table('countries')->lists("country_code");
+        $countries= DB::table('countries')->lists("id");
         
         for($i = 0; $i < 10; $i ++){
         	\DB::table('people')->insert(array(

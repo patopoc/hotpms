@@ -28,7 +28,7 @@ class BookingTableSeeder extends Seeder
         	
         	\DB::table('bookings')->insert(array(
         			'id_property' => $properties[array_rand($properties, 1)],
-        			'id_user' => 1,
+        			'id_user' => 2,
         			'person' => $people[array_rand($people, 1)],
         			'date' => date('Y-m-d'),
         			'check_in' => $checkIn,

@@ -16,4 +16,17 @@ class Person extends Model{
 		return $this->name . " " . $this->last_name;
 	}
 	
+	public function fullData(){
+		$data= [
+				'ci' => $this->ci,
+				'name' =>$this->name,
+				'last_name' => $this->last_name,
+				'email' => $this->email,
+				'telephone' => $this->telephone,
+				'country' => $this->country->name
+		];
+		
+		return $data;
+	}
+	
 }

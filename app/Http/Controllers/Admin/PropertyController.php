@@ -114,14 +114,27 @@ class PropertyController extends Controller
      */
     public function destroy($id, Request $request)
     {
+    	
         $property= Property::findOrFail($id);
-        $property->removeLogo();
-        $property->delete();
-        $message= $property->name.' removed successfully';
-        if($request->ajax()){
-        	return $message;
+            $message="";
+        
+        try{
+        	$property->delete();
+        	$property->removeLogo();
+        	$message= trans('appstrings.item_removed', ['item' => $property->name]);
+        	Session::flash('message_type', 'success');
         }
-        Session::flash('message',$message);
+        catch(\PDOException $e){
+        	$message= trans('sqlmessages.' . $e->getCode());
+        	if($message == 'sqlmessages.' . $e->getCode()){
+        		$message= trans('sqlmessages.undefined');
+        	}
+        	Session::flash('message_type', 'error');
+        }
+        
+        if($request->ajax()){
+        	return ['code'=>'error', 'message' => $message];
+        }Session::flash('message',$message);
         return redirect()->route('admin.property.index');
     }
 }

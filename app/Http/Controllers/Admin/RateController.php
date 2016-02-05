@@ -107,10 +107,23 @@ class RateController extends Controller
     public function destroy($id, Request $request)
     {
         $rate= Rate::findOrFail($id);
-        $rate->delete();
-        $message= $rate->name.' removed successfully';
+    	
+        $message="";
+        try{
+        	$rate->delete();
+        	$message= trans('appstrings.item_removed', ['item' => $rate->name]);
+        	Session::flash('message_type', 'success');
+        }
+        catch(\PDOException $e){
+        	$message= trans('sqlmessages.' . $e->getCode());
+        	if($message == 'sqlmessages.' . $e->getCode()){
+        		$message= trans('sqlmessages.undefined');
+        	}
+        	Session::flash('message_type', 'error');
+        }
+        
         if($request->ajax()){
-        	return $message;
+        	return ['code'=>'error', 'message' => $message];
         }
         Session::flash('message',$message);
         return redirect()->route('admin.rate.index');
