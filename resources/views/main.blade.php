@@ -48,7 +48,17 @@
            .control-element{
            		display:none;
            }
-                      
+           .div-table-head{
+           		border-bottom:1px solid #eeeeee;           		
+ 				padding-top:3px;  
+ 				padding-bottom:3px;        	
+ 				background-color: #f5f5f5;				
+           }
+           .div-table-child{
+           		border-bottom:1px solid #eeeeee;           		
+ 				padding-top:3px;  
+ 				padding-bottom:3px;
+           }             
 			
     </style>
 	
