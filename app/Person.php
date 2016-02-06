@@ -16,6 +16,12 @@ class Person extends Model{
 		return $this->name . " " . $this->last_name;
 	}
 	
+	public function scopeName($query, $name){
+		if($name !== ""){
+			$query->where(\DB::raw("CONCAT(lower(name), ' ', lower(last_name))"), "LIKE", "%". strtolower($name). "%");
+		}
+	}
+	
 	public function fullData(){
 		$data= [
 				'ci' => $this->ci,

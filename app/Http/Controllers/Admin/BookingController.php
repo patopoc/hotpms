@@ -26,12 +26,21 @@ class BookingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data['bookings']= Booking::where('status','a')
-        					->where('id_property', session('current_property')->id)
-        					->get();
-        $data['status']= 'a';
+    	$data= array();
+    	if($request->has('reference_code')){
+    		$data['bookings']= Booking::where('status','a')
+    									->where('reference_code', $request->get('reference_code'))    									
+							    		->where('id_property', session('current_property')->id)
+							    		->paginate(2);
+    	}
+    	else{
+	        $data['bookings']= Booking::where('status','a')
+	        					->where('id_property', session('current_property')->id)
+	        					->paginate(2);
+    	}
+	    $data['status']= 'a';
         return view('admin.booking.index',compact('data'));
         
     }

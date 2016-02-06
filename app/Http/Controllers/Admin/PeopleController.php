@@ -33,10 +33,15 @@ class PeopleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)    
     {
-		$people= Person::all();
-		
+    	$people=null;
+    	if($request->has('name')){
+			$people= Person::name($request->get('name'))->paginate(10);    	
+    	}
+    	else{
+			$people= Person::paginate(5);
+    	}
 		return view('admin.people.index', compact('people'));		
     }
 
