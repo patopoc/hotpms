@@ -23,7 +23,7 @@ class AuthController extends Controller
     use AuthenticatesAndRegistersUsers;
     
     protected $username= 'username';
-    protected $redirectPath= 'admin/booking';
+    protected $redirectPath= 'admin/dashboard';
     protected $redirectAfterLogout = 'auth/login';
 
     /**

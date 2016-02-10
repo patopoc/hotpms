@@ -20,7 +20,7 @@ class SetCurrentProperty
     {
     	
     	if(! $request->session()->has('current_property')){
-    		if(Auth::user()->username == 'admin'){
+    		if(Auth::user()->role->name == 'admin'){
     			$properties= Property::all();
     			Auth::user()->properties()->sync($properties);
     			$request->session()->put('current_property', $properties[0]);
