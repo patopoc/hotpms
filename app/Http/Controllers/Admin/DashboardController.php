@@ -9,6 +9,7 @@ use Hotpms\Http\Controllers\Controller;
 use Hotpms\Booking;
 use Hotpms\RoomType;
 use Hotpms\Helpers\DateHelper;
+use Illuminate\Support\Facades\Session;
 
 class DashboardController extends Controller
 {
@@ -27,51 +28,61 @@ class DashboardController extends Controller
     public function index()    
     {
     	//dd($this->getRouter()->current()->getAction()["as"]);
-    	$lastBookings= Booking::where('id_property',session('current_property')->id)
-    							->where('status','a')
-    							->orderBy('check_in', 'desc')
-    							->take(10)
-    							->get();
-    	$currentOccupiedRooms=count(Booking::where('check_in', '<=',date('Y-m-d'))
-    										->where('check_out', '>=', date('Y-m-d'))
-    										->where('id_property', session('current_property')->id)
-    										->where('status','a')
-    										->get());
-    	$activeBookings= count(Booking::where('status','a')
-    									->where('id_property', session('current_property')->id)
-    									->get());
-    	$canceledBookings=count(Booking::where('status','c')
-    									->where('id_property', session('current_property')->id)
-    									->get());
-    	$disabledRooms= count(RoomType::where('available',0)
-    									->where('id_property', session('current_property')->id)
-    									->get());
-    	
-    	$year= date('Y');
-    	
-    	$bookingsByMonth= \DB::select('SELECT Month(check_in) as name,count(*) as value 
-    									FROM bookings 
-    									where id_property='. session('current_property')->id .' and 
-    										  check_in >= "'. $year .'-01-01" and 
-    										  check_in <= "'. $year .'-12-31"
-    									group by Month(check_in)');
-    	
-    	$biggestValue=0;
-    	foreach ($bookingsByMonth as $booking){
-    		$booking->name= DateHelper::$mons[$booking->name];
-    		if($booking->value > $biggestValue)
-    			$biggestValue= $booking->value;
+    	if(session('current_property') !== null){
+	    	$lastBookings= Booking::where('id_property',session('current_property')->id)
+	    							->where('status','a')
+	    							->orderBy('check_in', 'desc')
+	    							->take(10)
+	    							->get();
+	    	$currentOccupiedRooms=count(Booking::where('check_in', '<=',date('Y-m-d'))
+	    										->where('check_out', '>=', date('Y-m-d'))
+	    										->where('id_property', session('current_property')->id)
+	    										->where('status','a')
+	    										->get());
+	    	$activeBookings= count(Booking::where('status','a')
+	    									->where('id_property', session('current_property')->id)
+	    									->get());
+	    	$canceledBookings=count(Booking::where('status','c')
+	    									->where('id_property', session('current_property')->id)
+	    									->get());
+	    	$disabledRooms= count(RoomType::where('available',0)
+	    									->where('id_property', session('current_property')->id)
+	    									->get());
+	    	
+	    	$year= date('Y');
+	    	
+	    	$bookingsByMonth= \DB::select('SELECT Month(check_in) as name,count(*) as value 
+	    									FROM bookings 
+	    									where id_property='. session('current_property')->id .' and 
+	    										  check_in >= "'. $year .'-01-01" and 
+	    										  check_in <= "'. $year .'-12-31"
+	    									group by Month(check_in)');
+	    	
+	    	$biggestValue=0;
+	    	foreach ($bookingsByMonth as $booking){
+	    		$booking->name= DateHelper::$mons[$booking->name];
+	    		if($booking->value > $biggestValue)
+	    			$biggestValue= $booking->value;
+	    	}
+	    	
+	    	$data['lastBookings']= $lastBookings;
+	    	$data['occupiedRooms']= $currentOccupiedRooms;
+	    	$data['activeBookings']= $activeBookings;
+	    	$data['canceledBookings']= $canceledBookings;
+	    	$data['disabledRooms']= $disabledRooms;
+	    	$data['bookingsByMonth']= $bookingsByMonth;
+	    	$data['biggestValue']= $biggestValue;
+	    	
+	        return view('admin.dashboard.index', compact('data'));
     	}
-    	
-    	$data['lastBookings']= $lastBookings;
-    	$data['occupiedRooms']= $currentOccupiedRooms;
-    	$data['activeBookings']= $activeBookings;
-    	$data['canceledBookings']= $canceledBookings;
-    	$data['disabledRooms']= $disabledRooms;
-    	$data['bookingsByMonth']= $bookingsByMonth;
-    	$data['biggestValue']= $biggestValue;
-    	
-        return view('admin.dashboard.index', compact('data'));
+    	else{
+    		$message= trans('appstrings.property_required');
+    		Session::flash('message',$message);
+    		
+    		//return redirect()->route('admin.dashboardindex');
+    		return view('admin.dashboard.index');
+    	}
+    		
     }
 
     /**

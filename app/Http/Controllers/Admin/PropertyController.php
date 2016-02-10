@@ -51,10 +51,11 @@ class PropertyController extends Controller
     {    	
     	$pictures[]= $request->file('logo');
     	$property= Property::create($request->all());
-    	if($pictures !== null)
+    	if($pictures[0] !== null){
         	PictureHelper::savePictures($pictures, $property, 'logo');    	  	
+        	session('current_property')->load('pictures');
+    	}
     	
-    	session('current_property')->load('pictures');
     	
         return \Redirect::route('admin.property.index');
     }
@@ -134,12 +135,22 @@ class PropertyController extends Controller
         	if($message == 'sqlmessages.' . $e->getCode()){
         		$message= trans('sqlmessages.undefined');
         	}
-        	Session::flash('message_type', 'error');
+        	
+        	if($request->ajax()){
+        		return ['code'=>'error', 'message' => $message];
+        	}
+        	Session::flash('message_type', 'error');        	
+        	
         }
+                
+        if(Property::all()->count() == 0)
+        	session(['current_property' => null]);
         
         if($request->ajax()){
-        	return ['code'=>'error', 'message' => $message];
-        }Session::flash('message',$message);
+        	return ['code'=>'ok', 'message' => $message];
+        }
+        
+        Session::flash('message',$message);
         return redirect()->route('admin.property.index');
     }
 }

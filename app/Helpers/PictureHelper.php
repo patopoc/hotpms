@@ -19,8 +19,7 @@ class PictureHelper{
 			if($validator->fails()){
 				$moduleModel->delete();
 				return redirect()->back()
-				->withErrors($validator->messages())
-				->withInput($request->all());
+				->withErrors($validator->messages());				
 			}
 		
 			$imageName= "pic-" . $moduleModel->id . "-" . $picture->getClientOriginalName();

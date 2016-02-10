@@ -5,7 +5,8 @@
 @if(Session::has('message'))
 	<p class="alert alert-success"> {{Session::get('message')}}</p>
 @endif	
-	
+
+@if(isset($data))	
             <div class="row">
                 <div class="col-lg-3 col-md-6">
                     <div class="panel panel-primary">
@@ -151,9 +152,11 @@
                         <!-- /.panel-body -->
              </div>
              <!-- /.panel -->
+@include('admin.dashboard.partials.scripts')
 
+@endif
 
 @endsection
 
-@include('admin.dashboard.partials.scripts')
+
 @include('menu')

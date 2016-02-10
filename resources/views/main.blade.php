@@ -9,8 +9,11 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>{{session('current_property')->name}}</title>
-
+	@if(session('current_property') !== null)
+    	<title>{{session('current_property')->name}}</title>
+	@else
+		<title>Hotpms</title>
+	@endif
     <!-- Bootstrap Core CSS -->
     <link href="{{ asset('bower_components/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
 
@@ -88,11 +91,14 @@
                                 
                 <a class="navbar-brand" href="{{route('admin.dashboard.index')}}">
 	                <div>
-	                
-	                @if(session('current_property')->logo !== null)                
-	                	<img style="margin-left:10px; margin-right:10px;" alt="" src="{{ asset(session('current_property')->logo->url) }}">
-	                @endif
-	                {{session('current_property')->name}}
+	                @if(session('current_property') !== null)
+		                @if(session('current_property')->logo !== null)                
+		                	<img style="margin-left:10px; margin-right:10px;" alt="" src="{{ asset(session('current_property')->logo->url) }}">
+		                @endif
+		                {{session('current_property')->name}}
+		            @else
+		            	Hotpms
+		            @endif
                 	</div>
                 </a>
             </div>
@@ -324,8 +330,10 @@
                     <ul class="dropdown-menu dropdown-user">
                         <li><a href="{{route('admin.users.edit', auth()->user()->id)}}"><i class="fa fa-user fa-fw"></i> User Profile</a>
                         </li>
-                        <li><a href="{{route('admin.property.edit', session('current_property')->id)}}"><i class="fa fa-gear fa-fw"></i> Settings</a>
-                        </li>
+                        @if(session('current_property') !== null)
+                        	<li><a href="{{route('admin.property.edit', session('current_property')->id)}}"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                        	</li>
+                        @endif
                         <li class="divider"></li>
                         <li><a href="{{ url('/auth/logout') }}"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>

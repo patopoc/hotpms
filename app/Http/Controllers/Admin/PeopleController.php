@@ -140,11 +140,16 @@ class PeopleController extends Controller
         	if($message == 'sqlmessages.' . $e->getCode()){
         		$message= trans('sqlmessages.undefined');
         	}
+        	
+        	if($request->ajax()){
+        		return ['code'=>'error', 'message' => $message];
+        	}
+        	
         	Session::flash('message_type', 'error');
         }
         
         if($request->ajax()){
-        	return ['code'=>'error', 'message' => $message];
+        	return ['code'=>'ok', 'message' => $message];
         }
         
         Session::flash('message', $message);        
