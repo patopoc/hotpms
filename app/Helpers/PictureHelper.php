@@ -26,11 +26,12 @@ class PictureHelper{
 			$imageName= "pic-" . $moduleModel->id . "-" . $picture->getClientOriginalName();
 			$image = Image::make($picture->getRealPath());
 			if($type == 'logo'){
-				$image->resize(50, null, function($constraint){
+				/*$image->resize(50, null, function($constraint){
 					$constraint->aspectRatio();
-				});
+				});*/
+				$image->resize(50, 32);
+			
 			}
-		
 			$savePath= $destinationFolder . $imageName;
 			//$pictures->move($destinationFolder, $imageName . '.' . $extension );
 			//dd($image);

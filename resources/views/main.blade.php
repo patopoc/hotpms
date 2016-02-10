@@ -107,7 +107,7 @@
                     <ul class="dropdown-menu dropdown-messages">
                         @foreach(session('available_properties') as $property)
                         <li>
-                            <a href="{{route('admin.people.index')}}?current_property={{$property->id}}">
+                            <a href="{{route('admin.dashboard.index')}}?current_property={{$property->id}}">
                                 <div>
                                     <strong>{{$property->name}}</strong>                                    
                                 </div>                                

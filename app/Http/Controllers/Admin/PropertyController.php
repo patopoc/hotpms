@@ -52,7 +52,9 @@ class PropertyController extends Controller
     	$pictures[]= $request->file('logo');
     	$property= Property::create($request->all());
     	if($pictures !== null)
-        	PictureHelper::savePictures($pictures, $property, 'logo');
+        	PictureHelper::savePictures($pictures, $property, 'logo');    	  	
+    	
+    	session('current_property')->load('pictures');
     	
         return \Redirect::route('admin.property.index');
     }
@@ -91,7 +93,7 @@ class PropertyController extends Controller
     {
         $property= Property::findOrFail($id);
         $property->fill($request->all());
-        $property->save();
+        $property->save(); 
         
         if($request->file('logo') !== null){
         	$property->removeLogo();
@@ -103,6 +105,9 @@ class PropertyController extends Controller
         	return $message;
         }
         Session::flash('message',$message);
+        
+        session('current_property')->load('pictures');
+                
         return redirect()->route('admin.property.index');
     }
 
