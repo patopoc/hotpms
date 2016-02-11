@@ -17,8 +17,7 @@ class CheckCurrentProperty
      * @return mixed
      */
     public function handle($request, Closure $next)
-    {
-    	
+    {    	
     	if(session('current_property') === null)
     		return redirect()->route("admin.dashboard.index");
     	    	
