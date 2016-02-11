@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
         
         //$this->call('PeopleTableSeeder');
         //$this->call('RolesTableSeeder');
-        $this->call('BookingTableSeeder');
+        //$this->call('BookingTableSeeder');
         
 
         Model::reguard();
