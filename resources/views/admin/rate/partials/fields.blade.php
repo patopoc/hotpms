@@ -4,12 +4,12 @@
     
 </div>
 <div class="form-group">
- 	{!! Form::label('weekday_price', 'Dailly Price') !!}
- 	{!! Form::text('weekday_price', null, ['class' => 'form-control']) !!}	 	
+ 	{!! Form::label('weekday_price', 'Daily Price') !!}
+ 	{!! Form::number('weekday_price', null, ['class' => 'form-control', 'min' => 0]) !!}	 	
     
 </div>
 <div class="form-group">
  	{!! Form::label('weekend_price', 'Week End Price') !!}
- 	{!! Form::text('weekend_price', null, ['class' => 'form-control']) !!}	 	
+ 	{!! Form::number('weekend_price', null, ['class' => 'form-control', 'min' => 0]) !!}	 	
     
 </div>

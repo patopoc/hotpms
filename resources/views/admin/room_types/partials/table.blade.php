@@ -12,7 +12,15 @@
 				
 		@foreach ($room_types as $room_type)
 		<tr data-id="{{$room_type->id}}">
-			<td> {{$room_type->name or ''}}</td>
+			<td> 
+				<p>{{$room_type->name or ''}}</p>
+				<a href="#" data-toggle="modal"					
+					data-target="#detailModal" 
+					data-detail="{{json_encode($room_type->fullData())}}">
+					
+					<i class="fa fa-picture-o"></i>
+				</a>
+			</td>
 			<td> {{$room_type->description or ''}}</td>
 			<td> {{$room_type->size or ''}}</td>
 			<td> {{$room_type->property->name or ''}}</td>
@@ -22,13 +30,7 @@
 				<a href="#" class="btn-delete btn btn-danger btn-sm" role='button'><span class="glyphicon glyphicon-minus-sign"></span></a>
 			</td>
 		</tr>	
-		<tr>
-			@foreach($room_type->pictures as $picture)
-				<td>
-					<img src="{{asset($picture->url)}}" >
-				</td>
-			@endforeach
-		</tr>
+		
 		@endforeach
 				
 	</table>

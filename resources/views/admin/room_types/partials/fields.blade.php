@@ -48,7 +48,7 @@
 </div>
 <div class="form-group">
  	{!! Form::label('cancelation_fee', 'Cancelation Fee') !!}
- 	{!! Form::number('cancelation_fee', null, ['class' => 'form-control']) !!}	 	
+ 	{!! Form::number('cancelation_fee', null, ['class' => 'form-control', 'min' => 0]) !!}	 	
     
 </div>
 <div class="form-group">

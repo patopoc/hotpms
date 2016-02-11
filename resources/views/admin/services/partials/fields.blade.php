@@ -5,6 +5,6 @@
 </div>
 <div class="form-group">
  	{!! Form::label('price', 'Service Price') !!}
- 	{!! Form::text('price', null, ['class' => 'form-control']) !!}	 	
+ 	{!! Form::number('price', null, ['class' => 'form-control', 'min' => 0]) !!}	 	
     
 </div>

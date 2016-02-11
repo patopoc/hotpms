@@ -45,7 +45,7 @@
 </div>
 <div class="form-group">
  	{!! Form::label('cancelation_policy', 'Cancelation Policy') !!}
- 	{!! Form::text('cancelation_policy', null, ['class' => 'form-control']) !!}	 	
+ 	{!! Form::textarea('cancelation_policy', null, ['class' => 'form-control']) !!}	 	
     
 </div>
 <div class="form-group">
@@ -55,12 +55,12 @@
 </div>
 <div class="form-group">
  	{!! Form::label('conditions', 'Conditions') !!}
- 	{!! Form::text('conditions', null, ['class' => 'form-control']) !!}	 	
+ 	{!! Form::textarea('conditions', null, ['class' => 'form-control']) !!}	 	
     
 </div>
 <div class="form-group">
  	{!! Form::label('pet_rules', 'Pet Rules') !!}
- 	{!! Form::text('pet_rules', null, ['class' => 'form-control']) !!}	 	
+ 	{!! Form::textarea('pet_rules', null, ['class' => 'form-control']) !!}	 	
     
 </div>
 

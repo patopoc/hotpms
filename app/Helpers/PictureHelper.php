@@ -31,6 +31,10 @@ class PictureHelper{
 				$image->resize(50, 32);
 			
 			}
+			else{				
+				$image->resize(500, 280);
+			}
+			
 			$savePath= $destinationFolder . $imageName;
 			//$pictures->move($destinationFolder, $imageName . '.' . $extension );
 			//dd($image);

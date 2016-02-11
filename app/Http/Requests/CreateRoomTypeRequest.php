@@ -25,7 +25,24 @@ class CreateRoomTypeRequest extends Request
     {
         return [
         		'name' => 'required | unique:room_types,name',        		    
-        		//'pictures' => 'required | mimes:jpeg,jpg,bmp,png'
+        		'id_property' => 'required',
+        		'id_service_plan' => 'required',
+        		'id_rate' => 'required',
+        		'id_facilities_plan' => 'required',
+        		'id_bed_type' => 'required',
+        		
         ];
+    }
+    
+    public function messages()
+    {
+    	return [
+    			'name.required' => 'A Name is required',
+    			'id_property.required'  => 'A Property is required',
+    			'id_service_plan.required' => 'A Service plan is required',
+    			'id_rate.required' => 'A Rate is required',
+    			'id_facilities_plan.required' => 'A Facility plan is required',
+    			'id_bed_type.required' => 'A Bed type is required',
+    	];
     }
 }

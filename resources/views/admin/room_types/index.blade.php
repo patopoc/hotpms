@@ -1,4 +1,5 @@
 @extends('main')
+@include('admin.room_types.partials.detail')
 
 @section('content')
 <div class="row">

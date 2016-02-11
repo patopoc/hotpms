@@ -13,6 +13,7 @@ use Hotpms\Http\Requests\EditRoomTypeRequest;
 use Hotpms\RoomPicture;
 use Illuminate\Database\Eloquent\Model;
 use Image;
+use Hotpms\Helpers\PictureHelper;
 class RoomTypeController extends Controller
 {
 	private $data=array();
@@ -70,35 +71,7 @@ class RoomTypeController extends Controller
     	$roomType->save();    	
     	
     	if($pictures[0] !== null){
-	    	foreach ($pictures as $picture){
-	    		
-	    		//Do the Image validation here because the FormRequest is not responding to the rule 
-	    		//given the field with array notation e.g. "pictures[]"
-	    		
-	    		$rules= ['file' => 'required | mimes:jpeg,jpg,bmp,png'];
-	    		$validator= \Validator::make(['file' => $picture], $rules);
-	    		
-	    		if($validator->fails()){
-	    			$roomType->delete();
-	    			return redirect()->back()
-	    				->withErrors($validator->messages())
-	    				->withInput($request->all());
-	    		}
-	    		
-		    	$imageName= "room-" . $roomType->id . "-" . $picture->getClientOriginalName();    	
-		    	$image = Image::make($picture->getRealPath());	    	
-		    	
-		    	$savePath= $destinationFolder . $imageName;
-		    	//$pictures->move($destinationFolder, $imageName . '.' . $extension );
-		    	$image->save(public_path().$savePath);    	
-		        
-		        $roomPictures[] = new RoomPicture([
-		        		'url' => $savePath,
-		        		'id_room_types' => $roomType->id,
-		        ]);	
-	    		
-	    	}
-	    	$roomType->pictures()->saveMany($roomPictures);
+	    	PictureHelper::savePictures($pictures, $roomType);
     	}
     	
         return \Redirect::route('admin.room_types.index');
@@ -140,6 +113,11 @@ class RoomTypeController extends Controller
         $roomtype= RoomType::findOrFail($id);
         $roomtype->fill($request->all());
         $roomtype->save();
+        
+        if($request->file('pictures') !== null){
+        	$roomType->removePictures();
+        	PictureHelper::savePictures([$request->file('pictures')], $roomType);
+        }
         
         $message= $roomtype->name.' updated successfully';
         if($request->ajax()){

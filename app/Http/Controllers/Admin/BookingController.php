@@ -11,6 +11,8 @@ use Hotpms\Person;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Hotpms\Helpers\DateHelper;
+use Hotpms\Http\Requests\EditBookingRequest;
+use Hotpms\Http\Requests\CreateBookingRequest;
 
 
 class BookingController extends Controller
@@ -106,7 +108,7 @@ class BookingController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateBookingRequest $request)
     {
     	$this->checkAvailability($request);
     	
@@ -206,7 +208,7 @@ class BookingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EditBookingRequest $request, $id)
     {
     	$this->checkAvailability($request, $id);
     	

@@ -1,7 +1,7 @@
 @if ($errors->any())
 <div class="alert alert-danger" role="alert">.
 
-	<p> Por favor corregir errores </p>	
+	<p> Please verify the message bellow: </p>	
 	<ul>
 		@foreach($errors->all() as $error)
 			<li>{{$error}}</li>

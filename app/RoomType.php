@@ -37,7 +37,7 @@ class RoomType extends Model
     }
     
     public function pictures(){
-    	return $this->hasMany('Hotpms\RoomPicture','id_room_types', 'id');
+    	return $this->hasMany('Hotpms\Picture','id_module', 'id');
     }
     
     public function removePictures(){
@@ -46,5 +46,16 @@ class RoomType extends Model
     			dd("can't delete " . public_path() . $picture->url);
     		$picture->delete();
     	}
+    }
+    
+    public function fullData(){
+    	$pictureUrl="";
+    	if($this->pictures->count() > 0)
+    		$pictureUrl= asset($this->pictures[0]->url);
+    	 
+    	$data=[
+    			'picture' => $pictureUrl,    			
+    	];
+    	return $data;
     }
 }

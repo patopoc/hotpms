@@ -9,7 +9,7 @@ class Person extends Model{
 	protected $fillable = ['ci', 'name', 'last_name', 'email', 'telephone', 'id_country'];
 	
 	public function country(){
-		return $this->hasOne("Hotpms\Country","country_code", "id_country");
+		return $this->hasOne("Hotpms\Country","id", "id_country");
 	}
 	
 	public function getFullNameAttribute(){

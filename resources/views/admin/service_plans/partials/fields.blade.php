@@ -5,7 +5,7 @@
     
 	</div>
 	<div id="services_container">
-	{!! Form::label('service', 'Facilites') !!}
+	{!! Form::label('service', 'Services') !!}
 		@for($i=0 ; $i < count($data['service_plan']->services); $i++)
 			<div id="form-group{{$i}}" class="form-group">		 	
 		    {!! Form::select('service'.$i, $data['services'], $data['service_plan']->services[$i]->id, 
