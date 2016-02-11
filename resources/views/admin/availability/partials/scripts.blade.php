@@ -54,8 +54,8 @@ $(document).ready(function(){
 
     $(".gantt").popover({
         selector: ".bar",
-        title: "I'm a popover",
-        content: "And I'm the content of said popover.",
+        title: "Client",
+        content: "",
         trigger: "hover"
     });
 
