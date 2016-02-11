@@ -95,6 +95,7 @@ class ServicePlanController extends Controller
         } */      
         
     	$service_plan= ServicePlan::create($request->all());
+    	
     	$service_plan->services()->attach($serviceKeys);
         
         return \Redirect::route('admin.service_plans.index');

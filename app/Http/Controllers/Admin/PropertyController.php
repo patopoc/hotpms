@@ -56,7 +56,7 @@ class PropertyController extends Controller
         	session('current_property')->load('pictures');
     	}
     	
-    	
+    	$request->session()->forget('current_property');
         return \Redirect::route('admin.property.index');
     }
 
@@ -142,15 +142,17 @@ class PropertyController extends Controller
         	Session::flash('message_type', 'error');        	
         	
         }
-                
-        if(Property::all()->count() == 0)
-        	session(['current_property' => null]);
+              
+        
+        $request->session()->forget('current_property');
         
         if($request->ajax()){
         	return ['code'=>'ok', 'message' => $message];
         }
         
         Session::flash('message',$message);
+        
+        
         return redirect()->route('admin.property.index');
     }
 }

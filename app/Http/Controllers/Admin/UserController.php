@@ -180,7 +180,7 @@ class UserController extends Controller
         ]);
 		$user->save();
 		
-		$user->properties()->sync();
+		$user->properties()->sync($propertyKeys);
 		
 		$message= $user->username . ' updated successfully';
 		if($request->ajax()){

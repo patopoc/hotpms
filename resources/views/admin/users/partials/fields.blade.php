@@ -80,6 +80,28 @@
  	{!! Form::label('id_role', 'Roles') !!}
  	{!! Form::select('id_role', $data["roles"], null, ['class' => 'form-control', 'placeholder' => 'Select Role']) !!}	 	    
 </div>
+@if(isset($data['user']))
+<div id="properties-container">
+	{!! Form::label('property', 'Properties') !!}
+	@for($i=0; $i < $data['user']->properties->count(); $i++)	
+	<div id="form-group{{$i}}" class="form-group"> 	
+	 	{!! Form::select('property' . $i, $data["properties"], $data["user"]->properties[$i]->id, 
+	 		['class' => 'form-control', 
+	 		'placeholder' => 'Select Property (default)', 
+	 		'onchange' => 'addItem(this,"properties-container",'. json_encode($data["propertiesJson"]) .', "property");']) !!}	 	    
+		<a href="#" class="btn-remove-item"><span class="glyphicon glyphicon-minus-sign"></span>Remove</a>
+	</div>
+	@endfor
+	
+	<div id="form-group{{$data['user']->properties->count()}}" class="form-group"> 	
+	 	{!! Form::select('property' . $data['user']->properties->count(), $data["properties"], null, 
+	 		['class' => 'form-control', 
+	 		'placeholder' => 'Select Property (default)', 
+	 		'onchange' => 'addItem(this,"properties-container",'. json_encode($data["propertiesJson"]) .', "property");']) !!}	 	    
+	</div>
+	
+</div>
+@else
 <div id="properties-container">
 {!! Form::label('property0', 'Properties') !!}
 <div id="form-group0" class="form-group"> 	
@@ -89,3 +111,4 @@
  		'onchange' => 'addItem(this,"properties-container",'. json_encode($data["propertiesJson"]) .', "property");']) !!}	 	    
 </div>
 </div>
+@endif

@@ -17,8 +17,9 @@
 				<a href="#" data-toggle="modal"					
 					data-target="#detailModal" 
 					data-detail="{{json_encode($room_type->fullData())}}">
-					
+					@if($room_type->pictures->count() > 0)
 					<i class="fa fa-picture-o"></i>
+					@endif
 				</a>
 			</td>
 			<td> {{$room_type->description or ''}}</td>

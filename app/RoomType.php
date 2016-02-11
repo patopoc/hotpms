@@ -40,6 +40,10 @@ class RoomType extends Model
     	return $this->hasMany('Hotpms\Picture','id_module', 'id');
     }
     
+    public function property(){
+    	return $this->hasOne('Hotpms\Property', 'id', 'id_property');
+    }
+    
     public function removePictures(){
     	foreach($this->pictures as $picture){
     		if(! unlink(public_path() . $picture->url))

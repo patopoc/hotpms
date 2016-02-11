@@ -11,7 +11,7 @@
 <div class="form-group">
  	{!! Form::label('id_property', 'Property') !!}
  	@if(isset($data['room']))
- 	{!! Form::select('id_property', $data["properties"], $data['room']->name, ['class' => 'form-control', 'placeholder' => 'Select Property']) !!}
+ 	{!! Form::select('id_property', $data["properties"], $data['room']->id_property, ['class' => 'form-control', 'placeholder' => 'Select Property']) !!}
  	@else
  	{!! Form::select('id_property', $data["properties"], null, ['class' => 'form-control', 'placeholder' => 'Select Property']) !!}	 	
     @endIf
@@ -53,7 +53,7 @@
 </div>
 <div class="form-group">
  	{!! Form::label('available', 'Available') !!}
- 	@if(isset($data['room'])){
+ 	@if(isset($data['room']))
  	{!! Form::select('available', ["1" => "YES", "0" => "NO"], $data['room']->available, ['class' => 'form-control', 'placeholder' => 'Availability']) !!}
  	@else
  	{!! Form::select('available', ["1" => "YES", "0" => "NO"], null, ['class' => 'form-control', 'placeholder' => 'Availability']) !!}	 	

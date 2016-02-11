@@ -61,6 +61,7 @@ class RoomTypeController extends Controller
      */
     public function store(CreateRoomTypeRequest $request)
     {    	
+    	
     	$pictures= $request->file('pictures');
     	 
     	$destinationFolder= '/imgs/prop/';
@@ -113,10 +114,11 @@ class RoomTypeController extends Controller
         $roomtype= RoomType::findOrFail($id);
         $roomtype->fill($request->all());
         $roomtype->save();
-        
-        if($request->file('pictures') !== null){
-        	$roomType->removePictures();
-        	PictureHelper::savePictures([$request->file('pictures')], $roomType);
+                 
+        $pictures= $request->file('pictures');
+        if($pictures[0] !== null){
+        	$roomtype->removePictures();
+        	PictureHelper::savePictures($pictures, $roomtype);
         }
         
         $message= $roomtype->name.' updated successfully';
