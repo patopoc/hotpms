@@ -25,14 +25,7 @@ class SetCurrentProperty
     			if($properties->count() > 0){
 	    			Auth::user()->properties()->sync($properties);
 	    			$request->session()->put('current_property', $properties[0]);
-    			}
-    			else{
-    				//dd($request->getRequestUri());
-    				if($request->getRequestUri() != '/hotpms/public/admin/dashboard' &&
-    					$request->getRequestUri() != '/hotpms/public/admin/property' &&
-    					$request->getRequestUri() != '/hotpms/public/admin/property/create')
-	    				return redirect()->route("admin.dashboard.index");
-    			}
+    			}    			
     			
     		}
     		else{

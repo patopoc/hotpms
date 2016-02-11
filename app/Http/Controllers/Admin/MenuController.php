@@ -17,6 +17,7 @@ class MenuController extends Controller
 	public function __construct(){
 	
 		$this->middleware('access_control');
+		$this->middleware('check_current_property');
 		$currentRoute= $this->getRouter()->current()->getAction()["as"];
 		$this->middleware('set_current_section:'.$currentRoute);
 	}

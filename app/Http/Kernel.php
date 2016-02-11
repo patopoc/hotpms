@@ -34,5 +34,6 @@ class Kernel extends HttpKernel
     	'access_control' => \Hotpms\Http\Middleware\AccessControl::class,
     	'set_current_property' => \Hotpms\Http\Middleware\SetCurrentProperty::class,
     	'set_current_section' => \Hotpms\Http\Middleware\SetCurrentSection::class,
+    	'check_current_property' => \Hotpms\Http\Middleware\CheckCurrentProperty::class,
     ];
 }
