@@ -1,4 +1,21 @@
 @section('scripts')
+<div class="modal fade" id="create-booking-modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Available Date</h4>
+      </div>
+      <div class="modal-body" id="create-booking-body">
+        <p></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button type="button" id="booking-ok" class="btn btn-primary">Ok</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 <script type="text/javascript">
 
@@ -29,8 +46,7 @@ $(document).ready(function(){
         },
         onAddClick: function(dt, rowId) {
            var cellDate= moment(dt).format("YYYY-MM-DD"); 
-           
-           $("#book-confirmation").dialog({
+           /*$("#book-confirmation").dialog({
 				 resizable: false,
 				 height:140,
 				 modal: true,
@@ -43,7 +59,14 @@ $(document).ready(function(){
 						 
 					 }
 				 }
+			});*/
+			
+			$("#create-booking-body p").text('Do you want to make a booking for the '+ cellDate +' ?');			
+			$('#create-booking-modal').modal('show');
+			$('#booking-ok').click(function(){
+				window.location.replace("{{route('admin.booking.create')}}?date=" + cellDate + "&room=" + rowId);
 			});
+			
         },
         onRender: function() {
             if (window.console && typeof console.log === "function") {
