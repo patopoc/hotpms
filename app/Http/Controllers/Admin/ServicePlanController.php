@@ -162,6 +162,11 @@ class ServicePlanController extends Controller
         $message="";
         try{
         	$service->delete();
+        	
+        	\DB::table("services_service_plan")
+        	->where("id_service_plan", $id)
+        	->delete();
+        	
         	$message= trans('appstrings.item_removed', ['item' => $service->full_name]);
         	Session::flash('message_type', 'success');
         }

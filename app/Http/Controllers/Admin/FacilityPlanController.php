@@ -174,6 +174,11 @@ class FacilityPlanController extends Controller
         
         try{
         	$facility->delete();
+        	
+        	\DB::table("facilities_facilities_plan")
+        			->where("id_facilities_plan", $id)
+        			->delete();
+        	
         	$message= trans('appstrings.item_removed', ['item' => $facility->name]);
         	Session::flash('message_type', 'success');
         }
