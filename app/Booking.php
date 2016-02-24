@@ -37,12 +37,14 @@ class Booking extends Model
 	public function getTotalPriceAttribute(){
 		$dateRange= DateHelper::date_range($this->check_in, $this->check_out);
 		$totalPrice=0;
+		$weekendPrice= $this->rate->weekend_price;
+		$weekdayPrice= $this->rate->weekday_price;
 		foreach ($dateRange as $date){
 			if(DateHelper::isWeekend($date)){
-				$totalPrice += $this->rate->weekend_price;
+				$totalPrice += $weekendPrice;
 			}
 			else{
-				$totalPrice += $this->rate->weekday_price;
+				$totalPrice += $weekdayPrice;
 			}
 		}
 		

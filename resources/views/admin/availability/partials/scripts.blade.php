@@ -25,7 +25,7 @@ $(document).ready(function(){
 	var route= "{{route('availabilityList')}}";
     route= route.replace("%7BfromDate%7D","{{$data['fromDate']}}");
     route= route.replace("%7BtoDate%7D","{{$data['toDate']}}");
-    /*/
+    //
     console.log("route: " + route);
 	 $.get(route, function(data){
 		console.log(data);

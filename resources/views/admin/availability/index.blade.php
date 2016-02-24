@@ -1,9 +1,8 @@
 @extends('main')
 
 @section('content')
-<div class="container">
 <div class="row">
-<div class="col-mg-10">
+<div class="col-lg-12">
 <div class="panel panel-default">
 <div class="panel-heading">Rooms Availability</div>
 @include('alert')
@@ -15,7 +14,7 @@
 	<div class="form-group">
 	{!! Form::label('from_date', 'From Date') !!}
 	<div class='input-group date' id='from_date'>
-	 	{!! Form::text('from_date', null, ['class' => 'form-control']) !!}
+	 	{!! Form::text('from_date', $data['fromDate'], ['class' => 'form-control']) !!}
 	 	<span class="input-group-addon">
         	<span class="glyphicon glyphicon-time"></span>
         </span>
@@ -26,7 +25,7 @@
 	<div class="form-group">
 	{!! Form::label('to_date', 'To Date') !!}
 	<div class='input-group date' id='to_date'>
-	 	{!! Form::text('to_date', null, ['class' => 'form-control']) !!}
+	 	{!! Form::text('to_date', $data['toDate'], ['class' => 'form-control']) !!}
 	 	<span class="input-group-addon">
         	<span class="glyphicon glyphicon-time"></span>
         </span>
@@ -34,9 +33,9 @@
  	<br>	
  	<button type="submit" class="btn btn-info">Look Availability</button>
     {!! Form::close() !!}
+    
 	<div class="gantt"></div>	
 	
-</div>
 </div>
 </div>
 </div>

@@ -26,8 +26,10 @@ class AvailabilityController extends Controller
     public function index(Request $request)
     {
     	    	
-    	$fromDate= date("Y-m-d");
+    	//$fromDate= date("Y-m-d");
+    	$fromDate= Booking::all()->min('check_in');
     	$toDate= date('Y-m-d', strtotime('+1 month'));
+    	    	
     	 
     	if($request->has("from_date") && $request->get("from_date") != "")
     		$fromDate= $request->get("from_date");
@@ -35,8 +37,9 @@ class AvailabilityController extends Controller
     	if($request->has("to_date") && $request->get("to_date") != "")
     		$toDate= $request->get("to_date");
     	else{
-    		$toDateSeconds= strtotime($fromDate) + 2592000;		 // one month timestamp
-    		$toDate= date("Y-m-d", $toDateSeconds);
+    		//$toDateSeconds= strtotime($fromDate) + 2592000;		 // one month timestamp
+    		//$toDate= date("Y-m-d", $toDateSeconds);
+    		$toDate= date('Y-m-d', strtotime('+6 month',strtotime($fromDate)));
     	}
     		
     	$data['fromDate']= $fromDate;
@@ -50,16 +53,21 @@ class AvailabilityController extends Controller
     	$bookingList= array();
     	$bookings= Booking::where('check_in', ">=", $fromDate)
     						->where('check_out', "<=", $toDate)
+    						->where('id_property', session('current_property')->id)
     						->get();
     	$rooms= RoomType::all();
     	if($bookings->count() > 0  && count($rooms) > 0){
     		foreach ($rooms as $room){
-    			$booking= $bookings->where('id_room_type',$room->id)->first();
+    			$bookingsByRoom= $bookings->where('id_room_type',$room->id);
+    			foreach ($bookingsByRoom as $booking)
     			if($booking !== null){
 	    			$roomId= $booking->roomType->id;
 	    			$roomName= $booking->roomType->name;
-	    			$checkIn= $booking->check_in;
-	    			$checkOut= $booking->check_out;
+	    			
+	    			//send the date along with the hour because the gantt widget needs it, otherwise
+	    			//it gets confused with the timezone according to reports in the provider's bug tracker
+	    			$checkIn= "/Date(". strtotime($booking->check_in . "23:59:00") * 1000 . ")/";
+	    			$checkOut= "/Date(". strtotime($booking->check_out . "23:59:00") * 1000 . ")/";
 		   			$person= $booking->personData->full_name;
 		   			
 		   			$registeredListItem= false;

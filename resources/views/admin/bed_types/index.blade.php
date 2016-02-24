@@ -1,7 +1,6 @@
 @extends('main')
 
 @section('content')
-<!--div class="container"-->
 <div class="row">
 <div class="col-lg-10">
 <div class="panel panel-default">
@@ -21,7 +20,6 @@
 </div>
 </div>
 </div>
-<!-- /div -->
 {!!Form::open( ['route' => ['admin.bed_types.destroy', ':PERSON_ID'], 'method' => 'delete', 'id'=>'form-delete'])!!}
 {!!Form::close()!!}
 
