@@ -145,6 +145,7 @@ return [
     	Collective\Html\HtmlServiceProvider::class,
     	'Webpatser\Countries\CountriesServiceProvider',
     	Intervention\Image\ImageServiceProvider::class,
+    	Stevebauman\Location\LocationServiceProvider::class,
     		
 
         /*
@@ -206,7 +207,9 @@ return [
     	'Html' => Collective\Html\HtmlFacade::class,
     		
    		'Countries' => 'Webpatser\Countries\CountriesFacade',
-    	'Image' => 'Intervention\Image\Facades\Image'
+    	'Image' => 'Intervention\Image\Facades\Image',
+    		
+    	'Location' => 'Stevebauman\Location\Facades\Location',
 
     ],
 

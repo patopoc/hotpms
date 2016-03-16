@@ -1,6 +1,7 @@
 <?php
 
 use Hotpms\Person;
+use Hotpms\Http\Controllers\Sandbox\ShortenerController;
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -54,4 +55,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','set_current_property
 	Route::resource('menus', 'MenuController');
 	Route::resource('availability', 'AvailabilityController');
 	
+});
+
+Route::group(['prefix' => 'sandbox', 'namespace' => 'Sandbox'], function(){
+	Route::post('short/api', 'ShortenerController@shorten');
+	Route::resource('short', 'ShortenerController');
 });
