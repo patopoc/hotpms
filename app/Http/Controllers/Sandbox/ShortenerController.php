@@ -15,7 +15,9 @@ use Hotpms\ShortUrlClickInfo;
 
 class ShortenerController extends Controller
 {
-		
+	
+	private $pubDir= 'localhost/hotpms/public';
+    //private $pubDir= 'hotpms.gopagoda.io';
     /**
      * Display a listing of the resource.
      *
@@ -35,22 +37,22 @@ class ShortenerController extends Controller
      */
     public function store(Request $request)
     {    	
+    	
+    	
     	$url= $request->get("long_url");
     	
         $shortUrl= new ShortUrl();
         $shortUrl->long_url= $url;
         $generatedUrl='';
         do{
-        	$generatedUrl= str_random(4);
+        	$generatedUrl= 'http://'. $this->pubDir . $request->getPathInfo() . "/" . str_random(4);
         }while(count(ShortUrl::where('short_url',$generatedUrl)->get()) > 0);
         
         $shortUrl->short_url= $generatedUrl;
-        $shortUrl->save();
+        $shortUrl->save();       
         
-        //$pubDir= 'localhost/hotpms/public';
-        $pubDir= 'hotpms.gopagoda.io';
         
-        session(['generated_url' => 'http://'. $pubDir . $request->getPathInfo() . "/" . $generatedUrl]);
+        session(['generated_url' => $generatedUrl]);
         
         return redirect()->route('sandbox.short.index');
     }
@@ -63,7 +65,7 @@ class ShortenerController extends Controller
      */
     public function show($shortUrl, Request $request)
     {
-    	$url= ShortUrl::where('short_url', $shortUrl)->first();
+    	$url= ShortUrl::where('short_url','LIKE', '%'.$shortUrl)->first();
     	$location= \Location::get();
     	if($url !== null){
     		ShortUrlClickInfo::create([
@@ -74,7 +76,7 @@ class ShortenerController extends Controller
     	}
         
         
-        return redirect()->route('sandbox.short.index');
+        return redirect()->to($url->long_url);
     }
     
 }
