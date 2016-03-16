@@ -16,8 +16,8 @@ use Hotpms\ShortUrlClickInfo;
 class ShortenerController extends Controller
 {
 	
-	private $pubDir= 'localhost/hotpms/public';
-    //private $pubDir= 'hotpms.gopagoda.io';
+	//private $pubDir= 'localhost/hotpms/public';
+    private $pubDir= 'hotpms.gopagoda.io';
     /**
      * Display a listing of the resource.
      *
