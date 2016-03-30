@@ -60,4 +60,30 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','set_current_property
 Route::group(['prefix' => 'sandbox', 'namespace' => 'Sandbox'], function(){
 	Route::post('short/api', 'ShortenerController@shorten');
 	Route::resource('short', 'ShortenerController');
+	Route::get('network', function(){
+		$data["remote"]= $_SERVER['REMOTE_ADDR'];
+		if (!empty($_SERVER['HTTP_CLIENT_IP']))   //check ip from share internet
+	    {
+	      $data['client']=$_SERVER['HTTP_CLIENT_IP'];
+	    }
+	    elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR']))   //to check ip is pass from proxy
+	    {
+	      $data['fwf1']=$_SERVER['HTTP_X_FORWARDED_FOR'];
+	    }
+	    elseif (!empty($_SERVER['HTTP_X_FORWARDED']))   //to check ip is pass from proxy
+	    {
+	    	$data['fwf2']=$_SERVER['HTTP_X_FORWARDED'];
+	    }
+	    elseif (!empty($_SERVER['HTTP_FORWARDED_FOR']))   //to check ip is pass from proxy
+	    {
+	    	$data['fwf3']=$_SERVER['HTTP_FORWARDED_FOR'];
+	    }
+	    elseif (!empty($_SERVER['HTTP_FORWARDED']))   //to check ip is pass from proxy
+	    {
+	    	$data['fwf4']=$_SERVER['HTTP_FORWARDED'];
+	    }
+	    
+	    dd($data);
+		return "";
+	});
 });
