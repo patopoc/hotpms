@@ -66,22 +66,39 @@ Route::group(['prefix' => 'sandbox', 'namespace' => 'Sandbox'], function(){
 	    {
 	      $data['client']=$_SERVER['HTTP_CLIENT_IP'];
 	    }
-	    elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR']))   //to check ip is pass from proxy
+	    if (!empty($_SERVER['HTTP_X_FORWARDED_FOR']))   //to check ip is pass from proxy
 	    {
-	      $data['fwf1']=$_SERVER['HTTP_X_FORWARDED_FOR'];
+	      $data['HTTP_X_FORWARDED_FOR']=$_SERVER['HTTP_X_FORWARDED_FOR'];
 	    }
-	    elseif (!empty($_SERVER['HTTP_X_FORWARDED']))   //to check ip is pass from proxy
+	    if (!empty($_SERVER['HTTP_X_FORWARDED']))   //to check ip is pass from proxy
 	    {
-	    	$data['fwf2']=$_SERVER['HTTP_X_FORWARDED'];
+	    	$data['HTTP_X_FORWARDED']=$_SERVER['HTTP_X_FORWARDED'];
 	    }
-	    elseif (!empty($_SERVER['HTTP_FORWARDED_FOR']))   //to check ip is pass from proxy
+	    if (!empty($_SERVER['HTTP_FORWARDED_FOR']))   //to check ip is pass from proxy
 	    {
-	    	$data['fwf3']=$_SERVER['HTTP_FORWARDED_FOR'];
+	    	$data['HTTP_FORWARDED_FOR']=$_SERVER['HTTP_FORWARDED_FOR'];
 	    }
-	    elseif (!empty($_SERVER['HTTP_FORWARDED']))   //to check ip is pass from proxy
+	    if (!empty($_SERVER['HTTP_FORWARDED']))   //to check ip is pass from proxy
 	    {
-	    	$data['fwf4']=$_SERVER['HTTP_FORWARDED'];
+	    	$data['HTTP_FORWARDED']=$_SERVER['HTTP_FORWARDED'];
 	    }
+	    if (!empty($_SERVER['HTTP_X_CLUSTER_CLIENT_IP']))   //to check ip is pass from proxy
+	    {
+	    	$data['HTTP_X_CLUSTER_CLIENT_IP']=$_SERVER['HTTP_X_CLUSTER_CLIENT_IP'];
+	    }
+	    
+	    if (getenv('HTTP_CLIENT_IP'))
+	    	$data['ENV_HTTP_CLIENT_IP'] = getenv('HTTP_CLIENT_IP');
+	    if(getenv('HTTP_X_FORWARDED_FOR'))
+	    	$data['ENV_HTTP_X_FORWARDED_FOR'] = getenv('HTTP_X_FORWARDED_FOR');
+	    if(getenv('HTTP_X_FORWARDED'))
+	    	$data['ENV_HTTP_X_FORWARDED'] = getenv('HTTP_X_FORWARDED');
+	    if(getenv('HTTP_FORWARDED_FOR'))
+	    	$data['ENV_HTTP_FORWARDED_FOR'] = getenv('HTTP_FORWARDED_FOR');
+	    if(getenv('HTTP_FORWARDED'))
+	    	$data['ENV_HTTP_FORWARDED'] = getenv('HTTP_FORWARDED');
+	    if(getenv('REMOTE_ADDR'))
+	    	$data['ENV_REMOTE_ADDR'] = getenv('REMOTE_ADDR');
 	    
 	    dd($data);
 		return "";
