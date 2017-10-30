@@ -37,7 +37,8 @@
 <div class="container" >
 		<div class="row" >
             <div class="col-sm-8 ">
-            		<h1 class="text-center"><strong>Short</strong>url</h1>      			
+            		<h1 class="text-center"><strong>Short</strong>url</h1>    
+                        <p>the http://ec2-52-34-79-1.us-west-2.compute.amazonaws.com/hotpms/public/sandbox/short/ would be replace with a proper domain name for example http://short.me </p>
             </div>
 		</div>
         <div class="row">
