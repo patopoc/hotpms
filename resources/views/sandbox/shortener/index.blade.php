@@ -38,7 +38,7 @@
 		<div class="row" >
             <div class="col-sm-8 ">
             		<h1 class="text-center"><strong>Short</strong>url</h1>    
-                        <p>"the <b>http://ec2-52-34-79-1.us-west-2.compute.amazonaws.com/hotpms/public/sandbox/short/</b> would be replace with a proper domain name for example <b>http://short.me</b> )</p>
+                        <p>(the <b>http://ec2-52-34-79-1.us-west-2.compute.amazonaws.com/hotpms/public/sandbox/short/</b> would be replace with a proper domain name for example <b>http://short.me</b> )</p>
             </div>
 		</div>
         <div class="row">
