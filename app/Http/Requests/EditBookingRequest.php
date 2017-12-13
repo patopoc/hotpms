@@ -34,7 +34,8 @@ class EditBookingRequest extends Request
         		'check_in' => 'required',
         		'check_out' => 'required',
         		'id_room_type' => 'required',
-        		'rate_plan' => 'required',        		
+        		'rate_plan' => 'required',   
+                        'id_country' => 'required'
         ];
     }
     
@@ -47,6 +48,7 @@ class EditBookingRequest extends Request
     			'check_out.required' => 'The Check Out is required',
     			'id_room_type.required' => 'A Room is required',
     			'rate_plan.required' => 'A Rate is required',
+                        'id_country.required' => 'A country is required'
     	];
     }
 }
